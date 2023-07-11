@@ -54,4 +54,21 @@ const userLogin=async (req,res,next)=>{
     }
 }
 
-module.exports={createUser,userLogin}
+
+const getAllUsers=asyncHandler(async(req,res,next)=>{
+    const users=await User.find({})
+    console.log(users)
+}
+
+)
+
+const getUser=asyncHandler(async (req,res,next)=>{
+    console.log(req.params.id)
+    const user=await User.findOne({_id:req.params.id.toString()})
+    console.log(user)
+})
+
+module.exports={
+    createUser,userLogin,
+    getAllUsers,getUser
+}
