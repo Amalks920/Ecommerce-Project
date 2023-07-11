@@ -16,15 +16,6 @@ const createUser=asyncHandler(async(req,res)=>{
 
         try {
 
-            //hashing password
-              bcrypt.genSalt(saltRounds,  function(err, salt) {
-                 bcrypt.hash(req.body.password, salt, function(err, hash) {
-                    if  (err) console.log(err)
-                    else req.body.password=hash
-                    console.log(req.body.password)
-                });
-            });
-
         let user=await User.create(req.body)
             res.json({user:user})
         } catch (error) {
@@ -33,7 +24,6 @@ const createUser=asyncHandler(async(req,res)=>{
     
          
     }else{
-        console.log('hello')
         res.json({
             message:"user already exists",
             success:false,
@@ -42,4 +32,16 @@ const createUser=asyncHandler(async(req,res)=>{
 }
 )
 
-module.exports={createUser}
+const userLogin=async (req,res,next)=>{
+    const {email,password}=req.body
+    //check if user exist or not
+    findUser=await User.findOne({email})
+    
+    if(findUser && (await findUser.isPasswordMatched(password)) ){
+            res.json({findUser})
+    }else{
+       throw new Error('Invalid Credentials')
+    }
+}
+
+module.exports={createUser,userLogin}
