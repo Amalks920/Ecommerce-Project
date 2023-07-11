@@ -3,6 +3,7 @@ const app=express();
 const dotenv=require('dotenv').config();
 const dbConnect=require('./config/dbConnect')
 const PORT=process.env.PORT || 4000
+const authRouter=require('./routes/authRoute')
 
 dbConnect()
 
@@ -11,7 +12,7 @@ app.use('/',(req,res,next)=>{
 })
 
 
-
+app.use('api/user',authRouter)
 app.listen(PORT,()=>{
     console.log(`app is running at port ${PORT}`)
 })
