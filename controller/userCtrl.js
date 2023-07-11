@@ -1,6 +1,8 @@
 const User=require('../models/userSchema')
+const asyncHandler=require('express-async-handler');
 
-const createUser=async(req,res)=>{
+
+const createUser=asyncHandler(async(req,res)=>{
 
     const email=req.body.email;
     console.log(req.body.email)
@@ -24,5 +26,6 @@ const createUser=async(req,res)=>{
         })
     }
 }
+)
 
 module.exports={createUser}
