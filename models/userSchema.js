@@ -53,8 +53,11 @@ var userSchema = new mongoose.Schema({
     },
     isBlocked:{
         type:Boolean,
-        required:true,
         default:false
+    },
+    role:{
+        type:String,
+        default:"user"
     }
 });
 
