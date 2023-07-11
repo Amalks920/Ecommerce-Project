@@ -39,7 +39,12 @@ const userLogin=async (req,res,next)=>{
     
     const {email,password}=req.body
     //check if user exist or not
-    findUser=await User.findOne({email})
+    try {
+        findUser=await User.findOne({email})
+    } catch (error) {
+        res.json({error:error.message})
+    }
+   
     
     if(findUser && (await findUser.isPasswordMatched(password)) ){
             res.json({
@@ -56,19 +61,62 @@ const userLogin=async (req,res,next)=>{
 
 
 const getAllUsers=asyncHandler(async(req,res,next)=>{
-    const users=await User.find({})
-    console.log(users)
+    try {
+        const users=await User.find({})
+
+        res.json({users:users})
+        
+    } catch (error) {
+        res.json({error:error.message})
+    }
+  
+    
 }
 
 )
 
 const getUser=asyncHandler(async (req,res,next)=>{
-    console.log(req.params.id)
-    const user=await User.findOne({_id:req.params.id.toString()})
-    console.log(user)
-})
+    
+    try {
+        const user=await User.findById({id:req.params.id})
+    } catch (error) {
+        res.json({error:error.message})
+    }
+ })
+
+ const deleteUser=asyncHandler(async (req,res,next)=>{
+    
+    try {
+        const deleteUser=await User.findOneAndDelete(req.params.id)
+        res.json({deleteUser})
+    } catch (error) {
+        console.log('hi')
+        res.json({error:error.message})
+    }
+ })
+
+ const updateUser=asyncHandler(async (req,res,next)=>{
+    
+    try {
+        const updateUser=User.findOneAndUpdate(req.params.id,{
+            firstname:req?.body?.firstname,
+            lastname:req?.body?.lastname,
+            email:req?.body?.email,
+            mobile:req?.body?.mobile
+        },
+        {
+            new:true,
+        }
+        )
+        res.json({updateUser})
+
+    } catch (error) {
+        res.json({error:error.message})
+    }
+ })
 
 module.exports={
     createUser,userLogin,
-    getAllUsers,getUser
+    getAllUsers,getUser,
+    deleteUser,updateUser
 }
