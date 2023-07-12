@@ -80,9 +80,10 @@ const getAllUsers=asyncHandler(async(req,res,next)=>{
 )
 
 const getUser=asyncHandler(async (req,res,next)=>{
-    
+        console.log('hello')
     try {
         const user=await User.findById({_id:req.params.id})
+       
         res.json({user:user})
     } catch (error) {
         res.json({error:error.message})
@@ -101,7 +102,7 @@ const getUser=asyncHandler(async (req,res,next)=>{
  })
 
  const updateUser=asyncHandler(async (req,res,next)=>{
-    console.log(req.params.id)
+    
     try {
         const updateUser=User.findOneAndUpdate(req.params.id,{
             firstname:req?.body?.firstname,
@@ -120,8 +121,37 @@ const getUser=asyncHandler(async (req,res,next)=>{
     }
  })
 
+
+ const isAdmin=asyncHandler(async(req,res,next)=>{
+        
+        const {email}=req.user;
+        
+        try {
+            const adminUser=await User.findOne({email}) 
+            if(adminUser.role!="admin"){
+           
+                res.json({message:"you are not admin"})
+           }else{
+               next()
+           } 
+        } catch (error) {
+            res.json({err:error.messsage})    
+        }
+
+        
+        
+       
+            
+            
+            
+        
+      
+              
+ })
+
 module.exports={
     createUser,userLogin,
     getAllUsers,getUser,
-    deleteUser,updateUser
+    deleteUser,updateUser,
+    isAdmin
 }

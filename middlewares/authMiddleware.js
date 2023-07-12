@@ -6,14 +6,25 @@ const asyncHandler=require('express-async-handler')
 const authMiddleware=asyncHandler(async (req,res,next)=>{
     
     let token
-    console.log(req.headers)
 
    if(req?.headers?.authorization?.startsWith("Bearer")){
+    
     token=req.headers.authorization.split(' ')[1];
+    
     try {
         if(token){
             const decoded=jwt.verify(token,process.env.PRIVATE_KEY)
-            const user=await User.findById(decoded?.id)
+           
+            try {
+                const user=await User.findById(decoded?.id)
+                req.user=user
+
+            } catch (error) {
+                res.json({err:error?.message})
+            }
+            
+            
+             console.log(req.user)
             next()
 
             
