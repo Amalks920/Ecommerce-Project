@@ -1,10 +1,12 @@
 const mongoose = require('mongoose'); // Erase if already required
+const ObjectId=require('mongodb').ObjectId
 const bcrypt=require('bcrypt')
 
 const saltRounds = 10;
 
 // Declare the Schema of the Mongo model
 var userSchema = new mongoose.Schema({
+   
     firstname:{
         type:String,
         required:true,
@@ -58,8 +60,24 @@ var userSchema = new mongoose.Schema({
     role:{
         type:String,
         default:"user"
-    }
-});
+    },
+    cart:{
+        type:Array,
+        default:[]
+    },
+    address:[{
+        type:mongoose.ObjectId,
+        ref:"Address"
+}],
+  wishlists:[{
+    type:mongoose.ObjectId,
+    ref:"Product"
+}]
+},
+{
+    timestamps:true
+}
+);
 
 userSchema.pre('save',async function (next){
     this.password=await bcrypt.hash(this.password, saltRounds)

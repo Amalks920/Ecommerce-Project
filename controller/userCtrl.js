@@ -2,6 +2,7 @@ const User=require('../models/userSchema');
 const asyncHandler=require('express-async-handler');
 const bcrypt=require('bcrypt');
 const generateToken=require('../config/jwtToken')
+const mongoose=require('mongoose')
 
 
 
@@ -41,18 +42,21 @@ const userLogin=async (req,res,next)=>{
     //check if user exist or not
     try {
         findUser=await User.findOne({email})
+        
     } catch (error) {
         res.json({error:error.message})
     }
    
     
     if(findUser && (await findUser.isPasswordMatched(password)) ){
+        let authorizationHeader=generateToken(findUser._id)
+        
             res.json({
                 _id:findUser._id,
                 name:findUser.firstname,
                 email:findUser.email,
                 username:findUser.username,
-                token:generateToken(findUser._id)
+                token:authorizationHeader,
             })
     }else{
        throw new Error('Invalid Credentials')
@@ -78,7 +82,8 @@ const getAllUsers=asyncHandler(async(req,res,next)=>{
 const getUser=asyncHandler(async (req,res,next)=>{
     
     try {
-        const user=await User.findById({id:req.params.id})
+        const user=await User.findById({_id:req.params.id})
+        res.json({user:user})
     } catch (error) {
         res.json({error:error.message})
     }
@@ -96,7 +101,7 @@ const getUser=asyncHandler(async (req,res,next)=>{
  })
 
  const updateUser=asyncHandler(async (req,res,next)=>{
-    
+    console.log(req.params.id)
     try {
         const updateUser=User.findOneAndUpdate(req.params.id,{
             firstname:req?.body?.firstname,
