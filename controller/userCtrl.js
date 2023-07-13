@@ -3,6 +3,10 @@ const asyncHandler=require('express-async-handler');
 const bcrypt=require('bcrypt');
 const generateToken=require('../config/jwtToken')
 const mongoose=require('mongoose')
+// const {createOtp}=require('../config/otpGenerator')
+
+const {sendOtp}=require('../config/otpGenerator')
+
 
 
 
@@ -136,22 +140,20 @@ const getUser=asyncHandler(async (req,res,next)=>{
            } 
         } catch (error) {
             res.json({err:error.messsage})    
-        }
-
-        
-        
-       
-            
-            
-            
-        
-      
-              
+        }            
  })
+
+
+ const generateOtp= (req,res,next)=>{
+  
+
+     sendOtp()
+   }
+
 
 module.exports={
     createUser,userLogin,
     getAllUsers,getUser,
     deleteUser,updateUser,
-    isAdmin
+    isAdmin,generateOtp
 }
