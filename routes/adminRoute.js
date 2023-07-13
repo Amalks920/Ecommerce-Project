@@ -17,8 +17,16 @@ router.put('/unblock-user/:id',unBlockUser)
 
 
 //product management
-const {addProduct}=require('../controller/Product/productCtrl')
+const {addProduct,getAllProducts,getAProduct,
+       deleteProduct,updateProduct
+}=require('../controller/Product/productCtrl')
 
-router.post('/add-prodcut',addProduct)
+router.post('/add-product',addProduct)
+router.get('/get-all-products',getAllProducts)
+router.get('/get-a-product/:id',getAProduct)
+router.delete('/delete-a-product/:id',deleteProduct)
+router.put('/update-product/:id',updateProduct)
+
+
 
 module.exports=router;  
