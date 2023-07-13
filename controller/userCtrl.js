@@ -151,9 +151,22 @@ const getUser=asyncHandler(async (req,res,next)=>{
    }
 
 
+   const blockUser=async (req,res,next)=>{
+           const {id}=req.params
+        const user=await User.findByIdAndUpdate(id,{isBlocked:true},{new:true})   
+        console.log(user)
+   }
+
+   const unBlockUser=async (req,res,next)=>{
+    const {id}=req.params
+    const user=await User.findByIdAndUpdate(id,{isBlocked:false},{new:true})
+    console.log(user)
+   }
+
 module.exports={
     createUser,userLogin,
     getAllUsers,getUser,
     deleteUser,updateUser,
-    isAdmin,generateOtp
+    isAdmin,generateOtp,
+    blockUser,unBlockUser
 }
