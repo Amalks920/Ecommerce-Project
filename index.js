@@ -4,6 +4,7 @@ const dotenv=require('dotenv').config();
 const dbConnect=require('./config/dbConnect')
 const PORT=process.env.PORT || 4000
 const authRouter=require('./routes/authRoute')
+const adminRouter=require('./routes/adminRoute')
 const {errorHandler,notFound}=require('./middlewares/errorHandler')
 
 
@@ -17,6 +18,7 @@ dbConnect()
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 app.use('/api/user',authRouter)
+app.use('/api/admin',adminRouter)
 
 app.use(notFound)
 app.use(errorHandler)
