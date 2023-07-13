@@ -106,9 +106,9 @@ const getUser=asyncHandler(async (req,res,next)=>{
  })
 
  const updateUser=asyncHandler(async (req,res,next)=>{
-    
+            console.log(req.body)
     try {
-        const updateUser=User.findOneAndUpdate(req.params.id,{
+        const updateUser=await User.findByIdAndUpdate(req.params.id,{
             firstname:req?.body?.firstname,
             lastname:req?.body?.lastname,
             email:req?.body?.email,
