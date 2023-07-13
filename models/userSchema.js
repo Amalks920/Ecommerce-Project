@@ -72,7 +72,12 @@ var userSchema = new mongoose.Schema({
   wishlists:[{
     type:mongoose.ObjectId,
     ref:"Product"
-}]
+}],
+
+refreshToken:{
+    type:String
+}
+
 },
 {
     timestamps:true

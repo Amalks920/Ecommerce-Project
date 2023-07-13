@@ -2,6 +2,7 @@ const express=require('express');
 const app=express();
 const dotenv=require('dotenv').config();
 const dbConnect=require('./config/dbConnect')
+const cookieParser=require('cookie-parser')
 const PORT=process.env.PORT || 4000
 const authRouter=require('./routes/authRoute')
 const adminRouter=require('./routes/adminRoute')
@@ -17,6 +18,7 @@ dbConnect()
 
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
+app.use(cookieParser())
 app.use('/api/user',authRouter)
 app.use('/api/admin',adminRouter)
 
