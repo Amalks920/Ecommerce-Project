@@ -1,5 +1,6 @@
 
 import React from 'react'
+import LoginModal from './LoginModal'
 
 const Navbar = () => {
   return (
@@ -17,7 +18,7 @@ const Navbar = () => {
         <input className="w-4/5 h-full rounded-l-full p-4 ps-9 shadow-xl" placeholder='Find Products' />
         <button className='bg-green-400 h-full w-1/5 rounded-r-full shadow-xl'>Search</button>
       </div>
-        <button className='bg-green-400 h-3/6 w-1/12'>Login</button>
+      <LoginModal />        
     </div>
   )
 }

@@ -2,6 +2,7 @@
 import './App.css';
 import React,{ useState,useEffect } from 'react';
 import Navbar from './components/Navbar';
+import LoginModal from './components/LoginModal';
 
 function App(){
   const [message,setMessage]=useState('');
@@ -26,6 +27,7 @@ function App(){
   return(
     <div className="w-screen h-screen">
     <Navbar />
+   
     </div>
   )
 }
