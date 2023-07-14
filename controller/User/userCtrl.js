@@ -6,7 +6,7 @@ const mongoose=require('mongoose')
 const jwt=require('jsonwebtoken')
 // const {createOtp}=require('../config/otpGenerator')
 const {generateRefreshToken}=require('../../config/refreshToken')
-
+const {Auth}=require("two-step-auth")
 const {sendOtp}=require('../../config/otpGenerator')
 
 
@@ -137,10 +137,25 @@ const logout=asyncHandler(async (req,res,next)=>{
 
 
 
- const generateOtp= (req,res,next)=>{
-  
+ const emailAuth= async (req,res,next)=>{
+  let emailId="Amalks920@gmail.com"
 
-     sendOtp()
+  try {
+    const resp = await Auth(emailId);
+    console.log(resp);
+  console.log(resp.mail);
+  console.log(resp.OTP);
+  console.log(resp.success);
+    
+  } catch (error) {
+        res.json({err:error})
+    
+  }
+  // You can follow this approach,
+  // but the second approach is suggested,
+  // as the mails will be treated as important
+  
+     
    }
 
 
@@ -148,7 +163,7 @@ const logout=asyncHandler(async (req,res,next)=>{
 
 module.exports={
     createUser,userLogin,
-    generateOtp,handleRefreshToken,
+    emailAuth,handleRefreshToken,
     logout
 }
 

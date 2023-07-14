@@ -68,15 +68,16 @@ const deleteProduct=asyncHandler(async (req,res,next)=>{
 
 
 const updateProduct=asyncHandler(async (req,res,next)=>{
-        console.log(req.body)
+       const {id}=req.body
 try {
-    const updateProduct=await ProductModel.updateOne(
-        req.body,
+    const updateProduct=await ProductModel.findOneAndUpdate(
+       { id },
+       req.body,
     {
         new:true,
     }
     )
-    res.json({updateUser})
+    res.json({updateProduct})
 
 } catch (error) {
     res.json({error:error.message})

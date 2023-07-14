@@ -30,7 +30,8 @@
     "mongodb": "^5.7.0",
     "mongoose": "^7.3.2",
     "otp-generator": "^4.0.1",
-    "twilio": "^4.13.0"
+    "twilio": "^4.13.0",
+    "two-step-auth": "^1.1.2"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

@@ -1,6 +1,6 @@
 const express=require('express');
 const router=express.Router();
-const {createUser,userLogin,generateOtp,handleRefreshToken,logout}=require('../controller/User/userCtrl');
+const {createUser,userLogin,emailAuth,handleRefreshToken,logout}=require('../controller/User/userCtrl');
 
 
 const authMiddleware=require('../middlewares/authMiddleware')
@@ -11,9 +11,10 @@ const authMiddleware=require('../middlewares/authMiddleware')
 router.post('/register',createUser);
 router.post('/login',userLogin)
 
-router.post('/generate-otp',sendOtp)
+router.get('/generate-otp',sendOtp)
 router.get('/refresh',handleRefreshToken)
 router.get('/logout',logout)
+
 
 
 

@@ -13,14 +13,17 @@ var productSchema = new mongoose.Schema({
       required: true,
     },
     category: {
-      type: Array,
-      required: true,
-      unique: true,
+      // type:mongoose.Schema.Types.ObjectId,
+      // ref:Category
+      type:String,
+      required:true
     },
     subCategory: {
-      type: Array,
-      required: true,
-      unique: true,
+      // type: mongoose.Schema.Types.ObjectId,
+      type:String,
+      // ref:subCategory,
+      required:true
+      
     },
     stockQuantity: {
       type: Number,
@@ -41,6 +44,14 @@ var productSchema = new mongoose.Schema({
     size: {
       type: Number,
       required: true,
+    },
+  //  ratings:{
+  //     star:Number,
+  //     postedBy:{type:mongoose.Schema.Types.ObjectId,ref:"User"},
+  //   },
+    sold:{
+      type:Number,
+      default:0
     },
     createdAt: {
       type: Date,
