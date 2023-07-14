@@ -1,8 +1,9 @@
 
 import './App.css';
 import React,{ useState,useEffect } from 'react';
+import Navbar from './components/Navbar';
 
-const App=()=>{
+function App(){
   const [message,setMessage]=useState('');
 
   useEffect(()=>{
@@ -23,10 +24,8 @@ const App=()=>{
   }
   
   return(
-    <div>
-    {/* {
-      message.map((el,index)=><p key={index}>{el}</p>)
-    } */}
+    <div className="w-screen h-screen">
+    <Navbar />
     </div>
   )
 }
