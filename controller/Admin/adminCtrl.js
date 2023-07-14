@@ -3,11 +3,11 @@ const asyncHandler=require('express-async-handler');
 
 
 
-const getAllUsers=asyncHandler(async(req,res,next)=>{
+const  getAllUsers=asyncHandler(async(req,res,next)=>{
     try {
         const users=await User.find({})
 
-        res.json({users:users})
+        res.json({'users':users})
         
     } catch (error) {
         res.json({error:error.message})

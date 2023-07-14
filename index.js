@@ -7,6 +7,7 @@ const PORT=process.env.PORT || 4000
 const authRouter=require('./routes/authRoute')
 const adminRouter=require('./routes/adminRoute')
 const {errorHandler,notFound}=require('./middlewares/errorHandler')
+const cors=require('cors')
 
 
 
@@ -21,6 +22,7 @@ app.use(express.urlencoded({extended:false}))
 app.use(cookieParser())
 app.use('/api/user',authRouter)
 app.use('/api/admin',adminRouter)
+app.use(cors())
 
 app.use(notFound)
 app.use(errorHandler)

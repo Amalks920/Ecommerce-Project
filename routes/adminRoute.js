@@ -8,7 +8,10 @@ const {getAllUsers,getUser,deleteUser,
     isAdmin,blockUser,
     unBlockUser}=require('../controller/Admin/adminCtrl');
 
-router.get('/get-all-users',authMiddleware,isAdmin,getAllUsers)
+router.get('/hi',(req,res,next)=>{
+    res.json({'users':['userone','usertwo','userthree']})
+})
+router.get('/get-all-users',getAllUsers)
 router.get('/get-a-user/:id',authMiddleware,isAdmin,getUser)
 router.delete('/:id',deleteUser)
 router.put('/:id',updateUser)
