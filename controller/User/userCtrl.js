@@ -180,7 +180,7 @@ const emailAuthentication=(req,res)=>{
 
 module.exports={
     createUser,userLogin,
-    handleRefreshToken,
+  
     emailAuthentication,
     logout
 }

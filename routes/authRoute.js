@@ -13,7 +13,6 @@ router.post('/register',createUser);
 router.post('/login',userLogin)
 
 router.get('/generate-otp',sendOtp)
-router.get('/refresh',handleRefreshToken)
 router.get('/logout',logout)
 router.post('/otp-verification-gmail',emailAuthentication)
 
