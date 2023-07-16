@@ -16,21 +16,30 @@ const otpGenerator = require('otp-generator')
 
 const saltRounds = 10;
 
-
 const createUser=asyncHandler(async(req,res)=>{
+    console.log('hello from server')
+    const {name,email,phone,password}=req.body
     
+    // console.log(req.body.name)
 
-    const email=req.body.email;
-    console.log(req.body.email)
-    const findUser=await User.findOne({email:email})
+    let findUser
+
+    
+         findUser=await User.findOne({email:email})
+
+        
+  
    
     if(!findUser){
-
+        console.log('hellll')
         try {
 
         let user=await User.create(req.body)
-            res.json({user:user})
+        console.log(user)
+             res.json({"user":"hello from server"})
         } catch (error) {
+            console.log('db error')
+            console.log(error.message)
             res.json({error:error.message})
         }
     
@@ -44,7 +53,7 @@ const createUser=asyncHandler(async(req,res)=>{
 }
 )
 
-const userLogin=async (req,res,next)=>{
+const userLogin=asyncHandler(async (req,res,next)=>{
 
     
 
@@ -56,28 +65,26 @@ const userLogin=async (req,res,next)=>{
         findUser=await User.findOne({email})
         if(findUser && (await findUser.isPasswordMatched(password)) ){
 
-        const refreshToken= generateRefreshToken(findUser?._id)
-        const updateUser=await User.findByIdAndUpdate(
-            findUser._id,
-            {
-                refreshToken:refreshToken
-            },
-            {
-                new:true
-            }
-        )
-        res.cookie('refreshToken',refreshToken,{
+        const refreshToken=generateRefreshToken(findUser?._id)
+        // const updateUser=await User.findByIdAndUpdate(
+        //     findUser._id,
+        //     {
+        //         refreshToken:refreshToken
+        //     },
+        //     {
+        //         new:true
+        //     }
+        // )
+        res.cookie('x-access-token',refreshToken,{
             httpOnly:true,
             maxAge:72*60*60*1000
         })
             
                 res.json({
-                    _id:findUser._id,
-                    name:findUser.firstname,
-                    email:findUser.email,
-                    username:findUser.username,
-                    token:refreshToken,
+                    
+                    "user":findUser
                 })
+               
         }else{
            throw new Error('Invalid Credentials')
         }
@@ -90,51 +97,22 @@ const userLogin=async (req,res,next)=>{
     
     
 }
-
+)
 const logout=asyncHandler(async (req,res,next)=>{
-    const cookie=req.cookies;
-    if(!cookie?.refreshToken) throw Error('No refresh token in cookies')
-    const refreshToken=cookie.refreshToken
-    const user=await User.findOne({refreshToken})
-    console.log(user)
-    if(!user){
-        res.clearCookie('refreshToken',{
+    const token=req.cookies['x-access-token']
+    console.log(token)
+
+    if(token){
+        res.clearCookie('x-access-token',{
             httpOnly:true,
-            secure:true,
+            secure:true
         })
-         res.sendStatus(204);
+        res.json({msg:"cookies cleared"})
+    }else{
+        res.json({msg:"already logout"})
     }
-    await User.findOneAndUpdate({refreshToken},{
-        refreshToken:""
-    })
-    res.clearCookie('refreshToken',{
-        httpOnly:true,
-        secure:true,
-    })
-     res.sendStatus(204);
-
+   
 })
-
-
- const handleRefreshToken=async (req,res,next)=>{
-    const cookies=req.cookies
-    if(!cookies?.refreshToken) throw new Error('No refresh token in cookies')
-    const refreshToken=cookies.refreshToken
-    const user=await User.findOne({refreshToken})
-    if(!user) throw new Error('No user matched with the given refresh token')
-
-    
-    jwt.verify(refreshToken,process.env.PRIVATE_KEY,(err,decoded)=>{
-        
-        if(err || user._id!=decoded.id) throw new Error('There is something wrong')
-        
-        const accessToken=generateToken(user?._id)
-        res.json({accessToken})
-    })
-    
-
- }
-
 
 
  //authentication using real gmail
