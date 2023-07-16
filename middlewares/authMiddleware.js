@@ -3,39 +3,29 @@ const jwt=require('jsonwebtoken')
 const asyncHandler=require('express-async-handler')
 
 
+
 const authMiddleware=asyncHandler(async (req,res,next)=>{
     
-    let token
+    let token=req.cookies['x-access-token'];
+    console.log(token)
 
-   if(req?.headers?.authorization?.startsWith("Bearer")){
-    
-    token=req.headers.authorization.split(' ')[1];
-    
-    try {
-        if(token){
-            const decoded=jwt.verify(token,process.env.PRIVATE_KEY)
+
+    if(token){
+        const decoded=jwt.verify(token,process.env.PRIVATE_KEY)
            
-            try {
-                const user=await User.findById(decoded?.id)
-                req.user=user
-
-            } catch (error) {
-                res.json({err:error?.message})
-            }
-            
-            
-             console.log(req.user)
-            next()
-
-            
-        }
-    } catch (error) {
-        throw new Error("Not Authorized token expired,Please Login again")
+                    try {
+                        const user=await User.findById(decoded?.id)
+                        next()
         
+                    } catch (error) {
+                        res.json({err:error?.message})
+                    }
+
+    }else{
+          throw new Error("There is no token attached to header")
+
     }
-   }else{
-        throw new Error("There is no token attached to header")
-   }
+    
 })
 
-module.exports=authMiddleware
+module.exports=authMiddleware;
