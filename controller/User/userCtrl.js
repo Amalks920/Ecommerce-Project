@@ -20,7 +20,7 @@ const createUser=asyncHandler(async(req,res)=>{
     console.log('hello from server')
     const {name,email,phone,password}=req.body
     
-    // console.log(req.body.name)
+    console.log(req.body)
 
     let findUser
 

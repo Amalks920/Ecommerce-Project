@@ -6,6 +6,23 @@ import { Signup } from './pages/Signup';
 import { Login } from './pages/Login';
  
 
+
+
+
+function App(){
+
+ 
+  
+  return(
+    <div className="w-screen h-screen">
+      
+    <RouterProvider router={appRouter}/>
+   
+    </div>
+  )
+}
+
+
 const appRouter=createBrowserRouter([
   {
   path:"/",
@@ -25,20 +42,5 @@ const appRouter=createBrowserRouter([
   ]
 }
 ])
-
-
-function App(){
-
- 
-  
-  return(
-    <div className="w-screen h-screen">
-    
-    <RouterProvider router={appRouter}/>
-   
-    </div>
-  )
-}
-
 
 export default App;

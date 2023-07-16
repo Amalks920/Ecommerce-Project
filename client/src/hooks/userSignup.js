@@ -10,8 +10,8 @@ export  const userSignup=(name,email,mobile,password)=>{
     }
     const URL=`${BACKEND_API}/user/reg`
 
-    axios.post(URL,data)
-    .then((res)=>{console.log(res)})
-    .catch((err)=>{console.log(err.message)})
+     axios.post(URL,JSON.stringify(data))
+    .then( (res)=>{ console.log(res)})
+    .catch((err)=>{  console.log(err.message)})
     
 }

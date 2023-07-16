@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from 'react-router-dom'
+import { BACKEND_API } from "../utils/constants";
+import axios from 'axios'
 
 import { userSignup } from "../hooks/userSignup";
 
@@ -21,7 +23,40 @@ const [password,setPassword]=useState('');
 console.log(name,email,password,mobile)
 
 
+// function userSignup(){
+//     const data={
+//         "name":name,
+//         "email":email,
+//         "mobile":mobile,
+//         "password":password
+//     }
+//     const URL=`${BACKEND_API}/user/reg`
 
+//      axios.post(URL,data)
+//     .then( (res)=>{ console.log(res)})
+//     .catch((err)=>{  console.log(err.message)})
+    
+// }
+
+
+  const userSignup=()=>{
+    const data={
+        "name":name,
+        "email":email,
+        "mobile":mobile,
+        "password":password
+    }
+    const URL=`${BACKEND_API}/user/register`
+
+     axios.post(URL,data)
+    .then( (res)=>{ console.log(res)})
+    .catch((err)=>{  console.log(err.message)})
+    
+}
+
+    useEffect(()=>{
+        console.log('hello')
+    },[])
 
 
 
@@ -29,6 +64,7 @@ console.log(name,email,password,mobile)
         
             return (
                 <div>
+
                     <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
                         <div>
                             <a >
@@ -38,7 +74,7 @@ console.log(name,email,password,mobile)
                             </a>
                         </div>
                         <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-lg sm:rounded-lg">
-                            <form>
+                            <form >
                                 <div>
                                     <label
                                         htmlFor="name"
@@ -100,6 +136,7 @@ console.log(name,email,password,mobile)
                                     >
                                         Password
                                     </label>
+
                                     <div className="flex flex-col items-start">
                                         <input
                                              onChange={(e)=>{setPassword(e.target.value)}}
@@ -119,13 +156,18 @@ console.log(name,email,password,mobile)
                                 >
                                     Forget Password?
                                 </a>
-                                <div className="flex items-center mt-4">
-                                    <button onClick={userSignup}>hello</button>
-                                    <button onClick={userSignup} className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
-                                        Register
-                                    </button>
-                                </div>
+
+                               
+
                             </form>
+
+                            <div className="flex items-center mt-4">
+
+<button onClick={userSignup} className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
+    Register
+</button>
+</div>
+
                             <div className="mt-4 text-grey-600">
                                 Already have an account?{" "}
                                 <span>
@@ -134,6 +176,7 @@ console.log(name,email,password,mobile)
                                     </Link>
                                 </span>
                             </div>
+
                             <div className="flex items-center w-full my-4">
                                 <hr className="w-full" />
                                 <p className="px-3 ">OR</p>
@@ -154,6 +197,7 @@ console.log(name,email,password,mobile)
                                     </svg>
                                     <p>Login with Google</p>
                                 </button>
+
                                 <button
                                     aria-label="Login with GitHub"
                                     role="button"
@@ -171,6 +215,7 @@ console.log(name,email,password,mobile)
                             </div>
                         </div>
                     </div>
+
                 </div>
             );
         }
