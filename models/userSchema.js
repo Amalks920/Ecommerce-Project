@@ -7,13 +7,8 @@ const saltRounds = 10;
 // Declare the Schema of the Mongo model
 var userSchema = new mongoose.Schema({
    
-    firstname:{
-        type:String,
-        required:true,
-        pattern: /^[a-zA-Z ]+$/,
-        message: 'Name must be at least 3 characters long and contain only letters and spaces',
-    },
-    lastname:{
+ 
+    name:{
         type:String,
         required:true,
         minLength: 3,
@@ -21,15 +16,15 @@ var userSchema = new mongoose.Schema({
         pattern: /^[a-zA-Z ]+$/,
         message: 'Name must be at least 3 characters long and contain only letters and spaces',
     },
-    username:{
-        type:String,
-        required:true,
-        unique:true,
-        minLength: 3,
-        maxLength: 50,
-        pattern: /^[a-z0-9]+$/,
-        message: 'Username must be at least 3 characters long and contain only lowercase letters and numbers',
-    },
+    // username:{
+    //     type:String,
+    //     required:true,
+    //     unique:true,
+    //     minLength: 3,
+    //     maxLength: 50,
+    //     pattern: /^[a-z0-9]+$/,
+    //     message: 'Username must be at least 3 characters long and contain only lowercase letters and numbers',
+    // },
 
     email:{
         type:String,

@@ -8,7 +8,10 @@ const authMiddleware=require('../middlewares/authMiddleware')
  const {sendOtp}=require('../config/otpGenerator')
 
 
-
+router.post('/reg',(req,res)=>{
+    console.log(req.body)
+    res.json({msg:"success"})
+})
 router.post('/register',createUser);
 router.post('/login',userLogin)
 

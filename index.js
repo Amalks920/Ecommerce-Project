@@ -19,10 +19,11 @@ dbConnect()
 
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
+app.use(cors())
 app.use(cookieParser())
 app.use('/api/user',authRouter)
 app.use('/api/admin',adminRouter)
-app.use(cors())
+
 
 app.use(notFound)
 app.use(errorHandler)

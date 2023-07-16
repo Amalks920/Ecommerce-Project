@@ -1,32 +1,40 @@
 
 import './App.css';
-import React,{ useState,useEffect } from 'react';
-import Navbar from './components/Navbar';
-import LoginModal from './components/LoginModal';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import MainContainer from './components/MainContainer';
+import { Signup } from './pages/Signup';
+import { Login } from './pages/Login';
+ 
+
+const appRouter=createBrowserRouter([
+  {
+  path:"/",
+  element:<MainContainer />,
+  children:[
+    {
+    path:'/signup',
+    element:<Signup />
+    },
+    {
+      path:'/login',
+      element:<Login />,
+      children:[
+        
+      ]
+    }
+  ]
+}
+])
+
 
 function App(){
-  const [message,setMessage]=useState('');
 
-  useEffect(()=>{
-    getApi()
-  },[])
-
-  async function getApi(){
-    try {
-      const data= await fetch("http://localhost:5000/api/admin/get-all-users")
-      const json= await data.json()
-      // setMessage(json.users)
-      console.log(json)
-    } catch (error) {
-        console.log(error.message)
-    }
-   
-    
-  }
+ 
   
   return(
     <div className="w-screen h-screen">
-    <Navbar />
+    
+    <RouterProvider router={appRouter}/>
    
     </div>
   )

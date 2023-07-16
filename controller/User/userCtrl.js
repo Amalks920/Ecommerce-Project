@@ -32,6 +32,7 @@ const createUser=asyncHandler(async(req,res)=>{
    
     if(!findUser){
         console.log('hellll')
+        console.log(req.body)
         try {
 
         let user=await User.create(req.body)
