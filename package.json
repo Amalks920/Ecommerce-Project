@@ -28,8 +28,10 @@
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.1",
     "lodash": "^4.17.21",
+    "mailgen": "^2.0.27",
     "mongodb": "^5.7.0",
     "mongoose": "^7.3.2",
+    "nodemailer": "^6.9.3",
     "otp-generator": "^4.0.1",
     "twilio": "^4.13.0",
     "two-step-auth": "^1.1.2"

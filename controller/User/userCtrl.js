@@ -7,9 +7,11 @@ const jwt=require('jsonwebtoken')
 // const {createOtp}=require('../config/otpGenerator')
 const {generateRefreshToken}=require('../../config/refreshToken')
 const {Auth}=require("two-step-auth")
-const {sendOtp}=require('../../config/otpGenerator')
-
-
+const {sendOtp}=require('../../config/otpGenerator');
+const {EMAIL,PASSWORD}=require('../../utils/emailAuth')
+const nodemailer=require('nodemailer')
+const MailGen=require('mailgen')
+const otpGenerator = require('otp-generator')
 
 
 const saltRounds = 10;
@@ -135,35 +137,73 @@ const logout=asyncHandler(async (req,res,next)=>{
 
 
 
+ //authentication using real gmail
+
+const emailAuthentication=(req,res)=>{
+    const {userEmail}=req.body
 
 
- const emailAuth= async (req,res,next)=>{
-  let emailId="Amalks920@gmail.com"
+    let config={
+        service:"gmail",
+        auth:{
+            user:EMAIL,
+            pass:PASSWORD
+        }
+    }
 
-  try {
-    const resp = await Auth(emailId);
-    console.log(resp);
-  console.log(resp.mail);
-  console.log(resp.OTP);
-  console.log(resp.success);
+    let transporter=nodemailer.createTransport(config)
+   
+    let MailGenerator=new MailGen({
+        theme:'default',
+        product:{
+            name:"Mailgen",
+            link:"https://mailgen.js/"
+        }
+    })
+
+
+    let response={
+        body:{
+            Email:userEmail,
+            intro:`Your OTP ${otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false, lowerCaseAlphabets: false, digits:true })}`,
+            
+            outro:"Expires within 10 minuites"
+
+        }
+    }   
     
-  } catch (error) {
-        res.json({err:error})
-    
-  }
-  // You can follow this approach,
-  // but the second approach is suggested,
-  // as the mails will be treated as important
-  
-     
+    let mail=MailGenerator.generate(response)
+
+   let message={
+    from:EMAIL,
+    to:userEmail,
+    subject:"Your OTP",
+    html:mail
    }
+
+   transporter.sendMail(message).then(()=>{
+    return res.status(201).json({
+        msg:"you should receive an email"
+    })
+   }).catch(error=>{
+    return res.status(500).json({error})
+   })
+}
+
+
+
+
+
+
+ 
 
 
 
 
 module.exports={
     createUser,userLogin,
-    emailAuth,handleRefreshToken,
+    handleRefreshToken,
+    emailAuthentication,
     logout
 }
 

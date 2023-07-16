@@ -1,6 +1,7 @@
 const express=require('express');
 const router=express.Router();
-const {createUser,userLogin,emailAuth,handleRefreshToken,logout}=require('../controller/User/userCtrl');
+const {createUser,userLogin,handleRefreshToken,
+    emailAuthentication,logout}=require('../controller/User/userCtrl');
 
 
 const authMiddleware=require('../middlewares/authMiddleware')
@@ -14,7 +15,7 @@ router.post('/login',userLogin)
 router.get('/generate-otp',sendOtp)
 router.get('/refresh',handleRefreshToken)
 router.get('/logout',logout)
-
+router.post('/otp-verification-gmail',emailAuthentication)
 
 
 
