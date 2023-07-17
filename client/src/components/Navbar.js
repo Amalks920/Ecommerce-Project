@@ -7,10 +7,7 @@ let user
 user=useSelector((store)=>store.user)
 
 
-useEffect(()=>{
-  subscribe()
 
-},[])
 
 
 
