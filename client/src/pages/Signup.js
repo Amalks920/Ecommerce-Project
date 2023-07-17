@@ -18,7 +18,7 @@ const [name,setName]=useState('');
 const [email,setEmail]=useState('');
 const [mobile,setMobile]=useState('');
 const [password,setPassword]=useState('');
-const dispatch=useDispatch()
+// const dispatch=useDispatch()
 
 
   const userSignup=()=>{
@@ -33,9 +33,10 @@ const dispatch=useDispatch()
 
      axios.post(URL,data)
     .then( (res)=>{ 
-        dispatch(setUsername(res.data.name))
-        dispatch(setIsLoggedIn(true))
-        console.log(res.data)
+
+        // dispatch(setUsername(res.data.name))
+        // dispatch(setIsLoggedIn(true))
+        // console.log(res.data)
     })
     .catch((err)=>{ 
         console.log('heyo')
