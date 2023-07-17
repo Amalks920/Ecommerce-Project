@@ -7,7 +7,7 @@ import axios from 'axios'
 
 import { userSignup } from "../hooks/userSignup";
 
-import { setUsername,setUserMobile,setIsLoggedIn,setUserEmail } from "../utils/loginSlice";
+import { setUser } from "../utils/loginSlice";
 
 
 
@@ -18,10 +18,15 @@ const [name,setName]=useState('');
 const [email,setEmail]=useState('');
 const [mobile,setMobile]=useState('');
 const [password,setPassword]=useState('');
-// const dispatch=useDispatch()
+// const [user,setUser]=useState([])
+
+const dispatch=useDispatch()
 
 
-  const userSignup=()=>{
+
+
+
+  const userSignup= ()=>{
     const data={
         "name":name,
         "email":email,
@@ -30,21 +35,22 @@ const [password,setPassword]=useState('');
     }
     const URL=`${BACKEND_API}/user/register`
 
-
      axios.post(URL,data)
-    .then( (res)=>{ 
-
-        // dispatch(setUsername(res.data.name))
-        // dispatch(setIsLoggedIn(true))
-        // console.log(res.data)
+    .then( (res)=>{   
+        dispatch(setUser(res.data))
+       
+        console.log(res.data)
     })
     .catch((err)=>{ 
-        console.log('heyo')
+        console.log('error in axios')
          console.log(err.message)
         })
+
+    
+
+
     
 }
-
 
 
 
@@ -53,6 +59,9 @@ const [password,setPassword]=useState('');
         
             return (
                 <div>
+                    <div>
+                       
+                    </div>
 
                     <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
                         <div>
@@ -152,7 +161,7 @@ const [password,setPassword]=useState('');
 
                             <div className="flex items-center mt-4">
 
-<button onClick={userSignup} className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
+<button onClick={()=>{userSignup()}} className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
     Register
 </button>
 </div>

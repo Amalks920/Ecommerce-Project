@@ -3,26 +3,32 @@ import { createSlice } from "@reduxjs/toolkit";
 const userSlice=createSlice({
     name:"user",
     initialState:{
-      name:"",
-      email:"",
-      mobile:"",
-      isLoggedIn:false
+      user:[]
+      // name:"",
+      // email:"",
+      // mobile:"",
+      // isLoggedIn:false
     },
     reducers:{
         
-            setUsername(state, action) {
-              state.username = action.payload;
-              console.log(state.username)
+            // setUsername(state, action) {
+            //   state.username = action.payload;
+            //   console.log(state.username)
+            // },
+            setUser:(state,action)=> {
+              state.user=action.payload
+              console.log('here=-----------')
+              console.log(state.user)
             },
-            setUserEmail(state, action) {
-              state.email = action.payload;
-            },
-            setUserMobile(state, action) {
-                state.mobile = action.payload;
-              },
-            setIsLoggedIn(state, action) {
-              state.isLoggedIn = action.payload;
-            },
+            // setUserEmail(state, action) {
+            //   state.email = action.payload;
+            // },
+            // setUserMobile(state, action) {
+            //     state.mobile = action.payload;
+            //   },
+            // setIsLoggedIn(state, action) {
+            //   state.isLoggedIn = action.payload;
+            // },
           },
     
     
@@ -32,9 +38,6 @@ const userSlice=createSlice({
 console.log(userSlice);
 
 export  const {
-    setUsername,
-    setUserEmail,
-    setUserMobile,
-    setIsLoggedIn,
+    setUser
   } = userSlice.actions
 export default userSlice.reducer

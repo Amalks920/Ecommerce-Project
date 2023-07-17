@@ -4,7 +4,10 @@ import {useSelector} from 'react-redux'
 
 const Navbar = () => {
 let user
-user=useSelector((store)=>store.user)
+
+
+
+user=useSelector((store)=>store.user.user)
 
 
 
@@ -30,7 +33,7 @@ user=useSelector((store)=>store.user)
         <input className="w-4/5 h-full rounded-l-full p-4 ps-9 shadow-xl" placeholder='Find Products' />
         <button className='bg-green-400 h-full w-1/5 rounded-r-full shadow-xl'>Search</button>
       </div>
-         <h1>{user && user.username}</h1>
+         <h1>Hi { user.name}</h1>
     </div>
   )
 }
