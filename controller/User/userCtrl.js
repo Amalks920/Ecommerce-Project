@@ -28,7 +28,7 @@ const createUser=asyncHandler(async(req,res)=>{
          findUser=await User.findOne({email:email})
 
         
-  
+    console.log(findUser)
    
     if(!findUser){
         console.log('hellll')
@@ -41,7 +41,7 @@ const createUser=asyncHandler(async(req,res)=>{
         } catch (error) {
             console.log('db error')
             console.log(error.message)
-            res.status(500).json({error:error.message})
+            res.status(error.status).json({code:error.status,msg:error.message})
         }
     
          
@@ -61,12 +61,16 @@ const userLogin=asyncHandler(async (req,res,next)=>{
     
     
     const {email,password}=req.body
+    console.log(email,password)
     //check if user exist or not
     try {
-        findUser=await User.findOne({email})
+        
+        findUser=await User.findOne({email:email})
+        
         if(findUser && (await findUser.isPasswordMatched(password)) ){
-
+            
         const refreshToken=generateRefreshToken(findUser?._id)
+        console.log(refreshToken)
         // const updateUser=await User.findByIdAndUpdate(
         //     findUser._id,
         //     {
@@ -80,24 +84,34 @@ const userLogin=asyncHandler(async (req,res,next)=>{
             httpOnly:true,
             maxAge:72*60*60*1000
         })
+        const {    
+            email,
+            isBlocked,
+            mobile,
+            name,
+            role
+          } = findUser;
             
-                res.json({
-                    
-                    "user":findUser
+                res.json({              
+                    email:email,isBlocked:isBlocked,
+                    mobile:mobile,name:name,role:role
                 })
                
         }else{
-           throw new Error('Invalid Credentials')
+            console.log('login hit')
+          res.json({msg:"invalid credentials"})
         }
         
         
     } catch (error) {
-        res.json({error:error.message})
+        console.log('hellllo')
+        res.status(error.status).json({error:error.message})
     }
    
     
-    
+  
 }
+
 )
 const logout=asyncHandler(async (req,res,next)=>{
     const token=req.cookies['x-access-token']

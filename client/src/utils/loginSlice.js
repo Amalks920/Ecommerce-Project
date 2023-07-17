@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const userSlice=createSlice({
     name:"user",
     initialState:{
-      user:[],
+      user:null,
       error:""
       // name:"",
       // email:"",
@@ -26,6 +26,9 @@ const userSlice=createSlice({
               state.error=action.payload
               console.log('here=-----------')
               console.log(state.error)
+            },
+            deleteUser:(state,action)=>{
+              state.user=null
             }
             // setUserEmail(state, action) {
             //   state.email = action.payload;
@@ -45,6 +48,6 @@ const userSlice=createSlice({
 console.log(userSlice);
 
 export  const {
-    setUser,setError
+    setUser,setError,deleteUser
   } = userSlice.actions
 export default userSlice.reducer

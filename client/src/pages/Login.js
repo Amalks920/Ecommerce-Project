@@ -1,11 +1,48 @@
-import React from 'react';
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom'
+import { setUser,setError } from '../utils/loginSlice';
+import axios from 'axios'
+import { BACKEND_API } from '../utils/constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { Signup } from './Signup';
+import Home from './Home';
 
-
+const URL=`${BACKEND_API}/user/login`
 
 
 
 export  const Login = () => {
+    const user=useSelector((store)=>store.user.user)
+    const navigate=useNavigate()
+    const dispatch=useDispatch()
+        const [email,setEmail]=useState('')
+        const [password,setPassword]=useState('')
+
+
+let data={
+    email:email,
+    password:password
+}
+
+const userLogin=()=>{
+
+    
+    axios.post(URL,data)
+    .then((res)=>{
+        dispatch(setUser(res.data))
+        navigate('/')
+    })
+    .catch((err)=>{
+        dispatch(setError(err.message))
+        console.log(err)
+    })
+}
+
+
+console.log(email,password)
+
+if(user) return <Home />
+
     return (
         <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
             <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
@@ -21,6 +58,7 @@ export  const Login = () => {
                             Email
                         </label>
                         <input
+                            onChange={(e)=>{setEmail(e.target.value)}}
                             type="email"
                             className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
                         />
@@ -33,6 +71,7 @@ export  const Login = () => {
                             Password
                         </label>
                         <input
+                            onChange={(e)=>{setPassword(e.target.value)}}
                             type="password"
                             className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
                         />
@@ -43,12 +82,13 @@ export  const Login = () => {
                     >
                         Forget Password?
                     </a>
-                    <div className="mt-6">
-                        <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
+                   
+                </form>
+                <div className="mt-6">
+                        <button onClick={userLogin} className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
                             Login
                         </button>
                     </div>
-                </form>
 
                 <p className="mt-8 text-xs font-light text-center text-gray-700">
                     {" "}

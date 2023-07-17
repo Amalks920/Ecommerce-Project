@@ -1,16 +1,21 @@
 
 import React, { useState,useEffect } from 'react'
-import {useSelector} from 'react-redux'
-
+import {useDispatch, useSelector} from 'react-redux'
+import { deleteUser } from '../utils/loginSlice'
+import { Link } from 'react-router-dom'
 const Navbar = () => {
 let user
 
-
+const dispatch=useDispatch()
 
 user=useSelector((store)=>store.user.user)
+console.log(user)
 
 
-
+const logout = () =>{
+dispatch(deleteUser())
+   
+}
 
 
 
@@ -35,7 +40,12 @@ user=useSelector((store)=>store.user.user)
         <input className="w-4/5 h-full rounded-l-full p-4 ps-9 shadow-xl" placeholder='Find Products' />
         <button className='bg-green-400 h-full w-1/5 rounded-r-full shadow-xl'>Search</button>
       </div>
-         <h1>Hi { user.name}</h1>
+     
+        {
+          
+        user ?<button onClick={logout} className='bg-green-500 w-1/2'>{`Logout`} </button> :<button className='bg-green-500 w-1/12 h-1/2'><Link to='/login'>Login</Link> </button>
+        }
+        
     </div>
   )
 }

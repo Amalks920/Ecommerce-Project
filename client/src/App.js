@@ -6,6 +6,8 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import MainContainer from './components/MainContainer';
 import { Signup } from './pages/Signup';
 import { Login } from './pages/Login';
+import { AdminHome } from './pages/admin/AdminHome';
+import AddProduct from './pages/admin/AddProduct';
  
 
 
@@ -44,6 +46,20 @@ const appRouter=createBrowserRouter([
       ]
     }
   ]
+},
+{
+  path:"/admin",
+  element:<MainContainer/>,
+  children:[
+    {
+    path:'/admin/add-product',
+    element:<AddProduct />
+    },
+    {
+      path:'/admin/admin-home',
+      element:<AdminHome />
+    }
+]
 }
 ])
 

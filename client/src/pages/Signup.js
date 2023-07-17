@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Link } from 'react-router-dom'
+import { Link,useNavigate} from 'react-router-dom'
 import { BACKEND_API } from "../utils/constants";
 import {useDispatch} from 'react-redux'
 import axios from 'axios'
 import { useSelector } from "react-redux";
 
+
 import { userSignup } from "../hooks/userSignup";
 
 import { setUser,setError } from "../utils/loginSlice";
+import Home from "./Home";
 
 
 
@@ -26,13 +28,15 @@ const [mobile,setMobile]=useState('');
 const [password,setPassword]=useState('');
 // const [user,setUser]=useState([])
 
+const user=useSelector((store)=>store.user.user)
 const dispatch=useDispatch()
 
-
+const navigate= useNavigate()
 
 
 
   const userSignup= ()=>{
+   
     const data={
         "name":name,
         "email":email,
@@ -45,7 +49,7 @@ const dispatch=useDispatch()
     .then( (res)=>{   
         console.log('hello')
         dispatch(setUser(res.data))
-       
+       navigate('/')
         
     })
     .catch((err)=>{ 
@@ -64,12 +68,12 @@ const dispatch=useDispatch()
 
 
 
-    
+    if(user) return <Home />
         
             return (
                 <div>
                    
-
+                  
                     <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
                         <div>
                             <a >
@@ -79,9 +83,9 @@ const dispatch=useDispatch()
                             </a>
                         </div>
                         <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-lg sm:rounded-lg">
-                            <form >
+                            <form>
                             <div>
-                    {error && <p>Invalid Credentials</p>}
+                    {error && <p className="text-red-600">Invalid Credentials</p>}
 
                     </div>
                                 <div>
@@ -172,7 +176,7 @@ const dispatch=useDispatch()
 
                             <div className="flex items-center mt-4">
 
-<button onClick={()=>{userSignup()}} className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
+<button type="submit" className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
     Register
 </button>
 </div>
