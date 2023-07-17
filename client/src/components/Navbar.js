@@ -1,7 +1,23 @@
 
-import React from 'react'
+import React, { useState,useEffect } from 'react'
+import {useSelector} from 'react-redux'
 
 const Navbar = () => {
+let user
+user=useSelector((store)=>store.user)
+
+
+useEffect(()=>{
+  subscribe()
+
+},[])
+
+
+
+  
+  console.log("user")
+  console.log(user)
+
   return (
     <div className='w-screen h-28 bg-white shadow-2xl flex justify-evenly items-center'>
       <div className='w-1/6'>
@@ -17,7 +33,7 @@ const Navbar = () => {
         <input className="w-4/5 h-full rounded-l-full p-4 ps-9 shadow-xl" placeholder='Find Products' />
         <button className='bg-green-400 h-full w-1/5 rounded-r-full shadow-xl'>Search</button>
       </div>
-         
+         <h1>{user && user.username}</h1>
     </div>
   )
 }

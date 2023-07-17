@@ -1,5 +1,7 @@
 
 import './App.css';
+import { Provider } from 'react-redux';
+import store from './utils/store';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import MainContainer from './components/MainContainer';
 import { Signup } from './pages/Signup';
@@ -14,11 +16,13 @@ function App(){
  
   
   return(
+    <Provider store={store}>
     <div className="w-screen h-screen">
       
     <RouterProvider router={appRouter}/>
    
     </div>
+    </Provider>
   )
 }
 

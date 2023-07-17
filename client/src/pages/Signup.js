@@ -2,11 +2,12 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from 'react-router-dom'
 import { BACKEND_API } from "../utils/constants";
+import {useDispatch} from 'react-redux'
 import axios from 'axios'
 
 import { userSignup } from "../hooks/userSignup";
 
-
+import { setUsername,setUserMobile,setIsLoggedIn,setUserEmail } from "../utils/loginSlice";
 
 
 
@@ -17,26 +18,7 @@ const [name,setName]=useState('');
 const [email,setEmail]=useState('');
 const [mobile,setMobile]=useState('');
 const [password,setPassword]=useState('');
-
-
-
-console.log(name,email,password,mobile)
-
-
-// function userSignup(){
-//     const data={
-//         "name":name,
-//         "email":email,
-//         "mobile":mobile,
-//         "password":password
-//     }
-//     const URL=`${BACKEND_API}/user/reg`
-
-//      axios.post(URL,data)
-//     .then( (res)=>{ console.log(res)})
-//     .catch((err)=>{  console.log(err.message)})
-    
-// }
+const dispatch=useDispatch()
 
 
   const userSignup=()=>{
@@ -48,15 +30,21 @@ console.log(name,email,password,mobile)
     }
     const URL=`${BACKEND_API}/user/register`
 
+
      axios.post(URL,data)
-    .then( (res)=>{ console.log(res)})
-    .catch((err)=>{  console.log(err.message)})
+    .then( (res)=>{ 
+        dispatch(setUsername(res.data.name))
+        dispatch(setIsLoggedIn(true))
+        console.log(res.data)
+    })
+    .catch((err)=>{ 
+        console.log('heyo')
+         console.log(err.message)
+        })
     
 }
 
-    useEffect(()=>{
-        console.log('hello')
-    },[])
+
 
 
 

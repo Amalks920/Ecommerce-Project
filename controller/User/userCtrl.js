@@ -37,7 +37,7 @@ const createUser=asyncHandler(async(req,res)=>{
 
         let user=await User.create(req.body)
         console.log(user)
-             res.json({"user":"hello from server"})
+             res.status(201).json({"name":user.name,"email":user.email,"mobile":user.mobile})
         } catch (error) {
             console.log('db error')
             console.log(error.message)
