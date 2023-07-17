@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const userSlice=createSlice({
     name:"user",
     initialState:{
-      user:[]
+      user:[],
+      error:""
       // name:"",
       // email:"",
       // mobile:"",
@@ -20,6 +21,12 @@ const userSlice=createSlice({
               console.log('here=-----------')
               console.log(state.user)
             },
+
+            setError:(state,action)=>{
+              state.error=action.payload
+              console.log('here=-----------')
+              console.log(state.error)
+            }
             // setUserEmail(state, action) {
             //   state.email = action.payload;
             // },
@@ -38,6 +45,6 @@ const userSlice=createSlice({
 console.log(userSlice);
 
 export  const {
-    setUser
+    setUser,setError
   } = userSlice.actions
 export default userSlice.reducer

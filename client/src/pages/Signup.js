@@ -4,15 +4,21 @@ import { Link } from 'react-router-dom'
 import { BACKEND_API } from "../utils/constants";
 import {useDispatch} from 'react-redux'
 import axios from 'axios'
+import { useSelector } from "react-redux";
 
 import { userSignup } from "../hooks/userSignup";
 
-import { setUser } from "../utils/loginSlice";
+import { setUser,setError } from "../utils/loginSlice";
+
 
 
 
 
   export const Signup= () => {
+
+   let error=useSelector((store)=>store.user.error)
+   console.log("eeeeeee");
+    console.log(error)
 
 const [name,setName]=useState('');
 const [email,setEmail]=useState('');
@@ -37,13 +43,16 @@ const dispatch=useDispatch()
 
      axios.post(URL,data)
     .then( (res)=>{   
+        console.log('hello')
         dispatch(setUser(res.data))
        
-        console.log(res.data)
+        
     })
     .catch((err)=>{ 
         console.log('error in axios')
+        dispatch(setError(err.message))
          console.log(err.message)
+         console.log(err)
         })
 
     
@@ -59,9 +68,7 @@ const dispatch=useDispatch()
         
             return (
                 <div>
-                    <div>
-                       
-                    </div>
+                   
 
                     <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
                         <div>
@@ -73,6 +80,10 @@ const dispatch=useDispatch()
                         </div>
                         <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-lg sm:rounded-lg">
                             <form >
+                            <div>
+                    {error && <p>Invalid Credentials</p>}
+
+                    </div>
                                 <div>
                                     <label
                                         htmlFor="name"
