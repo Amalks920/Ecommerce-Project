@@ -4,6 +4,8 @@ import axios from 'axios';
 
 const AddProduct = () => {
 const fileInput=createRef()
+const fileInput2=createRef()
+const fileInput3=createRef()
 
 const [productName,setProductName]=useState('');
 const [brandName,setBrandName]=useState();
@@ -42,10 +44,8 @@ const sendProductDeatails=(e)=>{
 e.preventDefault()
 const formData=new FormData()
 formData.set('file1',fileInput.current.files[0])
-console.log('file')
-console.log(fileInput.current.files[0])
-console.log(formData)
-  axios.post(URL,formData)
+formData.set('file2',fileInput.current.files[0])
+  axios.post(URL,data)
   .then((res)=>{
       // dispatch(setProductDetails(res.data))
      console.log(res.data)
