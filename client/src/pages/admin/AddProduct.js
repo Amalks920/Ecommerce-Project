@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { createRef, useState } from 'react'
 import {BACKEND_API} from '../../utils/constants'
 import axios from 'axios';
 
 const AddProduct = () => {
+const fileInput=createRef()
 
 const [productName,setProductName]=useState('');
 const [brandName,setBrandName]=useState();
@@ -33,10 +34,18 @@ let data={
  file3:file3
 }
 
-const sendProductDeatails=()=>{
+const sendProductDeatails=(e)=>{
 
   
-  axios.post(URL,data)
+  
+
+e.preventDefault()
+const formData=new FormData()
+formData.set('file1',fileInput.current.files[0])
+console.log('file')
+console.log(fileInput.current.files[0])
+console.log(formData)
+  axios.post(URL,formData)
   .then((res)=>{
       // dispatch(setProductDetails(res.data))
      console.log(res.data)
@@ -51,20 +60,20 @@ const sendProductDeatails=()=>{
   return (
     
 <div className='w-screen h-screen flex  justify-center'>
-<form className="w-full mt-44 max-w-lg" enctype="multipart/form-data">
+<form onSubmit={sendProductDeatails} className="w-full mt-44 max-w-lg" encType="multipart/form-data">
     <h1 className='text-center mb-16 font-bold'>ADD PRODUCT</h1>
   <div className="flex flex-wrap -mx-3 mb-6">
     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
         Product Name
       </label>
-      <input onChange={(e)=>{setProductName(e.target.value)}} className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-product-name" type="text" placeholder="Product Name" />
+      <input name="productname" onChange={(e)=>{setProductName(e.target.value)}} className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-product-name" type="text" placeholder="Product Name" />
     </div>
     <div className="w-full md:w-1/2 px-3">
       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
         Brand Name
       </label>
-      <input onChange={(e)=>{setBrandName(e.target.value)}} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-brand-name" type="text" placeholder="Brand Name" />
+      <input name='brandname' ref={fileInput} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-brand-name" type="text" placeholder="Brand Name" />
     </div>
   </div>
   <div className="flex flex-wrap -mx-3 mb-6">
@@ -126,7 +135,7 @@ const sendProductDeatails=()=>{
       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-city">
         first image
       </label>
-      <input onChange={(e)=>{setFiles1(e.target.files[0])}} className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file"></input>
+      <input name="file1" ref={fileInput}  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file"></input>
     </div>
     <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-city">
@@ -142,12 +151,12 @@ const sendProductDeatails=()=>{
       <input  onChange={(e)=>{setFiles3(e.target.files[0])}}  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file"></input>
     </div>
   </div>
-</form>
-<div className='flex justify-center mt-20 h-1/6'>
-      <button onClick={sendProductDeatails} className='bg-slate-700 w-1/3 h-1/3 rounded-md text-white'>ADD PRODUCT</button>
+  <div className='flex justify-center mt-20 h-1/6'>
+      <button className='bg-slate-700 w-1/3 h-1/3 rounded-md text-white'>ADD PRODUCT</button>
     </div>
+</form>
+
 </div>
-  
 
   )
 }

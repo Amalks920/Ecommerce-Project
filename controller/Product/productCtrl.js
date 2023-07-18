@@ -1,12 +1,31 @@
 const ProductModel=require('../../models/productSchema');
 const asyncHandler=require('express-async-handler');
+const path=require('path');
+const DIR_NAME= require('../../constants');
+
+
+const assetsFolder=path.join(DIR_NAME,"upload/images")
+
 
 
 const addProduct=asyncHandler(async(req,res,next)=>{
-    console.log('heio')
     const prodcutname=req.body.productname;
-    console.log("req.body")
     console.log(req.body)
+    const {file1}=req.files
+
+    try {
+
+
+    await file1.mv(path.join(assetsFolder,file1.name))
+    res.status(200).json({message:'ok'})
+        
+    } catch (error) {
+
+        console.log(error.message)
+        
+    }
+
+   
     res.json({"product":req.body})
     // const findProdcut=await ProductModel.findOne({prodcutname:prodcutname})
    
