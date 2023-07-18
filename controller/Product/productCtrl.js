@@ -11,7 +11,8 @@ const assetsFolder=path.join(DIR_NAME,"upload/images")
 const addProduct=asyncHandler(async(req,res,next)=>{
     const prodcutname=req.body.productname;
     console.log(req.body)
-    const {file1}=req.files
+    const {file1,file2,file3}=req.files
+    console.log(file1,file2,file3)
 
     try {
 

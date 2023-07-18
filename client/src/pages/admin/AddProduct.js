@@ -44,8 +44,10 @@ const sendProductDeatails=(e)=>{
 e.preventDefault()
 const formData=new FormData()
 formData.set('file1',fileInput.current.files[0])
-formData.set('file2',fileInput.current.files[0])
-  axios.post(URL,data)
+formData.set('file2',fileInput2.current.files[0])
+formData.set('file3',fileInput3.current.files[0])
+console.log(formData)
+  axios.post(URL,formData)
   .then((res)=>{
       // dispatch(setProductDetails(res.data))
      console.log(res.data)
@@ -141,14 +143,14 @@ formData.set('file2',fileInput.current.files[0])
       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-city">
         second image
       </label>
-      <input  onChange={(e)=>{setFiles2(e.target.files[0])}}  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input2" type="file"></input>
+      <input  name="file2" ref={fileInput2}  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input2" type="file"></input>
     </div>
     
     <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-city">
         third image
       </label>
-      <input  onChange={(e)=>{setFiles3(e.target.files[0])}}  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file"></input>
+      <input  name="file3" ref={fileInput3}  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file"></input>
     </div>
   </div>
   <div className='flex justify-center mt-20 h-1/6'>
