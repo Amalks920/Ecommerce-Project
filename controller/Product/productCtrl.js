@@ -5,26 +5,28 @@ const asyncHandler=require('express-async-handler');
 const addProduct=asyncHandler(async(req,res,next)=>{
     console.log('heio')
     const prodcutname=req.body.productname;
+    console.log("req.body")
     console.log(req.body)
-    const findProdcut=await ProductModel.findOne({prodcutname:prodcutname})
+    res.json({"product":req.body})
+    // const findProdcut=await ProductModel.findOne({prodcutname:prodcutname})
    
-    if(!findProdcut){
+    // if(!findProdcut){
 
-        try {
+    //     try {
 
-        let product=await ProductModel.create(req.body)
-            res.json({product:product})
-        } catch (error) {
-            res.json({error:error.message})
-        }
+    //     let product=await ProductModel.create(req.body)
+    //         res.json({product:product})
+    //     } catch (error) {
+    //         res.json({error:error.message})
+    //     }
     
          
-    }else{
-        res.json({
-            message:"product already exists",
-            success:false,
-        })
-    }
+    // }else{
+    //     res.json({
+    //         message:"product already exists",
+    //         success:false,
+    //     })
+    // }
 })
 
 const getAllProducts=asyncHandler(async(req,res,next)=>{

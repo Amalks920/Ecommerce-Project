@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import {BACKEND_API} from '../../utils/constants'
+import axios from 'axios';
 
 const AddProduct = () => {
 
@@ -14,15 +16,42 @@ const [file1,setFiles1]=useState();
 const [file2,setFiles2]=useState();
 const [file3,setFiles3]=useState();
 
-console.log(file1,file2,file3)
+console.log(file3)
 
-console.log(productName,brandName,category,subCategory,description,stockQuantiy,size,price)
+let URL=`${BACKEND_API}/admin/add-product`
+let data={
+ productName:productName,
+ brandName:brandName,
+ category:category,
+ subCategory:subCategory,
+ description:description,
+ stockQuantiy:stockQuantiy,
+ size:size,
+ price:price,
+ file1:file1,
+ file2:file2,
+ file3:file3
+}
+
+const sendProductDeatails=()=>{
+
+  
+  axios.post(URL,data)
+  .then((res)=>{
+      // dispatch(setProductDetails(res.data))
+     console.log(res.data)
+  })
+  .catch((err)=>{
+      // dispatch(setProductDetailsError(err.message))
+      console.log(err)
+  })
+}
 
 
   return (
     
-<div className='w-screen h-screen flex justify-center'>
-<form className="w-full mt-44 max-w-lg">
+<div className='w-screen h-screen flex  justify-center'>
+<form className="w-full mt-44 max-w-lg" enctype="multipart/form-data">
     <h1 className='text-center mb-16 font-bold'>ADD PRODUCT</h1>
   <div className="flex flex-wrap -mx-3 mb-6">
     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -113,11 +142,10 @@ console.log(productName,brandName,category,subCategory,description,stockQuantiy,
       <input  onChange={(e)=>{setFiles3(e.target.files[0])}}  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file"></input>
     </div>
   </div>
-
-  
-
-  
 </form>
+<div className='flex justify-center mt-20 h-1/6'>
+      <button onClick={sendProductDeatails} className='bg-slate-700 w-1/3 h-1/3 rounded-md text-white'>ADD PRODUCT</button>
+    </div>
 </div>
   
 
