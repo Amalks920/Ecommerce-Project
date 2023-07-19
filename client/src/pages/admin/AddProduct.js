@@ -22,31 +22,38 @@ const [file3,setFiles3]=useState();
 console.log(file3)
 
 let URL=`${BACKEND_API}/admin/add-product`
-let data={
- productName:productName,
- brandName:brandName,
- category:category,
- subCategory:subCategory,
- description:description,
- stockQuantiy:stockQuantiy,
- size:size,
- price:price,
- file1:file1,
- file2:file2,
- file3:file3
-}
+
 
 const sendProductDeatails=(e)=>{
 
-  
+  e.preventDefault()
+  const formData=new FormData()
+
+  let data={
+    productName:productName,
+    brandName:brandName,
+    category:category,
+    subCategory:subCategory,
+    description:description,
+    stockQuantiy:stockQuantiy,
+    size:size,
+    price:price,
+    
+   }
   
 
-e.preventDefault()
-const formData=new FormData()
+
+  
+
+
 formData.set('file1',fileInput.current.files[0])
 formData.set('file2',fileInput2.current.files[0])
 formData.set('file3',fileInput3.current.files[0])
-console.log(formData)
+
+Object.keys(data).forEach(key => {
+  formData.append(key, data[key]);
+})
+
   axios.post(URL,formData)
   .then((res)=>{
       // dispatch(setProductDetails(res.data))
@@ -75,7 +82,7 @@ console.log(formData)
       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
         Brand Name
       </label>
-      <input name='brandname' ref={fileInput} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-brand-name" type="text" placeholder="Brand Name" />
+      <input name='brandname' onChange={(e)=>{setBrandName(e.target.value)}} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-brand-name" type="text" placeholder="Brand Name" />
     </div>
   </div>
   <div className="flex flex-wrap -mx-3 mb-6">

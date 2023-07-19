@@ -27,8 +27,6 @@ const createUser=asyncHandler(async(req,res)=>{
     
          findUser=await User.findOne({email:email})
 
-        
-    console.log(findUser)
    
     if(!findUser){
         console.log('hellll')

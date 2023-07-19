@@ -29,9 +29,9 @@ var productSchema = new mongoose.Schema({
       type: Number,
       required: true,
     },
-    imageUrl: {
-      type: String,
-      required:true
+    images: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"ProductImg"
     },
     description: {
       type: String,

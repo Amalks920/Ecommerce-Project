@@ -19,7 +19,6 @@ import Home from "./Home";
   export const Signup= () => {
 
    let error=useSelector((store)=>store.user.error)
-   console.log("eeeeeee");
     console.log(error)
 
 const [name,setName]=useState('');
@@ -41,7 +40,8 @@ const navigate= useNavigate()
         "name":name,
         "email":email,
         "mobile":mobile,
-        "password":password
+        "password":password,
+        "role":'user'
     }
     const URL=`${BACKEND_API}/user/register`
 
