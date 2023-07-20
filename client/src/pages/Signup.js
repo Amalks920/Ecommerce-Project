@@ -1,58 +1,26 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
 import { Link,useNavigate} from 'react-router-dom'
-import { BACKEND_API } from "../utils/constants";
-import {useDispatch} from 'react-redux'
-import axios from 'axios'
-import { useSelector } from "react-redux";
-import { userSignup } from "../hooks/userSignup";
-import { setUser,setError } from "../utils/loginSlice";
-import Home from "./Home";
+import { useDispatch } from 'react-redux';
 import { Input } from "../components/Input";
 import { FormProvider, useForm } from "react-hook-form";
+import { name_validation,password_validation } from "../utils/inputValidations"
+import { register } from "../utils/register";
+import { setUser } from "../utils/loginSlice";
 
 
 
-const URL=`${BACKEND_API}/user/register`
 
+export const Signup= () => {
+const navigate=useNavigate()
 
+const methods=useForm() 
 
-  export const Signup= () => {
-    const methods=useForm() 
-
-    
-
-
-
-   let error=useSelector((store)=>store.user.error)
-    console.log(error)
-
-// const [name,setName]=useState('');
-// const [email,setEmail]=useState('');
-// const [mobile,setMobile]=useState('');
-// const [password,setPassword]=useState('');
-// const [user,setUser]=useState([])
-
-const user=useSelector((store)=>store.user.user)
 const dispatch=useDispatch()
 
-const navigate= useNavigate()
-
 const onSubmit = methods.handleSubmit(data => {
-    axios.post(URL,data)
-    .then( (res)=>{   
-        console.log('hello')
-        console.log(data)
-        // dispatch(setUser(res.data))
-       navigate('/')
-        
-    })
-    .catch((err)=>{ 
-        console.log('error in axios')
-        dispatch(setError(err.message))
-         console.log(err.message)
-         console.log(err)
-        })
+    data.role='user'
+    dispatch(setUser(data))
+     register(data)
+     navigate('/login')
   })
 
 
@@ -66,6 +34,7 @@ const onSubmit = methods.handleSubmit(data => {
 //         "password":password,
 //         "role":'user'
 //     }
+
 
 
  
@@ -99,7 +68,7 @@ const onSubmit = methods.handleSubmit(data => {
      </div>
      <div>
      
-     <Input label={"name"} type={"name"} id={"name"} placeHolder={"mobile"} />
+     <Input   {...name_validation}/>
      </div>
      <div className="mt-4">
         <Input label={"email"}  type={"email"} id={"email"} placeHolder={"mobile"} />
@@ -108,7 +77,7 @@ const onSubmit = methods.handleSubmit(data => {
       <Input label={"mobile"}  type={"mobile"} id={"mobile"} placeHolder={"mobile"} />
     </div>
     <div className="mt-4">
-     <Input  label={"password"} type={"password"} id={"pasword"} placeHolder={"password"} />
+     <Input  {...password_validation} />
     </div>
 
     <a className="text-xs text-purple-600 hover:underline">

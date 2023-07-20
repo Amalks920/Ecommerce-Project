@@ -31,7 +31,7 @@ console.log(findUser)
 
         } catch (error) {
             console.log('db error')
-            console.log(error.message)
+            console.log(error)
             res.status(401).json({code:error.status,msg:error.message})
         }
     
