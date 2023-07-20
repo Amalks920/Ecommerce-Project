@@ -1,45 +1,38 @@
 const User=require('../../models/userSchema');
 const asyncHandler=require('express-async-handler');
 const bcrypt=require('bcrypt');
-const generateToken=require('../../config/jwtToken')
 const mongoose=require('mongoose')
 const jwt=require('jsonwebtoken')
 // const {createOtp}=require('../config/otpGenerator')
-const {generateRefreshToken}=require('../../config/refreshToken')
+ const {generateToken}=require('../../config/generateToken')
 const {Auth}=require("two-step-auth")
 const {sendOtp}=require('../../config/otpGenerator');
 const {EMAIL,PASSWORD}=require('../../utils/emailAuth')
 const nodemailer=require('nodemailer')
 const MailGen=require('mailgen')
-const otpGenerator = require('otp-generator')
+const otpGenerator = require('otp-generator');
+
 
 
 const saltRounds = 10;
 
 const createUser=asyncHandler(async(req,res)=>{
-    console.log('hello from server')
-    const {name,email,phone,password}=req.body
-    
-    console.log(req.body)
 
-    let findUser
-
-    
-         findUser=await User.findOne({email:email})
-
+const {name,email,phone,password}=req.body
+let findUser
+console.log('signup finduser')
+console.log(findUser)
    
     if(!findUser){
-        console.log('hellll')
-        console.log(req.body)
         try {
-
         let user=await User.create(req.body)
-        console.log(user)
+        
              res.status(201).json({"name":user.name,"email":user.email,"mobile":user.mobile})
+
         } catch (error) {
             console.log('db error')
             console.log(error.message)
-            res.status(error.status).json({code:error.status,msg:error.message})
+            res.status(401).json({code:error.status,msg:error.message})
         }
     
          
@@ -53,34 +46,29 @@ const createUser=asyncHandler(async(req,res)=>{
 )
 
 const userLogin=asyncHandler(async (req,res,next)=>{
-
-    
-
-    
-    
     const {email,password}=req.body
-    console.log(email,password)
     //check if user exist or not
+    console.log(email)
     try {
-        
-        findUser=await User.findOne({email:email})
-        
-        if(findUser && (await findUser.isPasswordMatched(password)) ){
-            
-        const refreshToken=generateRefreshToken(findUser?._id)
-        console.log(refreshToken)
-        // const updateUser=await User.findByIdAndUpdate(
-        //     findUser._id,
-        //     {
-        //         refreshToken:refreshToken
-        //     },
-        //     {
-        //         new:true
-        //     }
-        // )
-        res.cookie('x-access-token',refreshToken,{
+       let findUser=await User.findOne({email:email})
+        console.log(User.isPasswordMatched)
+        if(findUser && (await findUser.isPasswordMatched(password)) ){   
+            console.log('helloo0000000')
+        const accessToken=generateToken(findUser?._id,process.env.ACCESS_TOKEN_PRIVATE_KEY,'1d')
+        const refreshToken=generateToken(findUser?._id,process.env.REFRESH_TOKEN_PRIVATE_KEY,'1d')
+            console.log(accessToken,refreshToken)
+        const updateUser=await User.findByIdAndUpdate(
+            findUser._id,
+            {
+                refreshToken:refreshToken
+            },
+            {
+                new:true
+            }
+        )
+        res.cookie('jwt',refreshToken,{
             httpOnly:true,
-            maxAge:72*60*60*1000
+            maxAge:24*60*60*1000
         })
         const {    
             email,
@@ -92,7 +80,8 @@ const userLogin=asyncHandler(async (req,res,next)=>{
             
                 res.json({              
                     email:email,isBlocked:isBlocked,
-                    mobile:mobile,name:name,role:role
+                    mobile:mobile,name:name,role:role,
+                    accessToken:accessToken
                 })
                
         }else{
@@ -103,7 +92,7 @@ const userLogin=asyncHandler(async (req,res,next)=>{
         
     } catch (error) {
         console.log('hellllo')
-        res.status(error.status).json({error:error.message})
+        res.json({error:error.message})
     }
    
     
@@ -112,18 +101,43 @@ const userLogin=asyncHandler(async (req,res,next)=>{
 
 )
 const logout=asyncHandler(async (req,res,next)=>{
-    const token=req.cookies['x-access-token']
+    const token=req.cookies['jwt']
     console.log(token)
-
-    if(token){
-        res.clearCookie('x-access-token',{
-            httpOnly:true,
-            secure:true
-        })
-        res.json({msg:"cookies cleared"})
-    }else{
-        res.json({msg:"already logout"})
+    if(!token){
+        console.log('no token available in cookies')
+        res.status(201).json({msg:"no cookies"})
     }
+
+    try {
+
+        const user=await User.findOne({refreshToken:token})
+        console.log("user")
+        console.log(user)
+
+        
+        
+    } catch (error) {
+        res.clearCookie('jwt',{httpOnly:true,maxAge:24*60*60*1000})
+        
+    }
+    console.log('updated')
+    let loggoutUser=await User.findOneAndUpdate({refreshToken:token},{refreshToken:null},{new:true})
+    res.clearCookie('jwt',{httpOnly:true,maxAge:24*60*60*1000})
+        res.json({msg:"user loggedout"})
+    console.log(loggoutUser);
+    
+    
+
+
+    // if(token){
+    //     res.clearCookie('x-access-token',{
+    //         httpOnly:true,
+    //         secure:true
+    //     })
+    //     res.json({msg:"cookies cleared"})
+    // }else{
+    //     res.json({msg:"already logout"})
+    // }
    
 })
 

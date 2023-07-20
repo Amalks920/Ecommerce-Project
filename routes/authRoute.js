@@ -1,23 +1,27 @@
 const express=require('express');
 const router=express.Router();
-const {createUser,userLogin,handleRefreshToken,
+const {createUser,userLogin,
     emailAuthentication,logout}=require('../controller/User/userCtrl');
+
+// const handleRefreshToken=require('../config/refreshTokenConfiguration')
 
 
 const authMiddleware=require('../middlewares/authMiddleware')
  const {sendOtp}=require('../config/otpGenerator')
 
 
-router.post('/reg',(req,res)=>{
-    console.log(req.body)
+router.get('/reg',authMiddleware,(req,res)=>{
+    // console.log(req.body)
     res.json({msg:"success"})
 })
 router.post('/register',createUser);
 router.post('/login',userLogin)
-
-router.get('/generate-otp',sendOtp)
-router.get('/logout',logout)
 router.post('/otp-verification-gmail',emailAuthentication)
+router.get('/generate-otp',sendOtp)
+
+router.use(authMiddleware)
+router.get('/logout',logout)
+
 
 
 
