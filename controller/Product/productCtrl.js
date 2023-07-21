@@ -6,15 +6,16 @@ const {fileSchema}=require('../../models/productImgSchema')
 
 
 
-const assetsFolder=path.join(DIR_NAME,"upload/images")
+const assetsFolder=path.join(DIR_NAME,"upload")
 
 
 
 const addProduct=asyncHandler(async(req,res,next)=>{
     const {productName}=req.body;
     console.log(req.body)
-    // const {file1,file2,file3}=req.files
+     const {file1,file2,file3}=req.files
     console.log(req.files)
+    await file1.mv(path.join(assetsFolder,file1.name))
 
 
     console.log(productName);
