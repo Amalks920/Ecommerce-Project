@@ -4,7 +4,7 @@ const path=require('path');
 const DIR_NAME= require('../../constants');
 const {fileSchema}=require('../../models/productImgSchema')
 const {uploadProductImages}=require('../../utils/uploadProductImages');
-const { Console } = require('console');
+const fs=require('node:fs')
 
 
 
@@ -42,10 +42,39 @@ const addProduct=asyncHandler(async(req,res,next)=>{
 })
 
 const getAllProducts=asyncHandler(async(req,res,next)=>{
+    let bufferData
     try {
         const products=await ProductModel.find({})
+        let imageArray=products.map((el)=>el.images)
+        
+        //   let innerArray=  imageArray.map(el=>(el))
+        //     innerArray.map(el=>console.log(el))
+            
+        //  let imageNameObj=Object.assign({},imageArray)
+        //  for(const key in imageNameObj){
+        //     imageNameObj[key].map((el)=>{
+        //         let imagePath=`${DIR_NAME}/upload/images/${el}`
+              
+        //        if(fs.existsSync(imagePath)){
+        //             fs.readFile(imagePath,(err,data)=>{
+        //                 if(err){ res.status(500).json({ message: 'Error occurred while reading the image.' })
+        //             }else{
 
-        res.json({prodcucts:products})
+        //                  bufferData.push(data)
+        //             }
+
+        //             })
+        //        }
+               
+        //     }
+        //         )
+        //  }
+        
+        
+          
+       console.log(bufferData)
+
+        
         
     } catch (error) {
         res.json({error:error.message})
