@@ -14,21 +14,10 @@ const assetsFolder=path.join(DIR_NAME,"upload/images/")
 
 const addProduct=asyncHandler(async(req,res,next)=>{
     const {productName}=req.body
-    console.log('req.body');
-    console.log(req.body)
-<<<<<<< HEAD
      const {file1,file2,file3}=req.files
-    console.log(req.files)
     await file1.mv(path.join(assetsFolder,file1.name))
 
 
-    console.log(productName);
-   
-=======
-    console.log(req.files)
-        // console.log(await req.files.file1.mv(assetsFolder,'img'))
-        
->>>>>>> upload-image
 
     const findProduct=await ProductModel.findOne({productname:productName})
     console.log(findProduct)
@@ -49,13 +38,6 @@ const addProduct=asyncHandler(async(req,res,next)=>{
         } catch (error) {
             res.json({error:error.message})
         }
-    
-         
-    // }else{
-    //     res.json({
-    //         message:"product already exists",
-    //         success:false,
-    //     })
      }
 })
 
