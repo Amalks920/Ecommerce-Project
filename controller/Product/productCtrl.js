@@ -3,7 +3,8 @@ const asyncHandler=require('express-async-handler');
 const path=require('path');
 const DIR_NAME= require('../../constants');
 const {fileSchema}=require('../../models/productImgSchema')
-const {uploadProductImages}=require('../../utils/uploadProductImages')
+const {uploadProductImages}=require('../../utils/uploadProductImages');
+const { Console } = require('console');
 
 
 
@@ -12,37 +13,40 @@ const assetsFolder=path.join(DIR_NAME,"upload/images/")
 
 
 const addProduct=asyncHandler(async(req,res,next)=>{
+    const {productName}=req.body
     console.log('req.body');
     console.log(req.body)
-    
-        console.log(await req.files.file1.mv(assetsFolder,'img'))
-        uploadProductImages(req.files)
-
-
-
-    // console.log(productName);
-   
-
-    // const findProduct=await ProductModel.findOne({productname:productName})
-    // console.log(findProduct)
-    // if(!findProduct){
+    console.log(req.files)
+        // console.log(await req.files.file1.mv(assetsFolder,'img'))
         
 
-    //     try {
+    const findProduct=await ProductModel.findOne({productname:productName})
+    console.log(findProduct)
+    if(!findProduct){
+        
 
-    //     let product=await ProductModel.create(req.body)
-    //         res.json({product:product})
-    //     } catch (error) {
-    //         res.json({error:error.message})
-    //     }
+        try {
+
+        let product=await ProductModel.create(req.body)
+        const filenames=await uploadProductImages(req.files)
+        console.log(filenames)
+        console.log(product._id)
+        
+        let insertFile=await ProductModel.updateOne({_id:product._id},{$push:{images:{$each:filenames}}})
+            console.log(insertFile)
+
+            res.json({product:product})
+        } catch (error) {
+            res.json({error:error.message})
+        }
     
          
-    // // }else{
-    // //     res.json({
-    // //         message:"product already exists",
-    // //         success:false,
-    // //     })
-    //  }
+    // }else{
+    //     res.json({
+    //         message:"product already exists",
+    //         success:false,
+    //     })
+     }
 })
 
 const getAllProducts=asyncHandler(async(req,res,next)=>{

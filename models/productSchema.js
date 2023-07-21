@@ -29,9 +29,8 @@ var ProductSchema = new mongoose.Schema({
       type: Number,
       required: true,
     },
-    images: {
-      type:Array
-    },
+    images:Array,
+
     description: {
       type: String,
       required: true,

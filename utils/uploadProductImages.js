@@ -4,23 +4,22 @@ const {mkdir}=require('node:fs/promises')
 console.log('hiii')
 let count=0
  const uploadProductImages=async(files)=>{
-   
+    console.log('file3')
+    
     const {file1,file2,file3}=files
+   
     try {
-        const newFolder= path.join(DIR_NAME,'upload')
-    //     const newFolder= path.resolve(DIR_NAME+`/upload/`)
-    //    console.log(newFolder)
-       
-       
-       console.log(files.file1.name)
-      await  files.file1.mv(path.join(newFolder,file1.name))
-
-
-    //    const values = Object.values(files);
-
-    //    for (const value of values) {
-    //         value.mv(newFolder,value.name)
-    //    }
+        const newFolder= path.join(DIR_NAME,'upload/images/')
+   
+      await  file1.mv(path.join(newFolder,file1.name))
+      await  file2.mv(path.join(newFolder,file2.name))
+      await  file3.mv(path.join(newFolder,file3.name))
+    
+      return [
+            file1.name,
+            file2.name,
+            file3.name
+      ]
 
     } catch (error) {
         console.log(error.message)
