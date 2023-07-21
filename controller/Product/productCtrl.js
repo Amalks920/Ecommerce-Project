@@ -3,6 +3,8 @@ const asyncHandler=require('express-async-handler');
 const path=require('path');
 const DIR_NAME= require('../../constants');
 const {fileSchema}=require('../../models/productImgSchema')
+const {uploadProductImages}=require('../../utils/uploadProductImages');
+const { Console } = require('console');
 
 
 
@@ -11,8 +13,10 @@ const assetsFolder=path.join(DIR_NAME,"upload/images/")
 
 
 const addProduct=asyncHandler(async(req,res,next)=>{
-    const {productName}=req.body;
+    const {productName}=req.body
+    console.log('req.body');
     console.log(req.body)
+<<<<<<< HEAD
      const {file1,file2,file3}=req.files
     console.log(req.files)
     await file1.mv(path.join(assetsFolder,file1.name))
@@ -20,15 +24,27 @@ const addProduct=asyncHandler(async(req,res,next)=>{
 
     console.log(productName);
    
+=======
+    console.log(req.files)
+        // console.log(await req.files.file1.mv(assetsFolder,'img'))
+        
+>>>>>>> upload-image
 
     const findProduct=await ProductModel.findOne({productname:productName})
     console.log(findProduct)
     if(!findProduct){
-        res.json({msg:"success"})
+        
 
         try {
 
-        let product=await ProductModel.create(req.files)
+        let product=await ProductModel.create(req.body)
+        const filenames=await uploadProductImages(req.files)
+        console.log(filenames)
+        console.log(product._id)
+        
+        let insertFile=await ProductModel.updateOne({_id:product._id},{$push:{images:{$each:filenames}}})
+            console.log(insertFile)
+
             res.json({product:product})
         } catch (error) {
             res.json({error:error.message})

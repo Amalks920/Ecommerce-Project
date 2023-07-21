@@ -16,12 +16,12 @@ dbConnect()
 // app.use('/',(req,res,next)=>{
 //     res.send(`<h1>Hello from Server</h1>`)
 // })
-
+app.use(fileUpload())
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 app.use(cors())
 app.use(cookieParser())
-app.use(fileUpload())
+
 app.use('/api/user',authRouter)
 app.use('/api/admin',adminRouter)
 

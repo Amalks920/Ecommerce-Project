@@ -29,10 +29,8 @@ var ProductSchema = new mongoose.Schema({
       type: Number,
       required: true,
     },
-    images: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref:"ProductImg"
-    },
+    images:Array,
+
     description: {
       type: String,
       required: true,
@@ -42,7 +40,7 @@ var ProductSchema = new mongoose.Schema({
       required: true,
     },
     size: {
-      type: Number,
+      type: String,
       required: true,
     },
   //  ratings:{
