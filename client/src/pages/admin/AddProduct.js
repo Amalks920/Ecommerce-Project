@@ -13,7 +13,8 @@ const [category,setCateory]=useState();
 const [subCategory,setSubCategory]=useState();
 const [description,setDescription]=useState();
 const [stockQuantiy,setStockQuantity]=useState();
-const [size,setSize]=useState();
+const [selectedSize,setSelectedSize]=useState();
+
 const [price,setPrice]=useState();
 const [file1,setFiles1]=useState();
 const [file2,setFiles2]=useState();
@@ -35,8 +36,8 @@ const sendProductDeatails=(e)=>{
     category:category,
     subCategory:subCategory,
     description:description,
-    stockQuantiy:stockQuantiy,
-    size:size,
+    stockQuantity:stockQuantiy,
+    size:selectedSize,
     price:price,
     
    }
@@ -47,8 +48,8 @@ const sendProductDeatails=(e)=>{
 
 
 formData.set('file1',fileInput.current.files[0])
-formData.set('file2',fileInput2.current.files[0])
-formData.set('file3',fileInput3.current.files[0])
+// formData.set('file2',fileInput2.current.files[0])
+// formData.set('file3',fileInput3.current.files[0])
 
 Object.keys(data).forEach(key => {
   formData.append(key, data[key]);
@@ -121,10 +122,10 @@ Object.keys(data).forEach(key => {
         Size
       </label>
       <div className="relative">
-        <select className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="size">
-          <option>xl</option>
-          <option>2xl</option>
-          <option>xxl</option>
+        <select value={selectedSize} onChange={(e)=>{setSelectedSize(e.target.value)}} className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="size">
+          <option value="xl">xl</option>
+          <option value="2xl">2xl</option>
+          <option value="xxl">xxl</option>
         </select>
         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
           <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -161,7 +162,7 @@ Object.keys(data).forEach(key => {
     </div>
   </div>
   <div className='flex justify-center mt-20 h-1/6'>
-      <button className='bg-slate-700 w-1/3 h-1/3 rounded-md text-white'>ADD PRODUCT</button>
+      <button type='submit' className='bg-slate-700 w-1/3 h-1/3 rounded-md text-white'>ADD PRODUCT</button>
     </div>
 </form>
 

@@ -3,43 +3,46 @@ const asyncHandler=require('express-async-handler');
 const path=require('path');
 const DIR_NAME= require('../../constants');
 const {fileSchema}=require('../../models/productImgSchema')
+const {uploadProductImages}=require('../../utils/uploadProductImages')
 
 
 
-const assetsFolder=path.join(DIR_NAME,"upload/images")
+const assetsFolder=path.join(DIR_NAME,"upload/images/")
 
 
 
 const addProduct=asyncHandler(async(req,res,next)=>{
-    const {productName}=req.body;
+    console.log('req.body');
     console.log(req.body)
-    // const {file1,file2,file3}=req.files
-    console.log(req.files)
+    
+        console.log(await req.files.file1.mv(assetsFolder,'img'))
+        uploadProductImages(req.files)
 
 
-    console.log(productName);
+
+    // console.log(productName);
    
 
-    const findProduct=await ProductModel.findOne({productname:productName})
-    console.log(findProduct)
-    if(!findProduct){
-        res.json({msg:"success"})
+    // const findProduct=await ProductModel.findOne({productname:productName})
+    // console.log(findProduct)
+    // if(!findProduct){
+        
 
-        try {
+    //     try {
 
-        let product=await ProductModel.create(req.files)
-            res.json({product:product})
-        } catch (error) {
-            res.json({error:error.message})
-        }
+    //     let product=await ProductModel.create(req.body)
+    //         res.json({product:product})
+    //     } catch (error) {
+    //         res.json({error:error.message})
+    //     }
     
          
-    // }else{
-    //     res.json({
-    //         message:"product already exists",
-    //         success:false,
-    //     })
-     }
+    // // }else{
+    // //     res.json({
+    // //         message:"product already exists",
+    // //         success:false,
+    // //     })
+    //  }
 })
 
 const getAllProducts=asyncHandler(async(req,res,next)=>{
