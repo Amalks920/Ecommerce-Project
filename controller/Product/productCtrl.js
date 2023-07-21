@@ -6,7 +6,7 @@ const {fileSchema}=require('../../models/productImgSchema')
 
 
 
-const assetsFolder=path.join(DIR_NAME,"upload")
+const assetsFolder=path.join(DIR_NAME,"upload/images/")
 
 
 
