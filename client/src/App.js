@@ -2,7 +2,7 @@
 import './App.css';
 import { Provider, useSelector } from 'react-redux';
 import store from './utils/store';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+// import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import MainContainer from './components/MainContainer';
 import { Signup } from './pages/Signup';
 import { Login } from './pages/Login';
@@ -14,6 +14,8 @@ import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { AdminSignup } from './pages/admin/AdminSignup';
 import AdminLogin from './pages/admin/AdminLogin';
+import { Route,Routes } from 'react-router-dom';
+import RequireAuth from './components/RequireAuth'
 
 
 let isLoggedIn
@@ -24,63 +26,25 @@ function App(){
   
   
   return(
-    <Provider store={store}>
-    <div className="w-screen h-screen">
-    
-    <RouterProvider router={appRouter} isLoggedIn={false}/>
+    <Routes>
+      <Route path='/' element={<MainContainer/>}>
 
-   
-    </div>
-    </Provider>
+         <Route path='login' element={<Login/>}></Route>
+         <Route path='signup' element={<Signup/>}></Route>
+         <Route element={<RequireAuth/>}>
+         <Route path='home' element={<Home/>}></Route>
+         </Route>
+
+         <Route path='admin-home' element={<AdminHome/>}></Route>
+         <Route path='admin-login' element={<AdminLogin/>}></Route>
+         <Route path='admin-signup' element={<AdminSignup/>}></Route>
+         <Route path='add-product' element={<AddProduct/>}></Route>
+
+
+      </Route>
+    </Routes>
   )
 }
 
-
-const appRouter=createBrowserRouter([
- 
-  {
-  path:"/",
-  element:<MainContainer />,
-  children:[
-    {
-    path:'/signup',
-    element:<Signup />
-    },
-    {
-      path:'/login',
-      element:<Login />,
-      children:[
-        
-      ]
-    },
-    {
-      path:'/home',
-      element: <Home />   
-    }
-  ]
-},
-{
-  path:"/admin",
-  element:<MainContainer/>,
-  children:[
-    {
-    path:'/admin/add-product',
-    element:<AddProduct />
-    },
-    {
-      path:'/admin/admin-home',
-      element:<AdminHome />
-    },
-    {
-      path:'/admin/admin-signup',
-      element:<AdminSignup />
-    },
-    {
-      path:'/admin/admin-login',
-      element:<AdminLogin />
-    }
-]
-}
-])
 
 export default App;

@@ -31,7 +31,7 @@ dispatch(deleteUser())
         <h1 className='font-bold text-2xl'>E-Comax</h1>
       </div>
       <ul className='flex justify-between w-1/3'>
-        <li>Home</li>
+        <li><Link to={'/login'}>Home</Link></li>
         <li>Shop</li>
         <li>Pages</li>
         <li>Contact</li>

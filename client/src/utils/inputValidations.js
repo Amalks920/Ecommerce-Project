@@ -2,8 +2,7 @@
 
 
 export const name_validation = {
-    name: 'name',
-    label: 'name',
+    
     type: 'text',
     id: 'name',
     placeholder: 'write your name ...',

@@ -4,7 +4,7 @@ const bcrypt=require('bcrypt');
 const mongoose=require('mongoose')
 const jwt=require('jsonwebtoken')
 // const {createOtp}=require('../config/otpGenerator')
- const {generateToken}=require('../../config/generateToken')
+ const generateToken=require('../../config/generateToken')
 const {Auth}=require("two-step-auth")
 const {sendOtp}=require('../../config/otpGenerator');
 const {EMAIL,PASSWORD}=require('../../utils/emailAuth')
@@ -53,7 +53,7 @@ const userLogin=asyncHandler(async (req,res,next)=>{
        let findUser=await User.findOne({email:email})
         console.log(User.isPasswordMatched)
         if(findUser && (await findUser.isPasswordMatched(password)) ){   
-            console.log('helloo0000000')
+            console.log(findUser._id)
         const accessToken=generateToken(findUser?._id,process.env.ACCESS_TOKEN_PRIVATE_KEY,'1d')
         const refreshToken=generateToken(findUser?._id,process.env.REFRESH_TOKEN_PRIVATE_KEY,'1d')
             console.log(accessToken,refreshToken)
@@ -85,8 +85,8 @@ const userLogin=asyncHandler(async (req,res,next)=>{
                 })
                
         }else{
-            console.log('login hit')
-          res.json({msg:"invalid credentials"})
+            
+          res.status(401).json({msg:"invalid credentials"})
         }
         
         

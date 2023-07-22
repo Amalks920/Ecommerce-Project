@@ -5,16 +5,65 @@ import { FormProvider, useForm } from "react-hook-form";
 import { name_validation,password_validation } from "../utils/inputValidations"
 import { register } from "../utils/register";
 import { setUser } from "../utils/loginSlice";
+import { useEffect, useRef, useState } from 'react';
 
 
+const usernameRegex = /^[A-Za-z][A-Za-z0-9_]{7,29}$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,}$/;
 
 
 export const Signup= () => {
+
+const userRef=useRef()
+const errRef=useRef()
+
 const navigate=useNavigate()
-
 const methods=useForm() 
-
 const dispatch=useDispatch()
+
+const [name,setName]=useState('')
+const [validName,setValidName]=useState('')
+const [nameFocus,setNameFocus]=useState('')
+
+const [email,setEmail]=useState('')
+const [validEmail,setValidEmail]=useState('')
+const [emailFocus,setEmailFocus]=useState('')
+
+
+const [mobile,setMobile]=useState('')
+const [validMobile,setValidMobile]=useState('')
+const [mobileFocus,setMobileFocus]=useState('')
+
+
+const [password,setPassword]=useState('')
+const [validPassword,setValidPassword]=useState('')
+const [passwordFocus,setPasswordFocus]=useState('')
+
+const [errMsg,setErrMsg]=useState('')
+const [success,setSuccess]=useState(false)
+
+// useEffect(()=>{
+//     userRef.current.focus()
+// },[])
+
+useEffect(()=>{
+    const result=usernameRegex.test(name)
+    console.log(result)
+    console.log(name)
+    setValidName(result)
+},[name])
+
+useEffect(()=>{
+    const result=passwordRegex.test(name)
+    console.log(result)
+    console.log(password)
+    setValidName(result)
+},[password])
+
+useEffect(()=>{
+    setErrMsg('')
+},[name,password])
+
 
 const onSubmit = methods.handleSubmit(data => {
     data.role='user'
@@ -23,32 +72,6 @@ const onSubmit = methods.handleSubmit(data => {
      navigate('/login')
   })
 
-
-
-//   const userSignup= ()=>{
-   
-//     const data={
-//         "name":name,
-//         "email":email,
-//         "mobile":mobile,
-//         "password":password,
-//         "role":'user'
-//     }
-
-
-
- 
-
-    
-
-
-    
-// }
-
-
-
-
-    // if(user) return <Home />
         
    return (
      <div>
@@ -66,19 +89,64 @@ const onSubmit = methods.handleSubmit(data => {
      <form>
      <div>
      </div>
+
      <div>
+<label htmlFor='name' className="block text-sm font-medium text-gray-700 undefined">
+     name
+ </label> 
+<input 
+type="text" id="name" name="name"
+ref={userRef}
+onChange={(e)=>setName(e.target.value)}
+required
+ className="block w-full mt-1 border-gray-300
+ rounded-md shadow-sm focus:border-indigo-300
+  focus:ring focus:ring-indigo-200 focus:ring-opacity-50"/>
+</div>
+
      
-     <Input   {...name_validation}/>
-     </div>
      <div className="mt-4">
-        <Input label={"email"}  type={"email"} id={"email"} placeHolder={"mobile"} />
-    </div>
+     <label htmlFor='name' className="block text-sm font-medium text-gray-700 undefined">
+     Email
+ </label> 
+<input
+ type="text" id='email' name="email"
+ ref={userRef}
+ onChange={(e)=>setEmail(e.target.value)}
+ required
+ className="block w-full mt-1 border-gray-300
+ rounded-md shadow-sm focus:border-indigo-300
+  focus:ring focus:ring-indigo-200 focus:ring-opacity-50"/>
+</div>
+    
      <div className="mt-4">
-      <Input label={"mobile"}  type={"mobile"} id={"mobile"} placeHolder={"mobile"} />
-    </div>
+     <label htmlFor='mobile' className="block text-sm font-medium text-gray-700 undefined">
+     mobile
+ </label> 
+<input
+ type="number" id='mobile' name="mobile"
+ ref={userRef}
+ onChange={(e)=>setMobile(e.target.value)}
+ required
+ className="block w-full mt-1 border-gray-300
+ rounded-md shadow-sm focus:border-indigo-300
+  focus:ring focus:ring-indigo-200 focus:ring-opacity-50"/>
+</div>
+    
     <div className="mt-4">
-     <Input  {...password_validation} />
-    </div>
+    <label htmlFor='password' className="block text-sm font-medium text-gray-700 undefined">
+     Password
+ </label> 
+<input
+ type="password" id='name' name="password"
+ ref={userRef}
+ onChange={(e)=>setPassword(e.target.value)}
+ required
+ className="block w-full mt-1 border-gray-300
+ rounded-md shadow-sm focus:border-indigo-300
+  focus:ring focus:ring-indigo-200 focus:ring-opacity-50"/>
+</div>
+  
 
     <a className="text-xs text-purple-600 hover:underline">
      Forget Password?
