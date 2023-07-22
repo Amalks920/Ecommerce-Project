@@ -48,8 +48,8 @@ const sendProductDeatails=(e)=>{
 
 
 formData.set('file1',fileInput.current.files[0])
-formData.set('file2',fileInput2.current.files[0])
-formData.set('file3',fileInput3.current.files[0])
+// formData.set('file2',fileInput2.current.files[0])
+// formData.set('file3',fileInput3.current.files[0])
 
 Object.keys(data).forEach(key => {
   formData.append(key, data[key]);

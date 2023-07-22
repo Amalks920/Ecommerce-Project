@@ -1,10 +1,11 @@
 const ProductModel=require('../../models/productSchema');
 const asyncHandler=require('express-async-handler');
 const path=require('path');
-const DIR_NAME= require('../../constants');
-const {fileSchema}=require('../../models/productImgSchema')
+const DIR_NAME= require('../../constants'); 
 const {uploadProductImages}=require('../../utils/uploadProductImages');
 const fs=require('node:fs')
+const {upload}=require('../../config/multer')
+const imgModel=require('../../models/imageSchema');
 
 
 
@@ -13,39 +14,54 @@ const assetsFolder=path.join(DIR_NAME,"upload/images/")
 
 
 const addProduct=asyncHandler(async(req,res,next)=>{
-    const {productName}=req.body
-     const {file1,file2,file3}=req.files
-    await file1.mv(path.join(assetsFolder,file1.name))
-
-
-
-    const findProduct=await ProductModel.findOne({productname:productName})
-    console.log(findProduct)
-    if(!findProduct){
-        
-
-        try {
-
-        let product=await ProductModel.create(req.body)
-        const filenames=await uploadProductImages(req.files)
-        console.log(filenames)
-        console.log(product._id)
-        
-        let insertFile=await ProductModel.updateOne({_id:product._id},{$push:{images:{$each:filenames}}})
-            console.log(insertFile)
-
-            res.json({product:product})
-        } catch (error) {
-            res.json({error:error.message})
+  
+    const saveImg=new imgModel({
+        name:req.body.name,
+        img:{
+            data:fs.readFileSync('upload/'+req.file.filename),
+            contentType:"image/png"
         }
-     }
+    })
+    saveImg.save()
+    .then((res)=>console.log('image is saved'))
+    .catch((err)=>console.log(err))
+    // const {productName}=req.body
+    //  const {file1,file2,file3}=req.files
+    // await file1.mv(path.join(assetsFolder,file1.name))
+
+
+
+    // const findProduct=await ProductModel.findOne({productname:productName})
+    // console.log(findProduct)
+    // if(!findProduct){
+        
+
+    //     try {
+
+    //     let product=await ProductModel.create(req.body)
+    //     const filenames=await uploadProductImages(req.files)
+    //     console.log(filenames)
+    //     console.log(product._id)
+        
+    //     let insertFile=await ProductModel.updateOne({_id:product._id},{$push:{images:{$each:filenames}}})
+    //         console.log(insertFile)
+
+    //         res.json({product:product})
+    //     } catch (error) {
+    //         res.json({error:error.message})
+    //     }
+    //  }
 })
 
 const getAllProducts=asyncHandler(async(req,res,next)=>{
-    let bufferData
+    console.log('console.log()')
     try {
-        const products=await ProductModel.find({})
-        let imageArray=products.map((el)=>el.images)
+        const images=await imgModel.find()
+        console.log(images)
+        
+        res.json({images:images})
+        // const products=await ProductModel.find({})
+        // let imageArray=products.map((el)=>el.images)
         
         //   let innerArray=  imageArray.map(el=>(el))
         //     innerArray.map(el=>console.log(el))
@@ -72,7 +88,7 @@ const getAllProducts=asyncHandler(async(req,res,next)=>{
         
         
           
-       console.log(bufferData)
+     
 
         
         

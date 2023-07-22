@@ -8,7 +8,7 @@ import { Signup } from './pages/Signup';
 import { Login } from './pages/Login';
 import { AdminHome } from './pages/admin/AdminHome';
 import AddProduct from './pages/admin/AddProduct';
-import Home from './pages/Home';
+import  Home from './pages/Home'
 import { redirect } from 'react-router-dom';
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
@@ -55,7 +55,7 @@ const appRouter=createBrowserRouter([
     },
     {
       path:'/home',
-      loader:isLoggedIn ? <Home />:null    
+      element: <Home />   
     }
   ]
 },

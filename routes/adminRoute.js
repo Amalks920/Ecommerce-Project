@@ -1,6 +1,7 @@
 const express=require('express');
 const router=express.Router();
 const authMiddleware=require('../middlewares/authMiddleware')
+const {upload}=require('../config/multer')
 
 //user management
 const {getAllUsers,getUser,deleteUser,
@@ -22,9 +23,9 @@ router.put('/unblock-user/:id',unBlockUser)
 //product management
 const {addProduct,getAllProducts,getAProduct,
        deleteProduct,updateProduct
-}=require('../controller/Product/productCtrl')
+}=require('../controller/Product/productCtrl');
 
-router.post('/add-product',addProduct)
+router.post('/add-product',upload.single('testImage'),addProduct)
 router.get('/get-all-products',getAllProducts)
 router.get('/get-a-product/:id',getAProduct)
 router.delete('/delete-a-product/:id',deleteProduct)
