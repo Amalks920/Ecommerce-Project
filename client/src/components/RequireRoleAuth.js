@@ -3,19 +3,19 @@ import useAuth from "../hooks/useAuth";
 import { Signup } from "../pages/Signup";
 import { Login } from "../pages/Login";
 
-const RequireAuth=(isHome)=> {
+const RequireRoleAuth=(isHome)=> {
     const {auth}=useAuth()
 
     const navigate=useNavigate()
     const location=useLocation()
-        console.log('auth');
-        console.log(auth.user)
+        
+    console.log("role of:"+ auth.role)
     return (
        
-        auth?.user
+        auth?.role==="user"
             ?<Outlet/>
             :<Navigate to="/login" state={{from:location}} replace/>
     );
 }
 
-export default RequireAuth;
+export default RequireRoleAuth;

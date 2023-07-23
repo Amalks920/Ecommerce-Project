@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate,useLocation } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 
 import axios from '../api/axios'
@@ -18,15 +18,18 @@ const LOGIN_URL='/user/login'
 
 export  const Login = () => {
     const {setAuth}=useAuth();
+    
 
     const userRef=useRef()
     const errRef=useRef()
     const navigate=useNavigate()
+    const location=useLocation()
+    const from=location.state?.from?.pathname || "/";
+
 
     const [email,setEmail]=useState('')
 const [password,setPassword]=useState('')
 const [errMsg,setErrMsg]=useState('')
-const [success,setSuccess]=useState(false)
 
 
 useEffect(()=>{
@@ -48,14 +51,17 @@ const handleSubmit=async (e)=>{
                 withCredentials:false
             }
             )
-            setAuth.user=response.data
+           
             console.log(response.data)
 
        
         console.log(email,password)
         setEmail('')
+         setAuth({user:email})
+       
         setPassword('')
-        setSuccess(true)
+        navigate('/home');
+        
         
         
     } catch (err) {

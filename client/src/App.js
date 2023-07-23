@@ -16,6 +16,9 @@ import { AdminSignup } from './pages/admin/AdminSignup';
 import AdminLogin from './pages/admin/AdminLogin';
 import { Route,Routes } from 'react-router-dom';
 import RequireAuth from './components/RequireAuth'
+import ProtectedRoute from './components/ProtectedRoute';
+import RequireRoleAuth from './components/RequireRoleAuth';
+import ProductManagement from './pages/admin/ProductManagement';
 
 
 let isLoggedIn
@@ -29,19 +32,26 @@ function App(){
     <Routes>
       <Route path='/' element={<MainContainer/>}>
 
+    
          <Route path='login' element={<Login/>}></Route>
          <Route path='signup' element={<Signup/>}></Route>
+    
+
          <Route element={<RequireAuth/>}>
          <Route path='home' element={<Home/>}></Route>
          </Route>
 
+         {/* <Route element={<RequireRoleAuth />}> */}
          <Route path='admin-home' element={<AdminHome/>}></Route>
          <Route path='admin-login' element={<AdminLogin/>}></Route>
          <Route path='admin-signup' element={<AdminSignup/>}></Route>
          <Route path='add-product' element={<AddProduct/>}></Route>
+         <Route path='product-management' element={<ProductManagement/>} ></Route>
+         {/* </Route> */}
 
 
-      </Route>
+         </Route>
+     
     </Routes>
   )
 }
