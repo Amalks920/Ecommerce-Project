@@ -35,6 +35,7 @@ const sendProductDeatails=(e)=>{
     brandName:brandName,
     category:category,
     subCategory:subCategory,
+    size:selectedSize,
     description:description,
     stockQuantity:stockQuantiy,
     size:selectedSize,
@@ -48,8 +49,8 @@ const sendProductDeatails=(e)=>{
 
 
 formData.set('file1',fileInput.current.files[0])
-// formData.set('file2',fileInput2.current.files[0])
-// formData.set('file3',fileInput3.current.files[0])
+formData.set('file2',fileInput2.current.files[0])
+formData.set('file3',fileInput3.current.files[0])
 
 Object.keys(data).forEach(key => {
   formData.append(key, data[key]);
@@ -165,6 +166,13 @@ Object.keys(data).forEach(key => {
       <button type='submit' className='bg-slate-700 w-1/3 h-1/3 rounded-md text-white'>ADD PRODUCT</button>
     </div>
 </form>
+
+
+
+
+
+
+
 
 </div>
 

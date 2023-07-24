@@ -1,5 +1,6 @@
 const User=require('../../models/userSchema');
 const asyncHandler=require('express-async-handler');
+const imgSchema=require('../../models/imageSchema')
 
 
 
@@ -80,16 +81,59 @@ const isAdmin=asyncHandler(async(req,res,next)=>{
 
 
 const blockUser=async (req,res,next)=>{
+    console.log('this is block user function')
+
     const {id}=req.params
- const user=await User.findByIdAndUpdate(id,{isBlocked:true},{new:true})   
-    res.json({message:"user blocked"})
+    console.log(id)
+    try {
+
+        const userExist=await User.findById(id)
+        
+        if(userExist && !userExist.isBlocked){
+            
+        const user=await User.findByIdAndUpdate(id,{isBlocked:true},{new:true})   
+        res.json({message:true})
+        }else{
+            res.status(401).json({msg:"user already unblock"})
+        }
+        
+    } catch (error) {
+        res.status(404).json({err:error})
+    }
+
 }
 
 const unBlockUser=async (req,res,next)=>{
 const {id}=req.params
-const user=await User.findByIdAndUpdate(id,{isBlocked:false},{new:true})
-    res.json({message:"user unblocked"})
+console.log('this is unblock user function')
+try {
+    const userExist=await User.findById(id)
+    console.log(userExist)
+
+    if(userExist && userExist.isBlocked){
+    const user=await User.findByIdAndUpdate(id,{isBlocked:false},{new:true})
+    res.json({message:false})
+    }else{
+        res.status(401).json({msg:"this user is not blockeds"})
+    }
+    
+} catch (error) {
+    res.status(401).json({err:error.message})
 }
+
+}
+
+const getImage=asyncHandler(async (req,res,next)=>{
+    try {   
+        const responseImg=await imgSchema.find({})
+        
+        res.json({res:responseImg})
+    } catch (error) {
+        console.log('hi')
+        console.log(error)
+    }
+}
+)
 
 
 
@@ -98,5 +142,5 @@ module.exports={
     getAllUsers,getUser,
     deleteUser,updateUser,
     isAdmin,blockUser,
-    unBlockUser
+    unBlockUser,getImage
 }

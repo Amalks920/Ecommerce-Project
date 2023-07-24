@@ -19,7 +19,8 @@ import RequireAuth from './components/RequireAuth'
 import ProtectedRoute from './components/ProtectedRoute';
 import RequireRoleAuth from './components/RequireRoleAuth';
 import ProductManagement from './pages/admin/ProductManagement';
-
+import EditProduct from './pages/admin/EditProduct';
+import UserManagement from './pages/admin/UserManagement';
 
 let isLoggedIn
 
@@ -47,6 +48,8 @@ function App(){
          <Route path='admin-signup' element={<AdminSignup/>}></Route>
          <Route path='add-product' element={<AddProduct/>}></Route>
          <Route path='product-management' element={<ProductManagement/>} ></Route>
+         <Route path="edit-product" element={<EditProduct/>}></Route>
+         <Route path="user-management" element={<UserManagement />}></Route>
          {/* </Route> */}
 
 

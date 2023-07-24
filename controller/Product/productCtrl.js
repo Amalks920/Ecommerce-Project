@@ -14,83 +14,61 @@ const assetsFolder=path.join(DIR_NAME,"upload/images/")
 
 
 const addProduct=asyncHandler(async(req,res,next)=>{
-  
-    const saveImg=new imgModel({
-        name:req.body.name,
-        img:{
-            data:fs.readFileSync('upload/'+req.file.filename),
-            contentType:"image/png"
-        }
-    })
-    saveImg.save()
-    .then((res)=>console.log('image is saved'))
-    .catch((err)=>console.log(err))
-    // const {productName}=req.body
+    
+   console.log('hmmme')
+     const {productName}=req.body
     //  const {file1,file2,file3}=req.files
     // await file1.mv(path.join(assetsFolder,file1.name))
 
+console.log(req.body)
 
-
-    // const findProduct=await ProductModel.findOne({productname:productName})
-    // console.log(findProduct)
-    // if(!findProduct){
+    const findProduct=await ProductModel.findOne({productName:productName})
+    console.log(findProduct)
+    if(!findProduct){
         
 
-    //     try {
+        try {
+            // const saveImg=await new imgModel({
+            //     name:req.body.name,
+            //     img:{
+            //         data:fs.readFileSync('upload/'+req.file.filename),
+            //         contentType:"image/png"
+            //     }
+            // })
+            //  saveImg.save()
+            // .then((response)=>{
+            //     console.log(response)
+            //     console.log('image is saved')
+            // })
+            // .catch((err)=>console.log(err))
 
-    //     let product=await ProductModel.create(req.body)
-    //     const filenames=await uploadProductImages(req.files)
-    //     console.log(filenames)
-    //     console.log(product._id)
+        let product=await ProductModel.create(req.body)
+        // const filenames=await uploadProductImages(req.files)
         
-    //     let insertFile=await ProductModel.updateOne({_id:product._id},{$push:{images:{$each:filenames}}})
-    //         console.log(insertFile)
+        console.log(product._id)
+        
+        // let insertFile=await ProductModel.updateOne({_id:product._id},{$push:{images:{$each:filenames}}})
+        //     console.log(insertFile)
 
-    //         res.json({product:product})
-    //     } catch (error) {
-    //         res.json({error:error.message})
-    //     }
-    //  }
-})
+            res.json({product:product})
+        } catch (error) {
+            res.json({error:error.message})
+        }
+    
+     }
+    }
+)
 
 const getAllProducts=asyncHandler(async(req,res,next)=>{
     console.log('console.log()')
     try {
-        const images=await imgModel.find()
-        console.log(images)
+        const allProducts=await ProductModel.find({})
+        // const images=await imgModel.find()
+        console.log(allProducts)
         
-        res.json({images:images})
-        // const products=await ProductModel.find({})
-        // let imageArray=products.map((el)=>el.images)
+        res.json({products:allProducts})
         
-        //   let innerArray=  imageArray.map(el=>(el))
-        //     innerArray.map(el=>console.log(el))
-            
-        //  let imageNameObj=Object.assign({},imageArray)
-        //  for(const key in imageNameObj){
-        //     imageNameObj[key].map((el)=>{
-        //         let imagePath=`${DIR_NAME}/upload/images/${el}`
-              
-        //        if(fs.existsSync(imagePath)){
-        //             fs.readFile(imagePath,(err,data)=>{
-        //                 if(err){ res.status(500).json({ message: 'Error occurred while reading the image.' })
-        //             }else{
 
-        //                  bufferData.push(data)
-        //             }
-
-        //             })
-        //        }
-               
-        //     }
-        //         )
-        //  }
-        
-        
-          
-     
-
-        
         
     } catch (error) {
         res.json({error:error.message})
@@ -120,14 +98,16 @@ const deleteProduct=asyncHandler(async (req,res,next)=>{
         res.json({deleteProduct})
     } catch (error) {
       
-        res.json({error:error.message})
+        res.status(403).json({error:error.message})
     }
     })
 
 
 
 const updateProduct=asyncHandler(async (req,res,next)=>{
+    console.log(req.files)
        const {id}=req.body
+       console.log('inside update product')
 try {
     const updateProduct=await ProductModel.findOneAndUpdate(
        { id },

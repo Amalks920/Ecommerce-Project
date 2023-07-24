@@ -3,6 +3,7 @@ import React, { useState,useEffect } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { deleteUser } from '../utils/loginSlice'
 import { Link } from 'react-router-dom'
+import axios from '../api/axios'
 const Navbar = () => {
 let user
 
@@ -13,6 +14,13 @@ console.log(user)
 
 
 const logout = () =>{
+  axios.get('/logout')
+  .then((res)=>{
+    console.log(res)
+  })
+  .catch((err)=>{
+    console.log(err)
+  })
 dispatch(deleteUser())
    
 }
@@ -43,7 +51,7 @@ dispatch(deleteUser())
      
         {
           
-        user ?<button onClick={logout} className='bg-green-500 w-1/2'>{`Logout`} </button> :<button className='bg-green-500 w-1/12 h-1/2'><Link to='/login'>Login</Link> </button>
+        user ?<button onClick={logout} className='bg-green-500 w-56 h-14'>{`Logout`} </button> :<button className='bg-green-500 w-1/12 h-1/2'><Link to='/login'>Login</Link> </button>
         }
         
     </div>

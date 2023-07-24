@@ -8,14 +8,14 @@ const authRouter=require('./routes/authRoute')
 const adminRouter=require('./routes/adminRoute')
 const {errorHandler,notFound}=require('./middlewares/errorHandler')
 const cors=require('cors')
-
+app.use(cors())
 
 dbConnect()
 
 // app.use('/',(req,res,next)=>{
 //     res.send(`<h1>Hello from Server</h1>`)
 // })
-app.use(cors())
+
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 

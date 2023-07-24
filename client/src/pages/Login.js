@@ -6,6 +6,7 @@ import axios from '../api/axios'
 import { BACKEND_API } from '../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { Signup } from './Signup';
+import { setUser } from '../utils/loginSlice';
 import Home from './Home';
 
 const LOGIN_URL='/user/login'
@@ -18,7 +19,7 @@ const LOGIN_URL='/user/login'
 
 export  const Login = () => {
     const {setAuth}=useAuth();
-    
+    let dispatch=useDispatch()
 
     const userRef=useRef()
     const errRef=useRef()
@@ -51,7 +52,7 @@ const handleSubmit=async (e)=>{
                 withCredentials:false
             }
             )
-           
+            dispatch(setUser(response.data))
             console.log(response.data)
 
        

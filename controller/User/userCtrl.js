@@ -24,8 +24,11 @@ console.log('signup finduser')
 console.log(findUser)
    
     if(!findUser){
+        
         try {
         let user=await User.create(req.body)
+
+        if(!user.name || !user.email || !user.mobile || !user.password) res.status(402).json({err:"something missing"})
         
              res.status(201).json({"name":user.name,"email":user.email,"mobile":user.mobile})
 
@@ -51,6 +54,9 @@ const userLogin=asyncHandler(async (req,res,next)=>{
     console.log(email)
     try {
        let findUser=await User.findOne({email:email})
+       if(findUser.isBlocked===true){
+        res.status(401).json({msg:"user is blocked"})
+       }  
         console.log(User.isPasswordMatched)
         if(findUser && (await findUser.isPasswordMatched(password)) ){   
             console.log(findUser._id)
