@@ -151,9 +151,10 @@ const logout=asyncHandler(async (req,res,next)=>{
  //authentication using real gmail
 
 const emailAuthentication=(req,res)=>{
+    
     const {userEmail}=req.body
-
-
+    console.log(EMAIL,PASSWORD)
+    console.log(userEmail)
     let config={
         service:"gmail",
         auth:{
@@ -163,6 +164,7 @@ const emailAuthentication=(req,res)=>{
     }
 
     let transporter=nodemailer.createTransport(config)
+    
    
     let MailGenerator=new MailGen({
         theme:'default',
@@ -173,10 +175,12 @@ const emailAuthentication=(req,res)=>{
     })
 
 
+    let otp=otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false, lowerCaseAlphabets: false, digits:true })
+    console.log(otp);
     let response={
         body:{
             Email:userEmail,
-            intro:`Your OTP ${otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false, lowerCaseAlphabets: false, digits:true })}`,
+            intro:`Your OTP ${otp})}`,
             
             outro:"Expires within 10 minuites"
 
@@ -192,12 +196,15 @@ const emailAuthentication=(req,res)=>{
     html:mail
    }
 
-   transporter.sendMail(message).then(()=>{
+   transporter.sendMail(message).then(async ()=>{
+    // const updateUser=await User.updateOne({},{otp:})
     return res.status(201).json({
-        msg:"you should receive an email"
+        msg:"you should receive an email",
+        otp:otp
     })
    }).catch(error=>{
-    return res.status(500).json({error})
+    console.log(error.message)
+    return res.json({error})
    })
 }
 
