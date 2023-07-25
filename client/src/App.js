@@ -12,7 +12,7 @@ import  Home from './pages/Home'
 import { redirect } from 'react-router-dom';
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { AdminSignup } from './pages/admin/AdminSignup';
+import  AdminSignup  from './pages/admin/AdminSignup';
 import AdminLogin from './pages/admin/AdminLogin';
 import { Route,Routes } from 'react-router-dom';
 import RequireAuth from './components/RequireAuth'
@@ -21,6 +21,7 @@ import RequireRoleAuth from './components/RequireRoleAuth';
 import ProductManagement from './pages/admin/ProductManagement';
 import EditProduct from './pages/admin/EditProduct';
 import UserManagement from './pages/admin/UserManagement';
+import OtpLogin from './pages/OtpLogin';
 
 let isLoggedIn
 
@@ -36,20 +37,24 @@ function App(){
     
          <Route path='login' element={<Login/>}></Route>
          <Route path='signup' element={<Signup/>}></Route>
-    
+         <Route path='otp-login' element={<OtpLogin/>}></Route>
 
          <Route element={<RequireAuth/>}>
          <Route path='home' element={<Home/>}></Route>
          </Route>
 
          {/* <Route element={<RequireRoleAuth />}> */}
-         <Route path='admin-home' element={<AdminHome/>}></Route>
          <Route path='admin-login' element={<AdminLogin/>}></Route>
          <Route path='admin-signup' element={<AdminSignup/>}></Route>
+         
+         <Route element={<RequireAuth/>}>
+         <Route path='admin-home' element={<AdminHome/>}></Route>
+         
          <Route path='add-product' element={<AddProduct/>}></Route>
          <Route path='product-management' element={<ProductManagement/>} ></Route>
          <Route path="edit-product" element={<EditProduct/>}></Route>
          <Route path="user-management" element={<UserManagement />}></Route>
+         </Route>
          {/* </Route> */}
 
 
