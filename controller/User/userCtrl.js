@@ -17,7 +17,7 @@ const otpGenerator = require('otp-generator');
 const saltRounds = 10;
 
 const createUser=asyncHandler(async(req,res)=>{
-
+console.log(req.body);
 const {name,email,phone,password}=req.body
 let findUser
 console.log('signup finduser')
@@ -54,7 +54,7 @@ const userLogin=asyncHandler(async (req,res,next)=>{
     console.log(email)
     try {
        let findUser=await User.findOne({email:email})
-       if(findUser.isBlocked===true){
+       if(findUser?.isBlocked===true){
         res.status(401).json({msg:"user is blocked"})
        }  
         console.log(User.isPasswordMatched)
@@ -97,7 +97,7 @@ const userLogin=asyncHandler(async (req,res,next)=>{
         
         
     } catch (error) {
-        console.log('hellllo')
+       
         res.json({error:error.message})
     }
    

@@ -1,58 +1,206 @@
-import { Input } from "../../components/Input";
-import { name_validation,password_validation } from "../../utils/inputValidations";
-import { FormProvider,useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import { register } from "../../utils/register";
-export const AdminSignup=() =>{
-    const methods=useForm() 
-
-    const onSubmit = methods.handleSubmit(data => {
-            data.role='admin'
-            register(data)
-      })
+import { Link,useNavigate} from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { FormProvider, useForm } from "react-hook-form";
+import { register } from "../utils/register";
+import { setUser } from "../utils/loginSlice";
+import { useEffect, useRef, useState } from 'react';
 
 
-    return (
-        <div>
-            <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
-            <div>
-            <a href="/">
-            <h3 className="text-4xl font-bold text-black">Admin</h3></a>
-            </div>
+const usernameRegex = /^[A-z][A-z0-9-_]{3,23}$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+export const Signup= () => {
 
-            <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-lg sm:rounded-lg">
+const userRef=useRef()
+const errRef=useRef()
 
-        <FormProvider {...methods}>
-     <form>
+const navigate=useNavigate()
+const methods=useForm() 
+const dispatch=useDispatch()
+
+const [name,setName]=useState('')
+const [validName,setValidName]=useState(false)
+const [nameFocus,setNameFocus]=useState(false)
+
+const [email,setEmail]=useState('')
+const [validEmail,setValidEmail]=useState(false)
+const [emailFocus,setEmailFocus]=useState(false)
+
+
+const [mobile,setMobile]=useState('')
+const [validMobile,setValidMobile]=useState(false)
+const [mobileFocus,setMobileFocus]=useState(false)
+
+
+const [password,setPassword]=useState('')
+const [validPassword,setValidPassword]=useState(false)
+const [passwordFocus,setPasswordFocus]=useState(false)
+
+const [errMsg,setErrMsg]=useState('')
+const [success,setSuccess]=useState(false)
+
+useEffect(()=>{
+    userRef.current.focus()
+},[])
+console.log(name,email,mobile,password);
+useEffect(()=>{
+    const result=usernameRegex.test(name)
+    console.log(result)
+    console.log(name)
+    setValidName(result)
+},[name])
+
+useEffect(()=>{
+    const result=passwordRegex.test(password)
+    console.log(result)
+    console.log(password)
+    setValidPassword(result)
+},[password])
+
+useEffect(()=>{
+    setErrMsg('')
+},[name,password])
+
+console.log(errMsg)
+// const onSubmit = methods.handleSubmit(data => {
+//     // data.role='user'
+//     
+//   })
+const handleSubmit=async (e)=>{
+    e.preventDefault();
+    const v1=usernameRegex.test(name)
+    const v2=passwordRegex.test(password)
+       
+    if(!v1 || !v2 ){
+        setErrMsg('Invalid Entry')
+        return 
+    }
+
+    let data={
+        name:name,
+        email:email,
+        mobile:mobile,
+        password:password,
+        role:"admin"
+    }
+
+ console.log(res)
+    console.log();
+     const res=register(data)
+     console.log(res?.message)
+     navigate('/login')
+
+
+}
+console.log(errMsg)
+
+        
+   return (
+     <div>
+
+        <p ref={errRef} className={errMsg ? "errMsg": "offscreen"}>{errMsg}</p>
+     <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
+     <div>
+     <a >
+     <h3 className="text-4xl font-bold text-purple-600">
+                                    Admin Signup
+     </h3>
+     </a>
+     </div>
+     <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-lg sm:rounded-lg">
+
+       
+     <form onSubmit={handleSubmit}>
      <div>
      </div>
+
      <div>
+<label htmlFor='name' className="block text-sm font-medium text-gray-700 undefined">
+     name
+ </label> 
+<input 
+type="name" id="name" name="name"
+ref={userRef}
+value={name}
+onChange={(e)=>setName(e.target.value)}
+onFocus={()=>setNameFocus(true)}
+onBlur={()=>setNameFocus(false)}
+
+required
+aria-describedby='uidnote'
+aria-invalid={validName ? "false" :"true"}
+ className="block w-full mt-1 border-gray-300
+ rounded-md shadow-sm focus:border-indigo-300
+  focus:ring focus:ring-indigo-200 focus:ring-opacity-50"/>
+  <p id='uidnote' className={nameFocus && name && !validName ? "instructions" :"offscreen"}>
+    <p>
+    7 to 29 characters.<br/>
+    Must begin with a letter <br/>
+    Letters,numbers,underscores,hyphens allowed
+    </p>
+  </p>
+</div>
+
      
-     <Input   {...name_validation}/>
-     </div>
      <div className="mt-4">
-        <Input label={"email"}  type={"email"} id={"email"} placeHolder={"mobile"} />
-    </div>
+     <label htmlFor='name' className="block text-sm font-medium text-gray-700 undefined">
+     Email
+ </label> 
+<input
+ type="text" id='email' name="email"
+ ref={userRef}
+ onChange={(e)=>setEmail(e.target.value)}
+ required
+ className="block w-full mt-1 border-gray-300
+ rounded-md shadow-sm focus:border-indigo-300
+  focus:ring focus:ring-indigo-200 focus:ring-opacity-50"/>
+</div>
+    
      <div className="mt-4">
-      <Input label={"mobile"}  type={"mobile"} id={"mobile"} placeHolder={"mobile"} />
-    </div>
+     <label htmlFor='mobile' className="block text-sm font-medium text-gray-700 undefined">
+     mobile
+ </label> 
+<input
+ type="number" id='mobile' name="mobile"
+ ref={userRef}
+ onChange={(e)=>setMobile(e.target.value)}
+ required
+ className="block w-full mt-1 border-gray-300
+ rounded-md shadow-sm focus:border-indigo-300
+  focus:ring focus:ring-indigo-200 focus:ring-opacity-50"/>
+</div>
+    
     <div className="mt-4">
-     <Input  {...password_validation} />
-    </div>
+    <label htmlFor='password' className="block text-sm font-medium text-gray-700 undefined">
+     Password
+ </label> 
+<input
+ type="password" id='name' name="password"
+ ref={userRef}
+ onChange={(e)=>setPassword(e.target.value)}
+ required
+ className="block w-full mt-1 border-gray-300
+ rounded-md shadow-sm focus:border-indigo-300
+  focus:ring focus:ring-indigo-200 focus:ring-opacity-50"/>
+</div>
+  
 
     <a className="text-xs text-purple-600 hover:underline">
      Forget Password?
     </a>
-    </form>
-    </FormProvider>
 
 
     <div className="flex items-center mt-4">
 
-<button onClick={onSubmit} type="submit" className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-black">
+<button disabled={!validName  || !validPassword ? true :false}  type="submit" className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
     Register
 </button>
 </div>
+
+    </form>
+    
+
+
+  
 
                             <div className="mt-4 text-grey-600">
                                 Already have an account?{" "}
@@ -100,8 +248,12 @@ export const AdminSignup=() =>{
                                 </button>
                             </div>
                         </div>
-                
-            </div>
-        </div>
-    );
-}
+                    </div>
+
+                </div>
+            );
+        }
+        
+      
+    
+

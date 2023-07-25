@@ -63,13 +63,37 @@ useEffect(()=>{
 },[name,password])
 
 console.log(errMsg)
-const onSubmit = methods.handleSubmit(data => {
-    data.role='user'
-    //
+// const onSubmit = methods.handleSubmit(data => {
+//     // data.role='user'
+//     
+//   })
+const handleSubmit=async (e)=>{
+    e.preventDefault();
+    const v1=usernameRegex.test(name)
+    const v2=passwordRegex.test(password)
+       
+    if(!v1 || !v2 ){
+        setErrMsg('Invalid Entry')
+        return 
+    }
+
+    let data={
+        name:name,
+        email:email,
+        mobile:mobile,
+        password:password,
+        role:"user"
+    }
+
+ console.log(res)
+    console.log();
      const res=register(data)
      console.log(res?.message)
      navigate('/login')
-  })
+
+
+}
+console.log(errMsg)
 
         
    return (
@@ -87,7 +111,7 @@ const onSubmit = methods.handleSubmit(data => {
      <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-lg sm:rounded-lg">
 
        
-     <form>
+     <form onSubmit={handleSubmit}>
      <div>
      </div>
 
@@ -165,16 +189,20 @@ aria-invalid={validName ? "false" :"true"}
     <a className="text-xs text-purple-600 hover:underline">
      Forget Password?
     </a>
-    </form>
-    
 
 
     <div className="flex items-center mt-4">
 
-<button disabled={!validName  || !validPassword} onClick={onSubmit} type="submit" className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
+<button disabled={!validName  || !validPassword ? true :false}  type="submit" className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
     Register
 </button>
 </div>
+
+    </form>
+    
+
+
+  
 
                             <div className="mt-4 text-grey-600">
                                 Already have an account?{" "}

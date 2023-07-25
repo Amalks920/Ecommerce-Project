@@ -3,10 +3,12 @@ import React, { useState,useEffect } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { deleteUser } from '../utils/loginSlice'
 import { Link } from 'react-router-dom'
+import { setUser } from '../utils/loginSlice'
+import { useNavigate } from 'react-router-dom'
 import axios from '../api/axios'
 const Navbar = () => {
 let user
-
+const navigate=useNavigate()
 const dispatch=useDispatch()
 
 user=useSelector((store)=>store.user.user)
@@ -14,14 +16,19 @@ console.log(user)
 
 
 const logout = () =>{
-  axios.get('/logout')
-  .then((res)=>{
-    console.log(res)
-  })
-  .catch((err)=>{
-    console.log(err)
-  })
-dispatch(deleteUser())
+  dispatch(setUser(null))
+  navigate('/login')
+  // axios.get('/user/logout')
+  // .then((res)=>{
+  //   console.log(res)
+  //   dispatch(deleteUser())
+  //   navigate('/login')
+
+  // })
+  // .catch((err)=>{
+  //   console.log(err)
+  // })
+
    
 }
 
