@@ -19,7 +19,7 @@ router.post('/login',userLogin)
 router.post('/otp-verification-gmail',emailAuthentication)
 router.get('/generate-otp',sendOtp)
 
-router.use(authMiddleware)
+//  router.use(authMiddleware)
 router.get('/logout',logout)
 
 

@@ -7,22 +7,29 @@ import ProductCard from '../components/ProductCard'
 const URL=`${BACKEND_API}/admin/get-all-products`
 
  const Home = () => {
+
+  //access token
+  const token=useSelector(store=>store.user.token)
+
   const [data,setData]=useState([])
 
+  let headers
+  if(token){
+     headers={
+      'Authorization':`Bearer ${token}`
+    }
+  }
+
   useEffect(()=>{
-    axios.get(URL)
+    axios.get(URL,{headers})
     .then((res)=>{
-     
-      console.log(res.data.products)
+
       setData(res.data.products)
        
     })
   .catch((err)=>console.log(err.message))
   },[])
-  console.log(data)
-  
-  
-    // const user=useSelector((store)=>store.user.user)
+
 
   return (
     <div>

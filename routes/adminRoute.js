@@ -28,7 +28,7 @@ const {addProduct,getAllProducts,getAProduct,
 router.post('/add-product',upload.single('testImage'),addProduct)
 //
 
-router.get('/get-all-products',getAllProducts)
+router.get('/get-all-products',authMiddleware,getAllProducts)
 router.get('/get-a-product/:id',getAProduct)
 router.delete('/delete-a-product/:id',deleteProduct)
 router.put('/update-product/:id',updateProduct)

@@ -3,7 +3,7 @@ import React, { useState,useEffect } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { deleteUser } from '../utils/loginSlice'
 import { Link } from 'react-router-dom'
-import { setUser } from '../utils/loginSlice'
+
 import { useNavigate } from 'react-router-dom'
 import axios from '../api/axios'
 const Navbar = () => {
@@ -16,8 +16,7 @@ console.log(user)
 
 
 const logout = () =>{
-  dispatch(setUser(null))
-  navigate('/login')
+   navigate('/login')
   // axios.get('/user/logout')
   // .then((res)=>{
   //   console.log(res)
@@ -43,7 +42,7 @@ const logout = () =>{
   return (
     <div className='w-screen h-28 bg-white shadow-2xl flex justify-evenly items-center'>
       <div className='w-1/6'>
-        <h1 className='font-bold text-2xl'>E-Comax</h1>
+        <h1 className='font-bold text-2xl'>E-Comx</h1>
       </div>
       <ul className='flex justify-between w-1/3'>
         <li><Link to={'/login'}>Home</Link></li>

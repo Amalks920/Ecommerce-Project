@@ -22,6 +22,7 @@ import ProductManagement from './pages/admin/ProductManagement';
 import EditProduct from './pages/admin/EditProduct';
 import UserManagement from './pages/admin/UserManagement';
 import OtpLogin from './pages/OtpLogin';
+import Reg from './pages/Reg';
 
 let isLoggedIn
 
@@ -46,15 +47,18 @@ function App(){
          {/* <Route element={<RequireRoleAuth />}> */}
          <Route path='admin-login' element={<AdminLogin/>}></Route>
          <Route path='admin-signup' element={<AdminSignup/>}></Route>
+
+         <Route path='reg' element={<Reg/>}></Route>
+
          
-         <Route element={<RequireAuth/>}>
+         
          <Route path='admin-home' element={<AdminHome/>}></Route>
          
          <Route path='add-product' element={<AddProduct/>}></Route>
          <Route path='product-management' element={<ProductManagement/>} ></Route>
          <Route path="edit-product" element={<EditProduct/>}></Route>
          <Route path="user-management" element={<UserManagement />}></Route>
-         </Route>
+         
          {/* </Route> */}
 
 

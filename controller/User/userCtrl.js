@@ -48,64 +48,69 @@ console.log(findUser)
 }
 )
 
+
+//                        USER LOGIN
+
 const userLogin=asyncHandler(async (req,res,next)=>{
     const {email,password}=req.body
     //check if user exist or not
     console.log(email)
     try {
        let findUser=await User.findOne({email:email})
+
+       
        if(findUser?.isBlocked===true){
         res.status(401).json({msg:"user is blocked"})
        }  
-        console.log(User.isPasswordMatched)
+
+        //validate the password
         if(findUser && (await findUser.isPasswordMatched(password)) ){   
-            console.log(findUser._id)
+
+           //generate accessToken and refreshToken
+           //passing id as payload for generate jwt api 
         const accessToken=generateToken(findUser?._id,process.env.ACCESS_TOKEN_PRIVATE_KEY,'1d')
         const refreshToken=generateToken(findUser?._id,process.env.REFRESH_TOKEN_PRIVATE_KEY,'1d')
-            console.log(accessToken,refreshToken)
+        console.log(findUser);
+        console.log(accessToken)
+            //save the refresh token in the database for future reference
         const updateUser=await User.findByIdAndUpdate(
             findUser._id,
-            {
-                refreshToken:refreshToken
-            },
-            {
-                new:true
-            }
+            {refreshToken:refreshToken},
+            {new:true}
         )
+        
+        //setting cookies with jwt token,also setting the flag httpOnly to true
+        //it will make the cookies more secure and can't be accesses using
+        //javascript in client side
+        //also set the expiry of the cookie
         res.cookie('jwt',refreshToken,{
             httpOnly:true,
             maxAge:24*60*60*1000
         })
-        const {    
-            email,
-            isBlocked,
-            mobile,
-            name,
-            role
-          } = findUser;
+
+        //destructuring finduser to get details of user 
+        const { email,isBlocked,mobile,name,role} = findUser;
             
-                res.json({              
-                    email:email,isBlocked:isBlocked,
-                    mobile:mobile,name:name,role:role,
-                    accessToken:accessToken
+
+        //send response to client side
+        res.json({              
+        email:email,isBlocked:isBlocked,
+        mobile:mobile,name:name,role:role,
+        accessToken:accessToken
                 })
                
-        }else{
-            
+        }else{   
+        //if user doesn't exist send error
           res.status(401).json({msg:"invalid credentials"})
-        }
-        
-        
+        }  
     } catch (error) {
-       
         res.json({error:error.message})
-    }
-   
-    
-  
+    } 
 }
-
 )
+
+
+
 const logout=asyncHandler(async (req,res,next)=>{
     const token=req.cookies['jwt']
     console.log(token)

@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate,useLocation } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
-
+import store from '../utils/store';
 import axios from '../api/axios'
 import { BACKEND_API } from '../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { Signup } from './Signup';
-import { setUser } from '../utils/loginSlice';
 import Home from './Home';
+import { setCredentials } from '../utils/loginSlice';
 
 const LOGIN_URL='/user/login'
 
@@ -15,9 +15,13 @@ const LOGIN_URL='/user/login'
 
 
 
-
+console.log('user here');
 
 export  const Login = () => {
+    const user=useSelector(store=>store.user)
+    //subscribing to login slice
+  
+
     const {setAuth}=useAuth();
     let dispatch=useDispatch()
 
@@ -51,16 +55,22 @@ const handleSubmit=async (e)=>{
                 headers:{'Content-Type':'application/json'},
                 withCredentials:false
             }
+            
             )
-            dispatch(setUser(response.data))
-            console.log(response.data)
-
-       
-        console.log(email,password)
+            
+            console.log("user there");
+            console.log(user);
+     
         setEmail('')
          setAuth({user:email})
+
+            //dispatch the setCredentials action which stores
+            //username and token in login slice
+            
+         dispatch(setCredentials({username:response.data.name,token:response.data.accessToken}))
        
         setPassword('')
+
         navigate('/home');
         
         
@@ -75,7 +85,7 @@ const handleSubmit=async (e)=>{
         }else{
             setErrMsg('Login Failed')
         }
-        errRef.current.focus();
+        // errRef.current.focus();
     }
    
 
@@ -85,7 +95,7 @@ const handleSubmit=async (e)=>{
     return (
         <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
             <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
-                <p ref={errRef} className={errMsg ? "errmsg": "offscreen"} aria-live='assertive'>{errMsg}</p>
+                {/* <p ref={errRef} className={errMsg ? "errmsg": "offscreen"} aria-live='assertive'>{errMsg}</p> */}
                 <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
                    Sign in
                 </h1>

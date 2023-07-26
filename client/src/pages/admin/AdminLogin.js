@@ -51,9 +51,7 @@ const handleSubmit=async (e)=>{
                 withCredentials:false
             }
             )
-            dispatch(setUser(response.data))
-            console.log('response.data---------------------');
-            console.log(response.data)
+            
            
        
         console.log(email,password)
