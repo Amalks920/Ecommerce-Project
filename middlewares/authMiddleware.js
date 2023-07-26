@@ -8,7 +8,7 @@ const AccessToken = require('twilio/lib/jwt/AccessToken')
 const authMiddleware=asyncHandler(async (req,res,next)=>{
     
  const authHeader=req.headers['authorization']
- console.log(authHeader)
+
 
  if(!authHeader) return res.status(402).json({msg:'failed'})
 
