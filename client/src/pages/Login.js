@@ -12,12 +12,12 @@ import { setCredentials } from '../utils/loginSlice';
 const LOGIN_URL='/user/login'
 
 
-
-
-
 console.log('user here');
 
 export  const Login = () => {
+
+
+
     const user=useSelector(store=>store.user)
     //subscribing to login slice
   
@@ -29,7 +29,8 @@ export  const Login = () => {
     const errRef=useRef()
     const navigate=useNavigate()
     const location=useLocation()
-    const from=location.state?.from?.pathname || "/";
+    const from=location;
+    console.log(from)
 
 
     const [email,setEmail]=useState('')
@@ -44,6 +45,7 @@ useEffect(()=>{
 useEffect(()=>{
     setErrMsg('')
 },[email,password])
+
 
 const handleSubmit=async (e)=>{
     e.preventDefault();
@@ -67,7 +69,7 @@ const handleSubmit=async (e)=>{
             //dispatch the setCredentials action which stores
             //username and token in login slice
             
-         dispatch(setCredentials({username:response.data.name,token:response.data.accessToken}))
+         dispatch(setCredentials({username:response.data.name,token:response.data.accessToken,role:response.data.role}))
        
         setPassword('')
 

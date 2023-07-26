@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { BACKEND_API } from '../utils/constants'
 import axios from 'axios'
 import ProductCard from '../components/ProductCard'
-
+import { setCredentials } from '../utils/loginSlice'
+import { useLocation } from 'react-router-dom'
 const URL=`${BACKEND_API}/admin/get-all-products`
 
  const Home = () => {
-
+ let dispatch=useDispatch()
   //access token
   const token=useSelector(store=>store.user.token)
 
   const [data,setData]=useState([])
+
+  
+
+
+// useEffect(()=>{
+
+//   dispatch(setCredentials({username:"username",token:token}))
+// })
 
   let headers
   if(token){
@@ -26,7 +35,7 @@ const URL=`${BACKEND_API}/admin/get-all-products`
 
       setData(res.data.products)
        
-    })
+    },[])
   .catch((err)=>console.log(err.message))
   },[])
 
