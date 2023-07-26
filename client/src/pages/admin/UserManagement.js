@@ -1,23 +1,47 @@
 import React, { useEffect, useState } from 'react'
 import UserTable from '../../components/UserTable'
 import axios from '../../api/axios'
+import { useSelector } from 'react-redux'
 const GET_USER_API='/admin/get-all-users'
 
 const UserManagement = () => {
     const [userData,setUserData]=useState([])
-
+    const token=useSelector(store=>store.user.token)
+    
     console.log(userData);
    useEffect(()=>{
 
-    axios.get(GET_USER_API)
-    .then((res)=>{
-      setUserData(res.data.users)
-        
-    })
-    .catch((err)=>{
-        console.log(err);
-    })
+    let isMounted=true;
+    const controller=new AbortController();
+    
+    let headers
+  if(token){
+     headers={
+      'Authorization':`Bearer ${token}`
+    }
+  }
 
+    const getUsers= async () =>{
+      axios.get(GET_USER_API,{headers},{})
+      .then((res)=>{
+        isMounted && setUserData(res.data.users)
+        console.log('userdata');  
+        console.log(userData);
+          
+      })
+      .catch((err)=>{
+          console.error(err);
+      })
+    }
+
+    getUsers()
+
+   return ()=>{
+
+    isMounted=false
+    controller.abort()
+   }
+  
 },[])
 
     
@@ -41,8 +65,8 @@ const UserManagement = () => {
     </thead>
     <tbody>
 
-              {userData?.map((el)=>{
-               return <UserTable users={el} />
+              {userData?.map((el,i)=>{
+               return <UserTable key={i} users={el} />
               })}  
              
        

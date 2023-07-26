@@ -50,9 +50,9 @@ function App() {
         {/* <Route element={<RequireAdminAuth isAdmin={"admin"}/>}> */}
       
         <Route path="/admin/admin-login" element={<AdminLogin />}></Route>
-        <Route path="admin/admin-signup" element={<AdminSignup />}></Route>
-        <Route path="admin/admin-home" element={<AdminHome />}></Route>
-        <Route path="admin/add-product" element={<AddProduct />}></Route>
+        <Route path="/admin/admin-signup" element={<AdminSignup />}></Route>
+        <Route path="/admin/admin-home" element={<AdminHome />}></Route>
+        <Route path="/admin/add-product" element={<AddProduct />}></Route>
         <Route
           path="/admin/product-management"
           element={<ProductManagement />}></Route>

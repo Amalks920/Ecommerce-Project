@@ -5,7 +5,7 @@ import useAuth from '../../hooks/useAuth';
 import axios from '../../api/axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { Signup } from '../Signup';
-import { setUser } from '../../utils/loginSlice';
+import { setCredentials } from '../../utils/loginSlice';
 import Home from '../Home';
 
 const LOGIN_URL='/user/login'
@@ -51,7 +51,7 @@ const handleSubmit=async (e)=>{
                 withCredentials:false
             }
             )
-            
+            console.log('t');
            
        
         console.log(email,password)
@@ -59,7 +59,11 @@ const handleSubmit=async (e)=>{
          setAuth({user:email})
        
         setPassword('')
-        if(response.data.role=="admin") navigate('/admin-home');
+        if(response.data.role=="admin"){
+            dispatch(setCredentials({username:response.data.name,
+            token:response.data.accessToken,role:response.data.role}))
+            navigate('/admin/admin-home');
+        } 
         
         
         

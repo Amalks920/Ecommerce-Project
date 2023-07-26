@@ -69,9 +69,10 @@ const userLogin=asyncHandler(async (req,res,next)=>{
            //generate accessToken and refreshToken
            //passing id as payload for generate jwt api 
         const accessToken=generateToken(findUser?._id,process.env.ACCESS_TOKEN_PRIVATE_KEY,'1d')
+        
         const refreshToken=generateToken(findUser?._id,process.env.REFRESH_TOKEN_PRIVATE_KEY,'1d')
-        console.log(findUser);
-        console.log(accessToken)
+      
+        console.log(accessToken);
             //save the refresh token in the database for future reference
         const updateUser=await User.findByIdAndUpdate(
             findUser._id,

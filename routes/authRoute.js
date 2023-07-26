@@ -3,7 +3,7 @@ const router=express.Router();
 const {createUser,userLogin,
     emailAuthentication,logout}=require('../controller/User/userCtrl');
 
-// const handleRefreshToken=require('../config/refreshTokenConfiguration')
+const handleRefreshToken=require('../config/refreshToken')
 
 
 const authMiddleware=require('../middlewares/authMiddleware')
@@ -14,6 +14,7 @@ router.get('/reg',authMiddleware,(req,res)=>{
     // console.log(req.body)
     res.json({msg:"success"})
 })
+router.get('/refresh',handleRefreshToken)
 router.post('/register',createUser);
 router.post('/login',userLogin)
 router.post('/otp-verification-gmail',emailAuthentication)
