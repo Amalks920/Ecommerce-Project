@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from '../../api/axios'
+import { Link } from 'react-router-dom'
 
 export const AdminHome = () => {
   const [data,setData]=useState([])
@@ -17,6 +18,7 @@ export const AdminHome = () => {
   return (
 
     <div>
+      <Link to={"/admin/user-management"}>User Management</Link>
       {
         data.map((el)=>{
           const base64String=btoa(

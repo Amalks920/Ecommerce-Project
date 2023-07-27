@@ -16,6 +16,7 @@ console.log(user)
 
 
 const logout = () =>{
+  
    navigate('/login')
   // axios.get('/user/logout')
   // .then((res)=>{

@@ -8,20 +8,16 @@ import { Login } from "./pages/Login";
 import { AdminHome } from "./pages/admin/AdminHome";
 import AddProduct from "./pages/admin/AddProduct";
 import Home from "./pages/Home";
-import { redirect } from "react-router-dom";
-import { useState } from "react";
-import { Navigate } from "react-router-dom";
 import AdminSignup from "./pages/admin/AdminSignup";
 import AdminLogin from "./pages/admin/AdminLogin";
 import { Route, Routes } from "react-router-dom";
 import { RequireAuth, RequireAdminAuth } from "./components/RequireAuth";
-import ProtectedRoute from "./components/ProtectedRoute";
-import RequireRoleAuth from "./components/RequireRoleAuth";
 import ProductManagement from "./pages/admin/ProductManagement";
 import EditProduct from "./pages/admin/EditProduct";
 import UserManagement from "./pages/admin/UserManagement";
 import OtpLogin from "./pages/OtpLogin";
 import Reg from "./pages/Reg";
+import AdminMainContainer from "./components/AdminMainContainer";
 
 let isLoggedIn;
 
@@ -44,15 +40,20 @@ function App() {
 
           <Route path="reg" element={<Reg />}></Route>
         </Route>
+
+
+       
       </Routes>
 
-      <Routes path="admin" element={<MainContainer/>}>
+
+      <Routes path="admin">
+        <Route element={<AdminMainContainer/>}>
         {/* <Route element={<RequireAdminAuth isAdmin={"admin"}/>}> */}
       
         <Route path="/admin/admin-login" element={<AdminLogin />}></Route>
-        <Route path="admin/admin-signup" element={<AdminSignup />}></Route>
-        <Route path="admin/admin-home" element={<AdminHome />}></Route>
-        <Route path="admin/add-product" element={<AddProduct />}></Route>
+        <Route path="/admin/admin-signup" element={<AdminSignup />}></Route>
+        <Route path="/admin/admin-home" element={<AdminHome />}></Route>
+        <Route path="/admin/add-product" element={<AddProduct />}></Route>
         <Route
           path="/admin/product-management"
           element={<ProductManagement />}></Route>
@@ -60,9 +61,11 @@ function App() {
         <Route
           path="/admin/user-management"
           element={<UserManagement />}></Route>
+          </Route>
           {/* </Route> */}
-         
       </Routes>
+
+      
     </>
   );
 }
