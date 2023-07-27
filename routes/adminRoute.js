@@ -25,7 +25,7 @@ const {addProduct,getAllProducts,getAProduct,
        deleteProduct,updateProduct
 }=require('../controller/Product/productCtrl');
 
-router.post('/add-product',upload.single('testImage'),addProduct)
+router.post('/add-product',addProduct)
 //
 
 router.get('/get-all-products',authMiddleware,getAllProducts)

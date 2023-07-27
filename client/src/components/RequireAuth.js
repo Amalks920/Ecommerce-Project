@@ -19,7 +19,7 @@ export const RequireAuth=(isHome)=> {
     );
 }
 
-export const RequireAdminAuth=(isAdmin)=>{
+export const RequireAdminAuth=({isAdmin})=>{
     // let role=useSelector(store=>store.user.role)
 
     return (

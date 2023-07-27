@@ -14,13 +14,14 @@ const [subCategory,setSubCategory]=useState();
 const [description,setDescription]=useState();
 const [stockQuantiy,setStockQuantity]=useState();
 const [selectedSize,setSelectedSize]=useState();
+const [keyWords,setKeyWords]=useState();
 
 const [price,setPrice]=useState();
 const [file1,setFiles1]=useState();
 const [file2,setFiles2]=useState();
 const [file3,setFiles3]=useState();
 
-console.log(file3)
+console.log(file1)
 
 let URL=`${BACKEND_API}/admin/add-product`
 
@@ -48,17 +49,19 @@ const sendProductDeatails=(e)=>{
   
 
 
-formData.set('file1',fileInput.current.files[0])
-formData.set('file2',fileInput2.current.files[0])
-formData.set('file3',fileInput3.current.files[0])
+// formData.set('file1',fileInput.current.files[0])
+// formData.set('file2',fileInput2.current.files[0])
+// formData.set('file3',fileInput3.current.files[0])
 
-Object.keys(data).forEach(key => {
-  formData.append(key, data[key]);
-})
+// Object.keys(data).forEach(key => {
+//   formData.append(key, data[key]);
+// })
 
-  axios.post(URL,formData)
+  axios.post(URL,data)
   .then((res)=>{
       // dispatch(setProductDetails(res.data))
+      console.log(formData)
+      
      console.log(res.data)
   })
   .catch((err)=>{
@@ -67,116 +70,208 @@ Object.keys(data).forEach(key => {
   })
 }
 
+console.log(productName,brandName,selectedSize,stockQuantiy,description,category);
 
-  return (
-    
-<div className='w-screen h-screen flex  justify-center'>
-<form onSubmit={sendProductDeatails} className="w-full mt-44 max-w-lg" encType="multipart/form-data">
-    <h1 className='text-center mb-16 font-bold'>ADD PRODUCT</h1>
-  <div className="flex flex-wrap -mx-3 mb-6">
-    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
+
+
+
+return (
+  <form onSubmit={sendProductDeatails} className="mt-3  grid grid-cols-5 grid-rows-[5%] gap-4  m-10 bg-white">
+     <div className='flex justify-left ps-8 font-bold text-lg items-center col-span-5 row-span-1 shadow-xl'>
+      <h1>ADD A PRODUCT</h1>
+     </div>
+     
+  <div className=' col-span-3 row-span-1  shadow-xl p-10'>
+      <div className='flex justify-center'><h2>BASIC INFORMATION</h2></div>
+
+      <div className='p-4 mt-4'>
+  <label className="block  uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
         Product Name
       </label>
-      <input name="productname" onChange={(e)=>{setProductName(e.target.value)}} className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-product-name" type="text" placeholder="Product Name" />
-    </div>
-    <div className="w-full md:w-1/2 px-3">
-      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
+      <input name="productname" value={productName} onChange={(e)=>{
+        setProductName(e.target.value);
+        
+        }} className=" appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-product-name" type="text" placeholder="Product Name" />
+
+      </div>
+
+      <div className='p-4 mt-4'>
+  <label className="block  uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
         Brand Name
       </label>
-      <input name='brandname' onChange={(e)=>{setBrandName(e.target.value)}} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-brand-name" type="text" placeholder="Brand Name" />
-    </div>
-  </div>
-  <div className="flex flex-wrap -mx-3 mb-6">
-    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
-        Category
+      <input name="productname" onChange={(e)=>{setBrandName(e.target.value)}} className="appearance-none border-black block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-product-name" type="text" placeholder="Product Name" />
+
+      </div>
+      
+
+    <div className='p-4 mt-4'>
+    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
+        size
       </label>
-      <input onChange={(e)=>{setCateory(e.target.value)}} className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-category-name" type="text" placeholder="Category" />
-      {/* <p className="text-red-500 text-xs italic">Please fill out this field.</p> */}
-    </div>
-    <div className="w-full md:w-1/2 px-3">
-      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
-        Sub Category
-      </label>
-      <input onChange={(e)=>{setSubCategory(e.target.value)}} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-subcategory-name" type="text" placeholder="Sub Category" />
-    </div>
-  </div>
-  <div className="flex flex-wrap -mx-3 mb-6">
-    <div className="w-full px-3">
-      <label  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">
-        Description
-      </label>
-      <input onChange={(e)=>{setDescription(e.target.value)}} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="description" type="description" placeholder="Description" />
-      <p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
-    </div>
-  </div>
-  <div className="flex flex-wrap -mx-3 mb-2">
-    <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-city">
-        Stock Quantity
-      </label>
-      <input onChange={(e)=>{setStockQuantity(e.target.value)}} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" type="text" placeholder="Quantity" />
-    </div>
-    <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-state">
-        Size
-      </label>
-      <div className="relative">
-        <select value={selectedSize} onChange={(e)=>{setSelectedSize(e.target.value)}} className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="size">
+    <select onChange={(e)=>{setSelectedSize(e.target.value)}} className=" block appearance-none w-full bg-gray-200 border border-black text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="size">
           <option value="xl">xl</option>
           <option value="2xl">2xl</option>
           <option value="xxl">xxl</option>
-        </select>
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-          <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-        </div>
+         </select>
+    </div>
+
+
+    <div className='p-4 mt-4'>
+  <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
+        Stock Quantity
+      </label>
+      <input name="productname" onChange={(e)=>{setStockQuantity(e.target.value)}} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-black  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-product-name" type="text" placeholder="Product Name" />
+
       </div>
-    </div>
-    <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-zip">
-        price
+
+
+   
+         
+
+
+    <div className='p-4 mt-4 h-[30%]'>
+        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
+        Description
       </label>
-      <input  onChange={(e)=>{setPrice(e.target.value)}}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="price" type="text" placeholder="90210" />
+      <textarea  name="productname" onChange={(e)=>{setDescription(e.target.value)}} className=" h-[80%]  appearance-none block w-full bg-gray-200 text-gray-700 border border-black  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-product-name" type="text" placeholder="Description" ></textarea>
     </div>
+
+
+
   </div>
 
-  <div className="flex flex-wrap -mx-3 mt-8 mb-2">
-    <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-city">
-        first image
-      </label>
-      <input name="file1" ref={fileInput}  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file"></input>
+
+  <div className=' col-span-2 row-span-1 '>
+
+    <div className='grid grid-cols-5 gap-4 shadow-xl'>
+      
+      <div className='col-span-5 flex items-center   row-span-6 justify-center ' >
+      <h2>TYPE</h2>
+      </div>
+
+      <div className='col-span-5 p-5 row-span-1  w-full' >
+      
+      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">Category</label>
+      <select value={category} onChange={(e)=>{setCateory(e.target.value)}} className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="size">
+          <option value="xl">Men</option>
+          <option value="2xl">Women</option>
+          <option value="xxl">Kids</option>
+         </select>
+      </div>
+        
+        
+      <div className='col-span-5 p-5 row-span-1  w-full mb-[16%]' >
+      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">Sub Category</label>
+      <select value={subCategory} onChange={(e)=>{setSubCategory(e.target.value)}} className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="size">
+          <option value="xl">Formals</option>
+          <option value="2xl">Casuals</option>
+          <option value="xxl">Boys</option>
+          <option value="xxl">Girl</option>
+         </select>
+         </div> 
+
+
     </div>
-    <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-city">
-        second image
-      </label>
-      <input  name="file2" ref={fileInput2}  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input2" type="file"></input>
+
+    <div className='grid grid-cols-5 gap-4 mt-[3%] shadow-xl'>
+    <div className='col-span-5 px-[3%] py-[10%] row-span-1  w-full mb-[16%]' >
+      <div className='flex justify-center pb-[5%]'>TAGS</div>
+      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">Add a Key Words</label>
+      <select value={keyWords} onChange={(e)=>{setKeyWords(e.target.value)}} className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="size">
+          <option value="xl">T-shirt</option>
+          <option value="2xl">T-shirt</option>
+          <option value="xxl">T-shirt</option>
+          <option value="xxl">T-shirt</option>
+         </select>
+         </div> 
     </div>
-    
-    <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-city">
-        third image
-      </label>
-      <input  name="file3" ref={fileInput3}  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file"></input>
+
+
+    <div className='grid grid-cols-5 gap-4 mt-[3%] shadow-xl'>
+    <div className='col-span-5 px-[3%] py-[10%] row-span-1  w-full mb-[16%]' >
+      <div className='flex justify-center pb-[5%]'>PRICE</div>
+      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">Enter Price</label>
+      <input name="price" value={price} onChange={(e)=>{setPrice(e.target.value)}} className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-product-name" type="text" placeholder="Price" />
+
+         </div> 
     </div>
+
+
   </div>
-  <div className='flex justify-center mt-20 h-1/6'>
-      <button type='submit' className='bg-slate-700 w-1/3 h-1/3 rounded-md text-white'>ADD PRODUCT</button>
+
+ 
+  <div className=' border col-span-5 row-span-1 p-10 shadow-xl'>
+    <div className='flex justify-center '>
+    <h2>ADD IMAGE</h2>
     </div>
-</form>
-
-
-
-
-
-
-
-
+    <div className='col-span-5 p-5 row-span-1  w-full mb-[16%]' >
+      <div className='m-[2%]'>
+  <p>First Image</p>
+<div className="flex items-center justify-center w-full">
+    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800  hover:bg-gray-100  dark:hover:border-gray-500 ">
+        
+        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+            </svg>
+            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+        </div>
+        <input onChange={(e)=>{setFiles1(e.target.value)}} id="dropzone-file" type="file" class="hidden" />
+    </label>
+</div> 
 </div>
 
-  )
+<div className='m-[2%]'>
+<p>Second Image</p>
+<div className="flex items-center justify-center w-full">
+    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800  hover:bg-gray-100  dark:hover:border-gray-500 ">
+        <p>FIRST IMAGE</p>
+        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+            </svg>
+            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+        </div>
+        <input id="dropzone-file" type="file" class="hidden" />
+    </label>
+</div> 
+</div>
+
+
+<div className='m-[2%]'>
+<p>Third Image</p>
+<div class="flex items-center justify-center w-full">
+    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800  hover:bg-gray-100  dark:hover:border-gray-500 ">
+        <p>FIRST IMAGE</p>
+        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+            </svg>
+            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+        </div>
+        <input id="dropzone-file" type="file" class="hidden" />
+    </label>
+</div> 
+</div>
+
+<div className='border shadow-xl bg-white w-full p-[2%] flex justify-between'>
+  <div>You are almost done</div>
+  <button className='bg-blue-900 p-[1%] rounded-xl text-white'>Add Product</button>
+</div>
+
+    </div>
+
+
+    
+  </div>
+
+  
+</form>
+
+)
 }
 
 export default AddProduct

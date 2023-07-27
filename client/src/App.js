@@ -46,11 +46,15 @@ function App() {
       </Routes>
 
 
+
+
       <Routes path="admin">
+
         <Route element={<AdminMainContainer/>}>
-        {/* <Route element={<RequireAdminAuth isAdmin={"admin"}/>}> */}
-      
         <Route path="/admin/admin-login" element={<AdminLogin />}></Route>
+
+        <Route element={<RequireAdminAuth isAdmin={"admin"}/>}>
+      
         <Route path="/admin/admin-signup" element={<AdminSignup />}></Route>
         <Route path="/admin/admin-home" element={<AdminHome />}></Route>
         <Route path="/admin/add-product" element={<AddProduct />}></Route>
@@ -62,7 +66,7 @@ function App() {
           path="/admin/user-management"
           element={<UserManagement />}></Route>
           </Route>
-          {/* </Route> */}
+          </Route>
       </Routes>
 
       

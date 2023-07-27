@@ -16,13 +16,15 @@ var ProductSchema = new mongoose.Schema({
       // type:mongoose.Schema.Types.ObjectId,
       // ref:Category
       type:String,
-      required:true
+      required:true,
+      unique:false
     },
     subCategory: {
       // type: mongoose.Schema.Types.ObjectId,
       type:String,
       // ref:subCategory,
-      required:true
+      required:true,
+      unique:false
       
     },
     stockQuantity: {
