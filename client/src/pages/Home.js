@@ -4,7 +4,7 @@ import { BACKEND_API } from '../utils/constants'
 import axios from 'axios'
 import ProductCard from '../components/ProductCard'
 import { setCredentials } from '../utils/loginSlice'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 const URL=`${BACKEND_API}/admin/get-all-products`
 
  const Home = () => {
@@ -42,12 +42,15 @@ const URL=`${BACKEND_API}/admin/get-all-products`
 
   return (
     <div>
+      <div>
+      <Link to={'/reg'}>REg</Link>
       {
         data.map((el)=>{
           console.log(el)
          return  <ProductCard products={el} />
         })
       }
+      </div>
      
      
     </div>
