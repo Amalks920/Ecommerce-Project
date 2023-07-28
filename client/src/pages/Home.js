@@ -6,8 +6,9 @@ import ProductCard from '../components/ProductCard'
 import { setCredentials } from '../utils/loginSlice'
 import { Link, useLocation } from 'react-router-dom'
 import CarouselTransition from '../components/Carousel'
-const URL=`${BACKEND_API}/admin/get-all-products`
+import { setProducts } from '../utils/productSlice'
 
+const URL=`${BACKEND_API}/admin/get-all-products`
 
  const Home = () => {
  let dispatch=useDispatch()
@@ -19,10 +20,10 @@ const URL=`${BACKEND_API}/admin/get-all-products`
   
 
 
-// useEffect(()=>{
+useEffect(()=>{
+  dispatch(setProducts(data))
 
-//   dispatch(setCredentials({username:"username",token:token}))
-// })
+})
 
   let headers
   if(token){
@@ -44,7 +45,7 @@ const URL=`${BACKEND_API}/admin/get-all-products`
 
   return (
     <div className='border border-x-red-700 h-screen'>
-
+      <Link to={'/product-page'}>product page</Link>
       <div className=' h-1/2 mt-[5%]'>
         <CarouselTransition />
       </div>
@@ -58,8 +59,9 @@ const URL=`${BACKEND_API}/admin/get-all-products`
         <div className='border border-black flex flex-wrap'>
       {
         data.map((el)=>{
-          
-         return  <ProductCard products={el} />
+        
+         return <ProductCard products={el} />
+         
         })
       }
       </div>

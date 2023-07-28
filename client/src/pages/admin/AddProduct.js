@@ -20,6 +20,7 @@ const [price,setPrice]=useState();
 const [file1,setFiles1]=useState();
 const [file2,setFiles2]=useState();
 const [file3,setFiles3]=useState();
+const [image,setImage]=useState();
 
 console.log(file1)
 
@@ -41,9 +42,10 @@ const sendProductDeatails=(e)=>{
     stockQuantity:stockQuantiy,
     size:selectedSize,
     price:price,
+    image:image
     
    }
-  
+  console.log(image);
 
 
   
@@ -60,7 +62,7 @@ const sendProductDeatails=(e)=>{
   axios.post(URL,data)
   .then((res)=>{
       // dispatch(setProductDetails(res.data))
-      console.log(formData)
+     
       
      console.log(res.data)
   })
@@ -72,11 +74,21 @@ const sendProductDeatails=(e)=>{
 
 console.log(productName,brandName,selectedSize,stockQuantiy,description,category);
 
+function previewFiles(file){
+  const reader=new FileReader()
+  reader.readAsDataURL(file)
 
+  reader.onloadend=()=>{
+    
+    setImage(reader.result)
+    console.log(image)
+  }
+}
 
 
 return (
   <form onSubmit={sendProductDeatails} className="mt-3  grid grid-cols-5 grid-rows-[5%] gap-4  m-10 bg-white">
+    <img src={image} alt=''/>
      <div className='flex justify-left ps-8 font-bold text-lg items-center col-span-5 row-span-1 shadow-xl'>
       <h1>ADD A PRODUCT</h1>
      </div>
@@ -191,7 +203,7 @@ return (
     <div className='col-span-5 px-[3%] py-[10%] row-span-1  w-full mb-[16%]' >
       <div className='flex justify-center pb-[5%]'>PRICE</div>
       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">Enter Price</label>
-      <input name="price" value={price} onChange={(e)=>{setPrice(e.target.value)}} className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-product-name" type="text" placeholder="Price" />
+      <input name="price" value={price} onChange={(e)=>{setPrice(e.target.value)}} className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-product-name" type="number" placeholder="Price" />
 
          </div> 
     </div>
@@ -217,7 +229,12 @@ return (
             <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
             <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
         </div>
-        <input onChange={(e)=>{setFiles1(e.target.value)}} id="dropzone-file" type="file" class="hidden" />
+        <input onChange={(e)=>
+          {
+            setFiles1(e.target.files[0])
+            previewFiles(e.target.files[0])
+          }}
+             id="dropzone-file" type="file" class="hidden" />
     </label>
 </div> 
 </div>
@@ -234,7 +251,7 @@ return (
             <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
             <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
         </div>
-        <input id="dropzone-file" type="file" class="hidden" />
+        <input onChange={(e)=>{setFiles2(e.target.files[0])}} id="dropzone-file" type="file" class="hidden" />
     </label>
 </div> 
 </div>
@@ -252,7 +269,7 @@ return (
             <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
             <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
         </div>
-        <input id="dropzone-file" type="file" class="hidden" />
+        <input onChange={(e)=>{setFiles3(e.target.files[0])}} id="dropzone-file" type="file" class="hidden" />
     </label>
 </div> 
 </div>

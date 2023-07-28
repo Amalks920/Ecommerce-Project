@@ -18,6 +18,7 @@ import UserManagement from "./pages/admin/UserManagement";
 import OtpLogin from "./pages/OtpLogin";
 import Reg from "./pages/Reg";
 import AdminMainContainer from "./components/AdminMainContainer";
+import ProductPage from "./pages/ProductPage";
 
 let isLoggedIn;
 
@@ -36,6 +37,7 @@ function App() {
 
           <Route element={<RequireAuth />}>
             <Route path="home" element={<Home />}></Route>
+            <Route path="product-page/:id" element={<ProductPage/>}></Route>
           </Route>
 
           <Route path="reg" element={<Reg />}></Route>
