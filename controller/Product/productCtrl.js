@@ -6,63 +6,79 @@ const { uploadProductImages } = require("../../utils/uploadProductImages");
 const fs = require("node:fs");
 const { upload } = require("../../config/multer");
 const imgModel = require("../../models/imageSchema");
-const cloudinary=require('../../cloudinary/cloudinary');
+const cloudinary = require("../../cloudinary/cloudinary");
 const { log } = require("console");
+const CategorySchema = require("../../models/categorySchema");
+const SubcategorySchema = require("../../models/subCategorySchema");
 const assetsFolder = path.join(DIR_NAME, "upload/images/");
 
 // cloudinary.uploader.upload(,
-//   { public_id: "ds,fkn" }, 
+//   { public_id: "ds,fkn" },
 //   function(error, result) {
 //     if(error)console.log(error.message)
 //     console.log(result) });
- 
-    
 
 const addProduct = asyncHandler(async (req, res, next) => {
   const { productName } = req.body;
-
+  console.log(req.body);
   const { image } = req.body;
-    
-    
+
   const findProduct = await ProductModel.findOne({ productName: productName });
-  
+
   if (!findProduct) {
     try {
-    //  let cloud=await  cloudinary.uploader.upload(
-    //         image,        
-    //     {
-    //         upload_preset:'unsigned_upload',
-    //         public_id:`f`,
-           
-    //     },
-    //     function (error, result) {
-    //         if(error) console.log(error.message)
-          
-    //        res.status(200).json(result)
-    //     }
-    //   );
-    //     console.log('product cloud')
-    //   console.log(cloud);
+      //
+      const { category, subCategory } = req.body;
+
+        let categoryInDb=await CategorySchema.findOne({category:category});
+        console.log(categoryInDb._id)
+
+      
+
+      const {productName,brandName,size,description,stockQuantity,price}=req.body
+
+      const addProduct=await ProductModel.create({
+        productName:productName,
+        brandName:brandName,
+        size:size,
+        description:description,
+        stockQuantity:Number(stockQuantity),
+        price:Number(price),
+        category:categoryInDb._id    
+      })
+
+      console.log(addProduct)
+
+      //  let cloud=await  cloudinary.uploader.upload(
+      //         image,
+      //     {
+      //         upload_preset:'unsigned_upload',
+      //         public_id:`f`,
+
+      //     },
+      //     function (error, result) {
+      //         if(error) console.log(error.message)
+
+      //        res.status(200).json(result)
+      //     }
+      //   );
+      //     console.log('product cloud')
+      //   console.log(cloud);
 
 
+      // let product = await ProductModel.create(req.body);
 
 
-
-
-    //   let product = await ProductModel.create(req.body);
-
-    //   console.log(product._id);
-
+      //   console.log(product._id);
 
       // let insertFile=await ProductModel.updateOne({_id:product._id},{$push:{images:{$each:filenames}}})
       //     console.log(insertFile)
 
-
-    //   res.json({ product: product });
+      res.json({ product: product });
     } catch (error) {
-        console.log(error.message);
-    //   res.json({ error: error.message });
-     }
+      console.log(error.message);
+      //   res.json({ error: error.message });
+    }
   }
 });
 

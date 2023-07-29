@@ -11,7 +11,7 @@ let user
 const navigate=useNavigate()
 const dispatch=useDispatch()
 
-user=useSelector((store)=>store.user.user)
+let token=useSelector((store)=>store.user.token)
 console.log(user)
 
 
@@ -41,7 +41,7 @@ const logout = () =>{
   console.log(user)
 
   return (
-    <div className='w-screen h-28 bg-white shadow-2xl flex justify-evenly items-center'>
+    <div className='w-screen fixed top-0 h-28 bg-white shadow-2xl flex justify-evenly items-center'>
       <div className='w-1/6'>
         <h1 className='font-bold text-2xl'>E-Comx</h1>
       </div>
@@ -51,15 +51,18 @@ const logout = () =>{
         <li>Pages</li>
         <li>Contact</li>
       </ul>
-      <div className=' p-2 rounded-full w-1/6 h-3/4 flex items-center justify-center'>
-        <input className="w-4/5 h-full rounded-l-full p-4 ps-9 shadow-xl" placeholder='Find Products' />
-        <button className='bg-green-400 h-full w-1/5 rounded-r-full shadow-xl'>Search</button>
-      </div>
      
+      
         {
           
-        user ?<button onClick={logout} className='bg-green-500 w-56 h-14'>{`Logout`} </button> :<button className='bg-green-500 w-1/12 h-1/2'><Link to='/login'>Login</Link> </button>
+        token ?<button onClick={logout} className='bg-slate-600 text-white font-bold w-56 h-14'>{`Logout`} </button> :<button className='bg-slate-600 text-white font-bold w-1/12 h-1/2'><Link to='/login'>Login</Link> </button>
         }
+        
+
+        <div>
+        
+        <div className='text-green-500'><Link to={'/user-cart'}>Cart</Link></div>
+        </div>
         
     </div>
   )

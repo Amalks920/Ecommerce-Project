@@ -49,8 +49,8 @@ var userSchema = new mongoose.Schema({
         default:"user"
     },
     cart:{
-        type:Array,
-        default:[]
+        type:mongoose.SchemaTypes.ObjectId,
+        ref:"cart"
     },
     address:[{
         type:mongoose.ObjectId,

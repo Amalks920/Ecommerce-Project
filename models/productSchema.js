@@ -1,5 +1,6 @@
 
 const mongoose = require('mongoose'); // Erase if already required
+const category=require('./categorySchema')
 
 // Declare the Schema of the Mongo model
 var ProductSchema = new mongoose.Schema({
@@ -7,26 +8,22 @@ var ProductSchema = new mongoose.Schema({
       type: String,
       required: true,
       unique: true,
+      lowercase:true
     },
     brandName: {
       type: String,
       required: true,
+      lowercase:true
     },
     category: {
       // type:mongoose.Schema.Types.ObjectId,
       // ref:Category
-      type:String,
+      type:mongoose.SchemaTypes.ObjectId,
+      ref:category,
       required:true,
       unique:false
     },
-    subCategory: {
-      // type: mongoose.Schema.Types.ObjectId,
-      type:String,
-      // ref:subCategory,
-      required:true,
-      unique:false
-      
-    },
+    
     stockQuantity: {
       type: Number,
       required: true,

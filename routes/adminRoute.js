@@ -6,7 +6,7 @@ const {upload}=require('../config/multer')
 //user management
 const {getAllUsers,getUser,deleteUser,
     updateUser,
-    isAdmin,blockUser,getImage,
+    isAdmin,blockUser,getImage,addCategory,
     unBlockUser}=require('../controller/Admin/adminCtrl');
 
 router.get('/hi',(req,res,next)=>{
@@ -33,6 +33,8 @@ router.get('/get-a-product/:id',getAProduct)
 router.delete('/delete-a-product/:id',deleteProduct)
 router.put('/update-product/:id',updateProduct)
 router.get('/get-image',getImage)
+
+router.post('/add-category',authMiddleware,addCategory);
 
 
 
