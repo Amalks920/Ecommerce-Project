@@ -10,6 +10,10 @@ const cloudinary = require("../../cloudinary/cloudinary");
 const { log } = require("console");
 const CategorySchema = require("../../models/categorySchema");
 const SubcategorySchema = require("../../models/subCategorySchema");
+const userSchema = require("../../models/userSchema");
+const CartSchema = require("../../models/CartSchema");
+const { ObjectId } = require("mongodb");
+const { default: mongoose } = require("mongoose");
 const assetsFolder = path.join(DIR_NAME, "upload/images/");
 
 // cloudinary.uploader.upload(,
@@ -20,34 +24,40 @@ const assetsFolder = path.join(DIR_NAME, "upload/images/");
 
 const addProduct = asyncHandler(async (req, res, next) => {
   const { productName } = req.body;
-  console.log(req.body);
+  
   const { image } = req.body;
 
   const findProduct = await ProductModel.findOne({ productName: productName });
 
   if (!findProduct) {
+   
     try {
+      
       //
       const { category, subCategory } = req.body;
+      console.log(req.body)
+      let categoryInDb = await CategorySchema.findOne({ category: category });
+     
+      const {
+        productName,
+        brandName,
+        size,
+        description,
+        stockQuantity,
+        price,
+      } = req.body;
 
-        let categoryInDb=await CategorySchema.findOne({category:category});
-        console.log(categoryInDb._id)
-
-      
-
-      const {productName,brandName,size,description,stockQuantity,price}=req.body
-
-      const addProduct=await ProductModel.create({
-        productName:productName,
-        brandName:brandName,
-        size:size,
-        description:description,
-        stockQuantity:Number(stockQuantity),
-        price:Number(price),
-        category:categoryInDb._id    
-      })
-
-      console.log(addProduct)
+      const addProduct = await ProductModel.create({
+        productName: productName,
+        brandName: brandName,
+        size: size,
+        description: description,
+        stockQuantity: Number(stockQuantity),
+        price: Number(price),
+        category: categoryInDb._id,
+      });
+      console.log('addproduct---->')
+      console.log(addProduct);
 
       //  let cloud=await  cloudinary.uploader.upload(
       //         image,
@@ -65,16 +75,14 @@ const addProduct = asyncHandler(async (req, res, next) => {
       //     console.log('product cloud')
       //   console.log(cloud);
 
-
       // let product = await ProductModel.create(req.body);
-
 
       //   console.log(product._id);
 
       // let insertFile=await ProductModel.updateOne({_id:product._id},{$push:{images:{$each:filenames}}})
       //     console.log(insertFile)
 
-      res.json({ product: product });
+      res.json({ product: addProduct });
     } catch (error) {
       console.log(error.message);
       //   res.json({ error: error.message });
@@ -132,10 +140,76 @@ const updateProduct = asyncHandler(async (req, res, next) => {
   }
 });
 
+const addToCart = async (req, res, next) => {
+  try {
+    const { userId, productId } = req.body;
+
+    let findUser = await userSchema.findById(userId);
+    await findUser.sayHi()
+
+    console.log("iscart exist");
+    isCartExist = await findUser.populate("cart");
+    console.log('isCartSolution');
+    console.log(isCartExist.cart);
+    if (!isCartExist.cart) {
+      console.log('insid isCartExist');
+      let userCart = await CartSchema.create({ products: [{productId}] });
+      let updateUser = await userSchema.findOneAndUpdate(
+        { _id: userId },
+        { cart: userCart._id }
+      );
+      console.log(updateUser);
+    } else {
+      let cartProducts = await isCartExist.populate("cart")
+      
+    let cartProd=await cartProducts.cart.populate("products")
+
+
+    const prodIdArray=await cartProd.products[0].productId.map((el)=>{
+      return el._id
+    })
+    console.log(prodIdArray,productId)
+    const isProdExist=await prodIdArray.find(function(_id){
+     
+      return _id.toString()===productId
+
+    })
+    
+    console.log(isProdExist)
+      if(isProdExist){
+        console.log('product already exist in cart')
+        
+      }else{
+        console.log('product doesn"t exist in cart');
+        await cartProd.products[0].productId.push(productId)
+        await cartProd.save()
+      }
+    
+    
+      
+    }
+
+    // if(findUser){
+
+    //
+    //
+
+    //   const em=await findUser.populate('cart')
+    //   console.log(em.cart)
+    // }else{
+    //   res.json({msg:'user not found'})
+    // }
+  } catch (error) {
+    console.log(error.message);
+    res.json({ err: error.message });
+  }
+};
+
 module.exports = {
   addProduct,
   getAllProducts,
   getAProduct,
   deleteProduct,
   updateProduct,
+  addToCart,
 };

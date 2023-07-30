@@ -30,7 +30,7 @@ export  const Login = () => {
     const navigate=useNavigate()
     const location=useLocation()
     const from=location;
-    console.log(from)
+ 
 
 
     const [email,setEmail]=useState('')
@@ -51,6 +51,7 @@ const handleSubmit=async (e)=>{
     e.preventDefault();
 
     try {
+        
         const response=await axios.post(LOGIN_URL,
             JSON.stringify({email:email,password:password}),
             {
@@ -69,7 +70,7 @@ const handleSubmit=async (e)=>{
             //dispatch the setCredentials action which stores
             //username and token in login slice
             
-         dispatch(setCredentials({username:response.data.name,token:response.data.accessToken,role:response.data.role}))
+         dispatch(setCredentials({username:response.data.name,token:response.data.accessToken,role:response.data.role,id:response.data.id}))
        
         setPassword('')
 

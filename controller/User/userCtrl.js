@@ -90,14 +90,14 @@ const userLogin=asyncHandler(async (req,res,next)=>{
         })
 
         //destructuring finduser to get details of user 
-        const { email,isBlocked,mobile,name,role} = findUser;
+        const { _id,email,isBlocked,mobile,name,role} = findUser;
             
 
         //send response to client side
         res.json({              
         email:email,isBlocked:isBlocked,
         mobile:mobile,name:name,role:role,
-        accessToken:accessToken
+        accessToken:accessToken,id:_id
                 })
                
         }else{   

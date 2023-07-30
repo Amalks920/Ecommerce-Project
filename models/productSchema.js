@@ -19,7 +19,7 @@ var ProductSchema = new mongoose.Schema({
       // type:mongoose.Schema.Types.ObjectId,
       // ref:Category
       type:mongoose.SchemaTypes.ObjectId,
-      ref:category,
+      ref:"category",
       required:true,
       unique:false
     },

@@ -204,7 +204,7 @@ const AddProduct = () => {
               Category
             </label>
             <select
-              value={category}
+              
               onChange={(e) => {
                 setCategory(e.target.value);
               }}

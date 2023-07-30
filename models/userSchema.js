@@ -50,7 +50,8 @@ var userSchema = new mongoose.Schema({
     },
     cart:{
         type:mongoose.SchemaTypes.ObjectId,
-        ref:"cart"
+        ref:"Cart",
+        default:new ObjectId(null)
     },
     address:[{
         type:mongoose.ObjectId,
@@ -77,6 +78,10 @@ userSchema.pre('save',async function (next){
 
 userSchema.methods.isPasswordMatched = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword,this.password);
+}
+
+userSchema.methods.sayHi=function (){
+    console.log('hi oooo')
 }
 
 //Export the model

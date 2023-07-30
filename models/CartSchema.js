@@ -1,12 +1,13 @@
 const mongoose=require('mongoose');
 
-const CartSchema=mongoose.Schema({
-    products:{
-        type:mongoose.SchemaTypes.ObjectId,
-        ref:"products",
+const CartSchema=new mongoose.Schema({
+    products:[{
+        productId:{
+        type:[mongoose.SchemaTypes.ObjectId],
         required:true,
-        unique:true      
-    },
+        unique:true    
+        }  
+    }],
 
     quantity:{
         type:Number,
@@ -19,3 +20,12 @@ const CartSchema=mongoose.Schema({
     }
 
 })
+
+CartSchema.methods.sayHi=function(){
+    // return `myr ${name}`
+    
+}
+
+module.exports=mongoose.model('Cart',CartSchema);
+
+
