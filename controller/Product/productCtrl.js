@@ -24,20 +24,18 @@ const assetsFolder = path.join(DIR_NAME, "upload/images/");
 
 const addProduct = asyncHandler(async (req, res, next) => {
   const { productName } = req.body;
-  
+
   const { image } = req.body;
 
   const findProduct = await ProductModel.findOne({ productName: productName });
 
   if (!findProduct) {
-   
     try {
-      
       //
       const { category, subCategory } = req.body;
-      console.log(req.body)
+      console.log(req.body);
       let categoryInDb = await CategorySchema.findOne({ category: category });
-     
+
       const {
         productName,
         brandName,
@@ -56,7 +54,7 @@ const addProduct = asyncHandler(async (req, res, next) => {
         price: Number(price),
         category: categoryInDb._id,
       });
-      console.log('addproduct---->')
+      console.log("addproduct---->");
       console.log(addProduct);
 
       //  let cloud=await  cloudinary.uploader.upload(
@@ -145,48 +143,48 @@ const addToCart = async (req, res, next) => {
     const { userId, productId } = req.body;
 
     let findUser = await userSchema.findById(userId);
-    await findUser.sayHi()
 
-    console.log("iscart exist");
     isCartExist = await findUser.populate("cart");
-    console.log('isCartSolution');
-    console.log(isCartExist.cart);
+
     if (!isCartExist.cart) {
-      console.log('insid isCartExist');
-      let userCart = await CartSchema.create({ products: [{productId}] });
+      console.log("insid isCartExist");
+      let userCart = await CartSchema.create({ products: [{ productId }] });
       let updateUser = await userSchema.findOneAndUpdate(
         { _id: userId },
         { cart: userCart._id }
       );
       console.log(updateUser);
     } else {
-      let cartProducts = await isCartExist.populate("cart")
-      
-    let cartProd=await cartProducts.cart.populate("products")
+      let cartProducts = await isCartExist.populate("cart");
 
+      let cartProd = await cartProducts.cart.populate("products");
 
-    const prodIdArray=await cartProd.products[0].productId.map((el)=>{
-      return el._id
-    })
-    console.log(prodIdArray,productId)
-    const isProdExist=await prodIdArray.find(function(_id){
-     
-      return _id.toString()===productId
+      const prodIdArray = await cartProd.products.map((el) => {
+        return el.productId;
+      });
 
-    })
-    
-    console.log(isProdExist)
-      if(isProdExist){
-        console.log('product already exist in cart')
-        
-      }else{
+      const isProdExist = await prodIdArray.find(function (_id) {
+        return _id.toString() === productId;
+      });
+
+      if (isProdExist) {
+        console.log("product already exist in cart");
+        let cartId = isCartExist.cart._id;
+        findCart = await CartSchema.findById(cartId);
+        // console.log(findCart.products.find(function (productId){
+        //   return productId===productId
+        // }).productId)
+        const inCount = await CartSchema.findOneAndUpdate({ prod });
+
+        // console.log(isCartExist.cart.products.find(function(productId){
+        //   return productId===productId
+        // }).count)
+        // isCartExist.save()
+      } else {
         console.log('product doesn"t exist in cart');
-        await cartProd.products[0].productId.push(productId)
-        await cartProd.save()
+        await cartProd.products.push({ productId });
+        await cartProd.save();
       }
-    
-    
-      
     }
 
     // if(findUser){
