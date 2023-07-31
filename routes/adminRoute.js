@@ -16,8 +16,8 @@ router.get('/get-all-users',authMiddleware,getAllUsers)
 router.get('/get-a-user/:id',authMiddleware,isAdmin,getUser)
 router.delete('/:id',authMiddleware,deleteUser)
 router.put('/:id',authMiddleware,updateUser)
-router.put('/block-user/:id',authMiddleware,blockUser)
-router.put('/unblock-user/:id',authMiddleware,unBlockUser)
+router.put('/block-user/:id',blockUser)
+router.put('/unblock-user/:id',unBlockUser)
 
 
 //product management

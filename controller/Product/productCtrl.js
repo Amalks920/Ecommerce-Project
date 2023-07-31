@@ -33,9 +33,10 @@ const addProduct = asyncHandler(async (req, res, next) => {
     try {
       //
       const { category, subCategory } = req.body;
+      const {image}=req.body
       console.log(req.body);
       let categoryInDb = await CategorySchema.findOne({ category: category });
-
+      console.log(categoryInDb);
       const {
         productName,
         brandName,
@@ -45,6 +46,24 @@ const addProduct = asyncHandler(async (req, res, next) => {
         price,
       } = req.body;
 
+      let cloudImage
+      try {
+        console.log('hello')
+         cloudImage=await  cloudinary.uploader.upload(
+          image,
+       {timeout: 60000}
+        
+      );
+      console.log('hl')
+      console.log(cloudImage);
+        
+      } catch (error) {
+        console.log(error)
+      } 
+
+      console.log(cloudImage.url)
+
+
       const addProduct = await ProductModel.create({
         productName: productName,
         brandName: brandName,
@@ -53,6 +72,7 @@ const addProduct = asyncHandler(async (req, res, next) => {
         stockQuantity: Number(stockQuantity),
         price: Number(price),
         category: categoryInDb._id,
+        image:cloudImage.url
       });
       console.log("addproduct---->");
       console.log(addProduct);
@@ -147,13 +167,21 @@ const addToCart = async (req, res, next) => {
     isCartExist = await findUser.populate("cart");
 
     if (!isCartExist.cart) {
-      console.log("insid isCartExist");
+      
       let userCart = await CartSchema.create({ products: [{ productId }] });
       let updateUser = await userSchema.findOneAndUpdate(
         { _id: userId },
         { cart: userCart._id }
       );
-      console.log(updateUser);
+      console.log('upd');
+      console.log(userCart._id)
+    
+      let returnedCart=await CartSchema.findById(userCart._id)
+      const productCount=returnedCart.products[0].productId
+      //find product from db
+      const product=await ProductModel.findOne(producId)
+     res.json({product:product})
+
     } else {
       let cartProducts = await isCartExist.populate("cart");
 
@@ -174,8 +202,12 @@ const addToCart = async (req, res, next) => {
         // console.log(findCart.products.find(function (productId){
         //   return productId===productId
         // }).productId)
-        const inCount = await CartSchema.findOneAndUpdate({ prod });
 
+
+        // const inCount = await CartSchema.findOneAndUpdate({ prod });
+
+
+          res.json({msg:'success'})
         // console.log(isCartExist.cart.products.find(function(productId){
         //   return productId===productId
         // }).count)
@@ -184,6 +216,8 @@ const addToCart = async (req, res, next) => {
         console.log('product doesn"t exist in cart');
         await cartProd.products.push({ productId });
         await cartProd.save();
+
+        res.json({msg:cartProd})
       }
     }
 
@@ -203,11 +237,17 @@ const addToCart = async (req, res, next) => {
   }
 };
 
+
+// const updateCartCount=asyncHandler(async(req,res,next)=>{
+//   console.log('updatecartcount')
+//   res.json({msg:"success"})
+// })
+
 module.exports = {
   addProduct,
   getAllProducts,
   getAProduct,
   deleteProduct,
   updateProduct,
-  addToCart,
+  addToCart
 };

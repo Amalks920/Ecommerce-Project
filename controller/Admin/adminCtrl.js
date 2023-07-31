@@ -91,6 +91,7 @@ const blockUser = async (req, res, next) => {
       res.status(401).json({ msg: "user already unblock" });
     }
   } catch (error) {
+    console.log(error.message)
     res.status(404).json({ err: error });
   }
 };

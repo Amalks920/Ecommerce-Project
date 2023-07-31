@@ -7,7 +7,8 @@ import { Provider } from 'react-redux';
 import store from './utils/store';
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import { AuthProvider } from './context/AuthProvider';
-
+// @material-tailwind/react
+import { ThemeProvider } from "@material-tailwind/react";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,7 +17,10 @@ root.render(
       <AuthProvider>
     <BrowserRouter>
     <Routes>  
+    <ThemeProvider>
+
       <Route path='/*' element={<App />} /> 
+      </ThemeProvider>
     </Routes>
     </BrowserRouter>
     </AuthProvider>

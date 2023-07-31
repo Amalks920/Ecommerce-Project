@@ -1,19 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
 import { useParams } from "react-router-dom";
 import store from "../utils/store";
 import axios from "../api/axios";
+import { cacheCartProducts } from "../utils/cartSlice";
+import { useDispatch } from "react-redux";
 
 const ADD_TO_CART_API = `/user/add-to-cart`;
 
 const ProductPage = () => {
   const { id } = useParams();
-
+  const dispatch=useDispatch();
+ 
+  
+ 
   //subscribe to userslice
   const token = useSelector((store) => store.user.token);
   const userid = useSelector((store) => store.user.id);
-
-  console.log('userrrrie'+userid);
+  const cart=useSelector(store=>store.cart)
+  console.log(cart)
 
   const products = useSelector((store) => {
     return store.products.products[2];
@@ -23,8 +28,7 @@ const ProductPage = () => {
   });
 
   let prodId = product[0]._id;
-  console.log("prod");
-  console.log(prodId);
+  
   // const products=useSelector(store=>store.products)
   // console.log(products)
 
@@ -36,10 +40,16 @@ const ProductPage = () => {
   }
 
   //add to cart
-
   const addToCart = async () => {
+    
+    
     try {
-      const cartResponse = await axios.post(ADD_TO_CART_API,{productId:prodId,userId:userid},{headers});
+      const cartResponse = await axios.post(ADD_TO_CART_API,
+        {productId:prodId,userId:userid},
+        {headers});
+        
+        
+        dispatch(cacheCartProducts(product))
       
     } catch (error) {
       console.log(error);

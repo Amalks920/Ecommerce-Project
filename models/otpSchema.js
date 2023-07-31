@@ -1,15 +1,16 @@
-const {Schema,model}=require('mongoose')
+const mongoose=require('mongoose')
 
-otp=model('Otp',Schema({
-    number:{
+const Otp=new mongoose.Schema({
+    Email:{
         type:String,
         required:true
     },
     otp:{
-        type:String,
+        type:Number,
         required:true
-    },
-    createdAt:{type:Date,default:Date.now,index:{expires:300}}
-},
-    {timestamps:true}   
-))
+    }
+}
+  
+)
+
+module.exports=mongoose.model('Otp',Otp)

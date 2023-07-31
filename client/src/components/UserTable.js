@@ -1,12 +1,23 @@
 import React, { useEffect, useState } from 'react'
+import { UseSelector } from 'react-redux/es/hooks/useSelector'
 import { Link } from 'react-router-dom'
 import axios from '../api/axios'
 import { set } from 'react-hook-form'
-
-
+import { useSelector } from 'react-redux'
 
 const UserTable = (props) => {
+  const token=useSelector(store=>store.user.token)
+
   const [blockButton,setBlockButton]=useState(true)
+
+console.log(blockButton)
+
+let headers
+if(token){
+   headers={
+    'Authorization':`Bearer ${token}`
+  }
+}
 console.log('props.users');
 const {name,email,mobile,isBlocked,_id}=props.users
 // const BLOCK_USER_API=`/admin/block-user/${_id}`
@@ -15,9 +26,11 @@ const BLOCK_USER_API=`/admin/block-user/${_id}`
 const UNBLOCK_USER_API=`/admin/unblock-user/${_id}`
 
 const blockUser=()=>{
-  axios.put(BLOCK_USER_API)
+  axios.put(BLOCK_USER_API,{headers})
   .then((res)=>{
-    setBlockButton(true)
+    if(res.data.message===true)  setBlockButton(false)
+    else setBlockButton(true)
+   
     console.log(res.data.message);
   })
   .catch((err)=>{
@@ -26,7 +39,7 @@ const blockUser=()=>{
 }
 
 const unBlockUser=()=>{
-  axios.put(UNBLOCK_USER_API)
+  axios.put(UNBLOCK_USER_API,{headers})
   .then((res)=>{
     setBlockButton(res.data.message)
     console.log(res.data.message);

@@ -22,8 +22,9 @@ const AddProduct = () => {
   const [file2, setFiles2] = useState();
   const [file3, setFiles3] = useState();
   const [image, setImage] = useState();
+  const [image2, setImage2] = useState();
+  const [image3, setImage3] = useState();
 
-  console.log(file1);
 
   let URL = `${BACKEND_API}/admin/add-product`;
 
@@ -58,7 +59,7 @@ const AddProduct = () => {
       .then((res) => {
         // dispatch(setProductDetails(res.data))
 
-        console.log(res.data);
+        console.log(res);
       })
       .catch((err) => {
         // dispatch(setProductDetailsError(err.message))
@@ -74,14 +75,17 @@ const AddProduct = () => {
     description,
     category
   );
+  console.log(category)
 
   function previewFiles(file) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
+   
 
     reader.onloadend = () => {
       setImage(reader.result);
       console.log(image);
+      
     };
   }
 
@@ -206,6 +210,7 @@ const AddProduct = () => {
             <select
               
               onChange={(e) => {
+                console.log(setCategory)
                 setCategory(e.target.value);
               }}
               className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -363,6 +368,8 @@ const AddProduct = () => {
                 <input
                   onChange={(e) => {
                     setFiles2(e.target.files[0]);
+                   
+                    previewFiles(e.target.files[0]);
                   }}
                   id="dropzone-file"
                   type="file"
@@ -405,6 +412,7 @@ const AddProduct = () => {
                 <input
                   onChange={(e) => {
                     setFiles3(e.target.files[0]);
+                    previewFiles(e.target.files[0]);
                   }}
                   id="dropzone-file"
                   type="file"

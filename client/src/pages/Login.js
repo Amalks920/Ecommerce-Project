@@ -37,7 +37,7 @@ export  const Login = () => {
 const [password,setPassword]=useState('')
 const [errMsg,setErrMsg]=useState('')
 
-
+console.log(email,password)
 useEffect(()=>{
     userRef.current.focus();
 },[])

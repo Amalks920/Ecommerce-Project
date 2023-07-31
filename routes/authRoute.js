@@ -4,10 +4,17 @@ const {
   createUser,
   userLogin,
   emailAuthentication,
+  otpLogin,
+  verifyOtp,
   logout,
 } = require("../controller/User/userCtrl");
 
-const {addToCart}=require('../controller/Product/productCtrl')
+const {
+  addToCart,
+  
+}=require('../controller/Product/productCtrl')
+
+const { getCartDetails,img }=require('../controller/Product/cartController')
 
 const handleRefreshToken = require("../config/refreshToken");
 
@@ -24,6 +31,12 @@ router.post("/login", userLogin);
 router.post("/otp-verification-gmail", emailAuthentication);
 router.get("/generate-otp", sendOtp);
 router.post("/add-to-cart",authMiddleware,addToCart);
+router.post('/get-cart-details',authMiddleware,getCartDetails);
+router.post('/otp-login',otpLogin)
+router.post('/otp',verifyOtp)
+
+router.post('/image',img);
+
 
 //  router.use(authMiddleware)
 router.get("/logout", logout);

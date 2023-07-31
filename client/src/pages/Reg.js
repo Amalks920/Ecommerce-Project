@@ -18,7 +18,8 @@ function Reg() {
         })
     })
   return (
-    <div>Reg</div>
+   <div className='mt-[20%] border border-black'>hello</div>
+
   )
 }
 

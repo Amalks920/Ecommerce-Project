@@ -11,6 +11,7 @@ const {EMAIL,PASSWORD}=require('../../utils/emailAuth')
 const nodemailer=require('nodemailer')
 const MailGen=require('mailgen')
 const otpGenerator = require('otp-generator');
+const Otp=require('../../models/otpSchema')
 
 
 
@@ -57,6 +58,7 @@ const userLogin=asyncHandler(async (req,res,next)=>{
     console.log(email)
     try {
        let findUser=await User.findOne({email:email})
+       
 
        
        if(findUser?.isBlocked===true){
@@ -109,6 +111,64 @@ const userLogin=asyncHandler(async (req,res,next)=>{
     } 
 }
 )
+
+
+//              OTP LOGIN
+
+const otpLogin=asyncHandler(async(req,res,next)=>{
+    if(req.body.userEmail){
+        res.json({msg:'success'})
+    }
+})
+
+const verifyOtp=asyncHandler(async(req,res,next)=>{
+        console.log(req.body)
+
+        try {
+
+            const otp=await Otp.findOne({otp:req.body.otp})
+            console.log(otp)
+
+            const findUser=await User.find({email:otp.Email})
+
+            const accessToken=generateToken(findUser?._id,process.env.ACCESS_TOKEN_PRIVATE_KEY,'1d')
+        
+        const refreshToken=generateToken(findUser?._id,process.env.REFRESH_TOKEN_PRIVATE_KEY,'1d')
+      
+        console.log(accessToken);
+            //save the refresh token in the database for future reference
+        const updateUser=await User.findByIdAndUpdate(
+            findUser._id,
+            {refreshToken:refreshToken},
+            {new:true}
+        )
+
+        res.cookie('jwt',refreshToken,{
+            httpOnly:true,
+            maxAge:24*60*60*1000
+        })
+
+        //destructuring finduser to get details of user 
+        const { _id,email,isBlocked,mobile,name,role} = findUser;
+            
+
+        //send response to client side
+        res.json({              
+        email:email,isBlocked:isBlocked,
+        mobile:mobile,name:name,role:role,
+        accessToken:accessToken,id:_id
+                })
+            
+            
+        } catch (error) {
+
+            res.sendStatus(404)
+            
+        }
+       
+
+
+})
 
 
 
@@ -203,7 +263,8 @@ const emailAuthentication=(req,res)=>{
    }
 
    transporter.sendMail(message).then(async ()=>{
-    // const updateUser=await User.updateOne({},{otp:})
+    console.log(otp)
+  const createOtpDb=await Otp.create({Email:EMAIL,otp:otp})
     return res.status(201).json({
         msg:"you should receive an email",
         otp:otp
@@ -226,9 +287,10 @@ const emailAuthentication=(req,res)=>{
 
 module.exports={
     createUser,userLogin,
-  
+    verifyOtp,
     emailAuthentication,
-    logout
+    logout,
+    otpLogin
 }
 
 

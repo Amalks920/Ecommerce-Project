@@ -6,6 +6,7 @@ const userSlice = createSlice({
     id:null,
     username: null,
     token: null,
+    email:null,
     role:"user"
    
   },
@@ -26,6 +27,10 @@ const userSlice = createSlice({
       state.user = null
       state.token = null
       state.id=null
+    },
+
+    setOtpLogin:(state,action)=>{
+        state.email=action.payload.email
     }
   }
 
@@ -35,7 +40,8 @@ const userSlice = createSlice({
 console.log(userSlice);
 
 export const {
-  setCredentials, loggout
+  setCredentials, loggout,
+  setOtpLogin
 } = userSlice.actions
 
 

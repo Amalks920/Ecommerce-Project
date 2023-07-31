@@ -21,6 +21,8 @@ import AdminMainContainer from "./components/AdminMainContainer";
 import ProductPage from "./pages/ProductPage";
 import AddCategory from "./pages/admin/AddCategory";
 import UserCart from "./pages/UserCart";
+import Img from "./pages/Img";
+import EnterOtp from "./pages/EnterOtp";
 
 let isLoggedIn;
 
@@ -36,7 +38,8 @@ function App() {
           <Route path="login" element={<Login />}></Route>
           <Route path="signup" element={<Signup />}></Route>
           <Route path="otp-login" element={<OtpLogin />}></Route>
-
+          <Route path="enter-otp" element={<EnterOtp />}></Route>
+          <Route path="img" element={<Img />}></Route>
           <Route element={<RequireAuth />}>
             <Route path="home" element={<Home />}></Route>
             <Route path="product-page/:id" element={<ProductPage/>}></Route>
