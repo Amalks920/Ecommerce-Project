@@ -107,7 +107,7 @@ const userLogin=asyncHandler(async (req,res,next)=>{
           res.status(401).json({msg:"invalid credentials"})
         }  
     } catch (error) {
-        res.json({error:error.message})
+        res.status(401).json({error:error.message})
     } 
 }
 )

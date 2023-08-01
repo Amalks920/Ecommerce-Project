@@ -3,7 +3,7 @@ import React, { useState,useEffect } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { deleteUser } from '../utils/loginSlice'
 import { Link } from 'react-router-dom'
-
+import { logout } from '../utils/loginSlice'
 import { useNavigate } from 'react-router-dom'
 import axios from '../api/axios'
 const Navbar = () => {
@@ -17,17 +17,17 @@ console.log(user)
 
 const logout = () =>{
   
-   navigate('/login')
-  // axios.get('/user/logout')
-  // .then((res)=>{
-  //   console.log(res)
-  //   dispatch(deleteUser())
-  //   navigate('/login')
+  
+  axios.get('/user/logout')
+  .then((res)=>{
+    console.log(res)
+    dispatch(logout)
+    navigate('/login')
 
-  // })
-  // .catch((err)=>{
-  //   console.log(err)
-  // })
+  })
+  .catch((err)=>{
+    console.log(err)
+  })
 
    
 }
@@ -41,15 +41,15 @@ const logout = () =>{
   console.log(user)
 
   return (
-    <div className='w-screen fixed top-0 h-28 bg-white shadow-2xl flex justify-evenly items-center'>
+    <div className='w-screen fixed z-20 top-0 h-28 bg-white shadow-2xl flex justify-evenly items-center'>
       <div className='w-1/6'>
         <h1 className='font-bold text-2xl'>E-Comx</h1>
       </div>
       <ul className='flex justify-between w-1/3'>
         <li><Link to={'/login'}>Home</Link></li>
-        <li>Shop</li>
-        <li>Pages</li>
-        <li>Contact</li>
+        <li>Men</li>
+        <li>Women</li>
+        <li>Kids</li>
       </ul>
      
       

@@ -30,6 +30,11 @@ var ProductSchema = new mongoose.Schema({
     },
     image:String,
 
+    isSoftDeleted:{
+      type:Boolean,
+      default:false
+    },
+    
     description: {
       type: String,
       required: true,

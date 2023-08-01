@@ -1,6 +1,6 @@
 
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useAuth } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from '../api/axios'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,7 +9,7 @@ import { setOtpLogin } from '../utils/loginSlice'
 const OtpLogin = () => {
     const [email,setEmailId]=useState('')
     const navigate=useNavigate()
-    
+   
    
 
 
@@ -20,6 +20,7 @@ const OtpLogin = () => {
             console.log(res)
           
             setEmailId('')
+           
             
             navigate('/enter-otp')
             

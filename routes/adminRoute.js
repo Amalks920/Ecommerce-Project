@@ -30,7 +30,7 @@ router.post('/add-product',addProduct)
 
 router.get('/get-all-products',authMiddleware,getAllProducts)
 router.get('/get-a-product/:id',getAProduct)
-router.delete('/delete-a-product/:id',deleteProduct)
+router.put('/delete-a-product/:id',deleteProduct)
 router.put('/update-product/:id',updateProduct)
 router.get('/get-image',getImage)
 

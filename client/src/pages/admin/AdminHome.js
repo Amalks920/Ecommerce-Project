@@ -23,16 +23,7 @@ export const AdminHome = () => {
     <div className='flex'>
      
      
-      {
-        data.map((el)=>{
-          const base64String=btoa(
-            String.fromCharCode(...new Uint8Array((el.img.data.toString('base64'))))
-          )
-          console.log(el.img.data)
-          return  <img src={`data:image/png;base64,${base64String}`}/>
-
-        })
-      }
+      
       
     </div>
   )

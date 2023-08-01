@@ -10,6 +10,9 @@ import Home from '../Home';
 
 const LOGIN_URL='/user/login'
 
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const emailRegex=  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 
 
 
@@ -32,6 +35,13 @@ const [password,setPassword]=useState('')
 const [errMsg,setErrMsg]=useState('')
 
 
+
+const [validEmail, setValidEmail] = useState(false);
+
+
+const [validPassword, setValidPassword] = useState(false);
+
+
 useEffect(()=>{
     userRef.current.focus();
 },[])
@@ -39,6 +49,25 @@ useEffect(()=>{
 useEffect(()=>{
     setErrMsg('')
 },[email,password])
+
+
+
+
+useEffect(() => {
+    const result = passwordRegex.test(password);
+    console.log(result);
+    console.log(password);
+    setValidPassword(result);
+  }, [password]);
+
+
+  useEffect(() => {
+    const result = emailRegex.test(email);
+    console.log('result')
+    console.log(result);
+    console.log(email);
+    setValidEmail(result);
+  }, [email]);
 
 const handleSubmit=async (e)=>{
     e.preventDefault();
@@ -99,6 +128,8 @@ const handleSubmit=async (e)=>{
                         >
                             Email
                         </label>
+                        {!validEmail && email.length!=0 && <p className="text-red-500">Invalid Email</p>}
+
                         <input
                             
                             type="email"
@@ -117,6 +148,8 @@ const handleSubmit=async (e)=>{
                         >
                             Password
                         </label>
+                        {!validPassword && password.length!=0 && <p className="text-red-500">Invalid Password</p>}
+
                         <input
                             ref={userRef}
                             onChange={(e)=>setPassword(e.target.value)}
@@ -132,7 +165,9 @@ const handleSubmit=async (e)=>{
                     >
                         Forget Password?
                     </a>
-                    <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
+                    <button 
+                     disabled={!validEmail || !validPassword ? true : false}
+                    className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
                             Login
                         </button>
                    

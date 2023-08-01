@@ -58,11 +58,11 @@ useEffect(()=>{
 
        
          return  <div className="shadow-2xl w-full h-32 my-[2%] flex bg-white rounded-2xl">
-         <div className="w-1/5 "><img/></div>
+         <div className="w-1/5 "><img className="rounded-full m-[15%]" src={el.image} width={50} height={50}/></div>
 
          <div className="w-1/5 flex flex-col justify-center items-center">
              <h1>{el.productName}</h1>
-             <p>{el.description}</p>
+             
          </div>
 
          <div className="w-1/5 flex justify-center items-center">

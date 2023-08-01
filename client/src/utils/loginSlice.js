@@ -23,7 +23,7 @@ const userSlice = createSlice({
       state.role=role
       console.log(state.role)
     },
-    loggout: (state, action) => {
+    logout: (state, action) => {
       state.user = null
       state.token = null
       state.id=null

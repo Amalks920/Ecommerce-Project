@@ -9,15 +9,13 @@ const authMiddleware=asyncHandler(async (req,res,next)=>{
     
  const authHeader=req.headers['authorization']
 
- console.log('authhhhhhh');
- console.log(authHeader)
+
 
 
  if(!authHeader) return res.status(402).json({msg:'failed'})
 
  const token=authHeader.split(' ')[1]
- console.log("==========================")
-console.log(token)
+
 
 
  jwt.verify(

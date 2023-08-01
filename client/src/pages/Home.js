@@ -44,19 +44,19 @@ useEffect(()=>{
 
 
   return (
-    <div className='border border-x-red-700 h-screen'>
+    <div className='border border-x-red-700 mb-[10%] h-screen overflow-x-hidden'>
       <Link to={'/product-page'}>product page</Link>
-      <div className=' h-1/2 mt-[5%]'>
+      <div className=' h-1/2 mt-[1%]'>
         <CarouselTransition />
       </div>
       
-      <div className='h-1/2 border border-black ms-[10%] me-[10%] flex flex-col mt-[10%]'>
+      <div className='h-1/2   ms-[10%]  me-[10%] flex flex-col mt-[40%]'>
         
-        <div className='border border-black h-1/3 flex justify-center font-sans font-extrabold text-xl'>
-          <h1>Top Rated</h1>
+        <div className='  min-1/3 flex justify-center font-sans font-extrabold text-xl'>
+          <h1>All Products</h1>
           </div>
 
-        <div className='border border-black flex flex-wrap'>
+        <div className=' min-h-fit  flex flex-wrap'>
       {
         data.map((el)=>{
         
@@ -67,9 +67,7 @@ useEffect(()=>{
       </div>
 
 </div>
-     
-     
-     
+       
     </div>
   )
 }

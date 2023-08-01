@@ -2,17 +2,30 @@ import React, { createRef, useEffect, useState } from 'react'
 import { Input } from '../../components/Input'
 import axios from '../../api/axios'
 import { useLocation } from 'react-router-dom'
-
+import { useParams,useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 
 const EditProduct = () => {
   const location=useLocation()
-  const {from}=location.state
-  const id=from.props.products._id
+  const {id}=useParams()
+  const token=useSelector(store=>store.user.token)
+  const navigate=useNavigate()
+  // const {from}=location.state
+  // const id=from.props.products._id
+  console.log('idddddd')
+  console.log(console.log(id));
   
+
+ 
   const EDIT_URL=`admin/update-product/${id}`
   
-  
+  let headers;
+  if (token) {
+    headers = {
+      Authorization: `Bearer ${token}`,
+    };
+  }
  
 
     const editProduct=(e)=>{
@@ -23,12 +36,11 @@ const EditProduct = () => {
     let data={
       productName:productname,
       brandName:brandname,
-      category:category,
-      subCategory:subCategory,
       description:description,
       stockQuantity:stockQuantiy,
       size:selectedSize,
       price:price,
+      id:id
       
      }
 
@@ -36,10 +48,11 @@ Object.keys(data).forEach(key => {
   formData.append(key, data[key]);
 });
 
-axios.put(EDIT_URL,data)
+axios.put(EDIT_URL,data,{headers})
 .then((res)=>{
     // dispatch(setProductDetails(res.data))
    console.log(res.data)
+   navigate('/admin/view-products')
 })
 .catch((err)=>{
     // dispatch(setProductDetailsError(err.message))
@@ -54,20 +67,23 @@ axios.put(EDIT_URL,data)
 
     const [productname,setProductName]=useState('')
     const [brandname,setBrandName]=useState('')
-    const [category,setCateory]=useState('')
-    const [subCategory,setSubCategory]=useState('')
+    const [category,setCategory]=useState('')
     const [description,setDescription]=useState();
     const [stockQuantiy,setStockQuantity]=useState();
     const [selectedSize,setSelectedSize]=useState();
-
+    const [subCategory,setSubCategory]=useState()
     const [price,setPrice]=useState();
     
     console.log(fileInput,fileInput2,fileInput3)
   return (
-    <form onSubmit={editProduct}>
-    <div className='flex w-screen h-screen justify-center'>
+    <>
+    <div className="flex justify-left ps-8 font-bold text-lg ms-[15%] items-center h-[15%] shadow-xl">
+        <h1 className="text-2xl">EDIT A PRODUCT</h1>
+      </div>
+    <form className='' onSubmit={editProduct}>
+    <div className='flex justify-evenly w-screen h-screen items-center'>
        
-        <div className='border border-black w-1/2 text-center'>
+        <div className='border border-black w-1/2  text-center mx-[5%] ms-[10%]'>
             
         {/* <div className="mb-3">
       <label
@@ -82,8 +98,8 @@ axios.put(EDIT_URL,data)
         id="formFile"
       />
     </div>  */}
-     <div class="flex items-center justify-center w-full">
-    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+     <div class="flex items-center justify-center ms-[5%]">
+    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-44 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
         <div class="flex flex-col items-center justify-center pt-5 pb-6">
             <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
@@ -96,7 +112,7 @@ axios.put(EDIT_URL,data)
 </div>  
 
 <div class="flex items-center justify-center w-full">
-    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-44 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
         <div class="flex flex-col items-center justify-center pt-5 pb-6">
             <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
@@ -109,7 +125,7 @@ axios.put(EDIT_URL,data)
 </div>  
 
 <div class="flex items-center justify-center w-full">
-    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-44 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
         <div class="flex flex-col items-center justify-center pt-5 pb-6">
             <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
@@ -139,29 +155,7 @@ axios.put(EDIT_URL,data)
     
       </div>
 
-      <div className='flex w-2/3   items-center'>
-      <select onChange={(e)=>{setCateory(e.target.value)}} value={category} className='mb-6 w-1/2 items-center pe-2  me-1 h-11 mt-7 bg-white border border-gray-300' data-te-select-init>
-  <option value="1">Category</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
-  <option value="4">Four</option>
-  <option value="5">Five</option>
-  <option value="6">Six</option>
-  <option value="7">Seven</option>
-  <option value="8">Eight</option>
-</select>
-
-<select onChange={(e)=>{setSubCategory(e.target.value)}} value={subCategory} className='mb-6 w-1/2 items-center pe-2 h-11 mt-7 ms-1 bg-white border border-gray-300' data-te-select-init>
-  <option value="1">Sub Category</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
-  <option value="4">Four</option>
-  <option value="5">Five</option>
-  <option value="6">Six</option>
-  <option value="7">Seven</option>
-  <option value="8">Eight</option>
-</select>     
-      </div>
+   
      
 
       <div className='flex w-2/3 flex-col  items-center'>
@@ -211,7 +205,7 @@ axios.put(EDIT_URL,data)
 
 </form>
 
-/* <div class="flex items-center justify-center w-full">
+ <div class="flex items-center justify-center w-full">
     <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
         <div class="flex flex-col items-center justify-center pt-5 pb-6">
             <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
@@ -222,8 +216,8 @@ axios.put(EDIT_URL,data)
         </div>
         <input id="dropzone-file" type="file" class="hidden" />
     </label>
-</div>  */
-
+</div>  
+</>
   )
 }
 

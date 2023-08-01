@@ -4,6 +4,7 @@ const imgSchema = require("../../models/imageSchema");
 const CategorySchema = require("../../models/categorySchema");
 const SubCategorySchema = require("../../models/subCategorySchema");
 const { result } = require("lodash");
+const productSchema = require("../../models/productSchema");
 
 const getAllUsers = asyncHandler(async (req, res, next) => {
   try {
@@ -27,8 +28,13 @@ const getUser = asyncHandler(async (req, res, next) => {
 });
 
 const deleteUser = asyncHandler(async (req, res, next) => {
+  const {id}=req.body;
   try {
-    const deleteUser = await User.findOneAndDelete(req.params.id);
+    const user = await productSchema.findByIdAndUpdate(
+      id,
+      { isSoftDeleted: true },
+      { new: true }
+    );
     res.json({ deleteUser });
   } catch (error) {
     console.log("hi");

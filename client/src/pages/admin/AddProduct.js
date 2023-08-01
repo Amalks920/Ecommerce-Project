@@ -2,8 +2,11 @@ import React, { createRef, useState } from "react";
 import { BACKEND_API } from "../../utils/constants";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
+  const navigate=useNavigate()
+
   const fileInput = createRef();
   const fileInput2 = createRef();
   const fileInput3 = createRef();
@@ -60,6 +63,7 @@ const AddProduct = () => {
         // dispatch(setProductDetails(res.data))
 
         console.log(res);
+        navigate('/admin/product-dashboard')
       })
       .catch((err) => {
         // dispatch(setProductDetailsError(err.message))
@@ -93,14 +97,14 @@ const AddProduct = () => {
     <form
       onSubmit={sendProductDeatails}
       className="mt-3  grid grid-cols-5 grid-rows-[5%] gap-4  m-10 bg-white">
-      <Link to={"/admin/add-category"}>cat</Link>
+    
       <div className="flex justify-left ps-8 font-bold text-lg items-center col-span-5 row-span-1 shadow-xl">
-        <h1>ADD A PRODUCT</h1>
+        <h1 className="text-2xl">ADD A PRODUCT</h1>
       </div>
 
       <div className=" col-span-3 row-span-1  shadow-xl p-10">
         <div className="flex justify-center">
-          <h2>BASIC INFORMATION</h2>
+          <h2 className="font-bold">BASIC INFORMATION</h2>
         </div>
 
         <div className="p-4 mt-4">
@@ -133,7 +137,7 @@ const AddProduct = () => {
             onChange={(e) => {
               setBrandName(e.target.value);
             }}
-            className="appearance-none border-black block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
             id="grid-product-name"
             type="text"
             placeholder="Product Name"
@@ -150,7 +154,7 @@ const AddProduct = () => {
             onChange={(e) => {
               setSelectedSize(e.target.value);
             }}
-            className=" block appearance-none w-full bg-gray-200 border border-black text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            className=" block appearance-none w-full bg-gray-200  text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             id="size">
             <option value="xl">xl</option>
             <option value="2xl">2xl</option>
@@ -170,7 +174,7 @@ const AddProduct = () => {
             onChange={(e) => {
               setStockQuantity(e.target.value);
             }}
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-black  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            className="appearance-none block w-full bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
             id="grid-product-name"
             type="number"
             placeholder="Product Name"
@@ -188,7 +192,7 @@ const AddProduct = () => {
             onChange={(e) => {
               setDescription(e.target.value);
             }}
-            className=" h-[80%]  appearance-none block w-full bg-gray-200 text-gray-700 border border-black  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            className=" h-[80%]  appearance-none block w-full bg-gray-200 text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
             id="grid-product-name"
             type="text"
             placeholder="Description"></textarea>
@@ -234,10 +238,10 @@ const AddProduct = () => {
               }}
               className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="size">
-              <option value="xl">Formals</option>
-              <option value="2xl">Casuals</option>
-              <option value="xxl">Boys</option>
-              <option value="xxl">Girl</option>
+              <option value="Formals">Formals</option>
+              <option value="Casuals">Casuals</option>
+              <option value="Boy">Boys</option>
+              <option value="Girl">Girl</option>
             </select>
           </div>
         </div>

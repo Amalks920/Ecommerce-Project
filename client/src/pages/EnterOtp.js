@@ -19,6 +19,7 @@ const EnterOtp = () => {
      dispatch(setCredentials({username:response.data.name,token:response.data.accessToken,role:response.data.role,id:response.data.id}))
 
      console.log(response)
+   
      navigate('/home');
     } catch (error) {
       console.log(error)

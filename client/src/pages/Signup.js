@@ -11,9 +11,9 @@ import { setUser } from "../utils/loginSlice";
 import { useEffect, useRef, useState } from "react";
 
 const usernameRegex = /^[A-z][A-z0-9-_]{3,23}$/;
-const emailRegex=  /^[A-z][A-z0-9-_]{3,23}$/;
+const emailRegex=  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const mobileRegex= /^[+]\d{2}?\d{10}$/;
+const mobileRegex= /^(?:(?:\+|00)(\d{1,3})[\s-]?)?(\d{10})$/;
 export const Signup = () => {
   const userRef = useRef();
   const errRef = useRef();
@@ -70,7 +70,7 @@ export const Signup = () => {
     const result = mobileRegex.test(mobile);
     console.log(result);
     console.log(mobile);
-    setValidPassword(result);
+    setValidMobile(result);
   }, [mobile]);
   
 
@@ -197,7 +197,7 @@ export const Signup = () => {
                 className="block text-sm font-medium text-gray-700 undefined">
                 mobile
               </label>
-              {!validMobile && <p className="text-red-500">Invalid Mobile</p>}
+              {!validMobile && mobile.length!=0 && <p className="text-red-500">Invalid Mobile</p>}
 
               <input
               
@@ -219,7 +219,7 @@ export const Signup = () => {
                 className="block text-sm font-medium text-gray-700 undefined">
                 Password
               </label>
-              {!validPassword && password.length!=0 && <p className="text-red-500">Invalid Name</p>}
+              {!validPassword && password.length!=0 && <p className="text-red-500">Invalid Password</p>}
 
               <input
                 type="password"
@@ -241,7 +241,7 @@ export const Signup = () => {
 
             <div className="flex items-center mt-4">
               <button
-                disabled={!validName || !validPassword ? true : false}
+                disabled={!validName || !validPassword || validMobile || validEmail ? true : false}
                 type="submit"
                 className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
                 Register

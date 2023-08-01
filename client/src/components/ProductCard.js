@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 const ProductCard = (props) => {
  
  
-  const {_id,productName,price,image}=props.products
+  const {_id,productName,price,image,brandName}=props.products
   return (
     <Link to={`/product-page/${_id}`}>
-    <div className="relative m-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
+    <div className="relative m-10  flex w-full max-w-xs flex-col overflow-hidden rounded-lg min-h-fit border border-gray-100 bg-white shadow-md">
     <a className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl" href="#">
       <img className="object-cover" src={image} width={1000} height={30} alt="product image" />
       <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">39% OFF</span>
@@ -15,13 +15,13 @@ const ProductCard = (props) => {
       
     <div className="mt-4 px-5 pb-5">
   <a href="#">
-    <h5 className="text-xl tracking-tight text-slate-900">{productName}</h5>
+    <h5 className="text-xl tracking-tight text-slate-500 uppercase font-bold">{productName}</h5>
   </a>
 
   <div className="mt-2 mb-5 flex items-center justify-between">
   <p>
-    <span className="text-3xl font-bold text-slate-900">${price}</span>
-    <span className="text-sm text-slate-900 line-through">$699</span>
+    <span className="text-3xl font-bold text-blue-900">${price}</span>
+    
   </p>
 </div>
 

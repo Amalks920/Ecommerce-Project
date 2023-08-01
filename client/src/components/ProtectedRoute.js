@@ -7,7 +7,7 @@ const ProtectedRoute=({auth,component:Component, ...rest})=>{
     return (
         <Route {...rest} render={(props)=>{
             if(auth) return <Component {...props} />
-            if(!auth) return  <redirect to={{path:'/login',state:{from:props.location}}} />
+            if(!auth) return  <redirect to={{path:'/login' ||'/enter-otp',state:{from:props.location}}} />
         }}/>
     )
 

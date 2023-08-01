@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 const UserTable = (props) => {
   const token=useSelector(store=>store.user.token)
 
-  const [blockButton,setBlockButton]=useState(true)
+  const [blockButton,setBlockButton]=useState(false)
 
 console.log(blockButton)
 
@@ -28,8 +28,7 @@ const UNBLOCK_USER_API=`/admin/unblock-user/${_id}`
 const blockUser=()=>{
   axios.put(BLOCK_USER_API,{headers})
   .then((res)=>{
-    if(res.data.message===true)  setBlockButton(false)
-    else setBlockButton(true)
+    setBlockButton(res.data.message)
    
     console.log(res.data.message);
   })
@@ -63,7 +62,7 @@ const unBlockUser=()=>{
   <td className=" p-10  flex justify-between">
 
 
-   {blockButton ?(
+   {!blockButton ?(
      <button onClick={blockUser} className="bg-transparent border border-red-600 ms-20 p-3 w-1/2 me-5 rounded-lg shadow-lg text-red-600">Block User</button>
    ):<button onClick={unBlockUser} className="bg-transparent border border-green-600 ms-20 p-3 w-1/2 me-5 rounded-lg shadow-lg text-green-600">Unblock User</button>
     }

@@ -23,6 +23,8 @@ import AddCategory from "./pages/admin/AddCategory";
 import UserCart from "./pages/UserCart";
 import Img from "./pages/Img";
 import EnterOtp from "./pages/EnterOtp";
+import ProductDashBoard from "./pages/admin/ProductDashBoard";
+import ViewProduct from "./pages/admin/ViewProduct";
 
 let isLoggedIn;
 
@@ -40,11 +42,11 @@ function App() {
           <Route path="otp-login" element={<OtpLogin />}></Route>
           <Route path="enter-otp" element={<EnterOtp />}></Route>
           <Route path="img" element={<Img />}></Route>
-          <Route element={<RequireAuth />}>
+          {/* <Route element={<RequireAuth />}> */}
             <Route path="home" element={<Home />}></Route>
             <Route path="product-page/:id" element={<ProductPage/>}></Route>
             <Route path="user-cart" element={<UserCart />}></Route>
-          </Route>
+          {/* </Route> */}
 
           <Route path="reg" element={<Reg />}></Route>
         </Route>
@@ -62,15 +64,17 @@ function App() {
         <Route path="/admin/admin-login" element={<AdminLogin />}></Route>
 
         <Route element={<RequireAdminAuth isAdmin={"admin"}/>}>
-      
+        <Route path="/admin/product-dashboard" element={<ProductDashBoard/>}></Route>
         <Route path="/admin/admin-signup" element={<AdminSignup />}></Route>
         <Route path="/admin/admin-home" element={<AdminHome />}></Route>
         <Route path="/admin/add-product" element={<AddProduct />}></Route>
         <Route path="/admin/add-category" element={<AddCategory />}></Route>
+        <Route path="/admin/view-products" element={<ViewProduct />}></Route>
+        
         <Route
           path="/admin/product-management"
           element={<ProductManagement />}></Route>
-        <Route path="/admin/edit-product" element={<EditProduct />}></Route>
+        <Route path="/admin/edit-product/:id" element={<EditProduct />}></Route>
         <Route
           path="/admin/user-management"
           element={<UserManagement />}></Route>

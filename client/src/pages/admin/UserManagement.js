@@ -50,6 +50,9 @@ const UserManagement = () => {
 
   return (
     <div>
+      <div className="flex justify-left ps-[4%] font-bold text-lg  items-center h-[120px] shadow-xl">
+        <h1 className="text-2xl">VIEW PRODUCT</h1>
+      </div>
     <table className="table-auto mt-20 w-3/4 ml-60  shadow-2xl rounded-md">
     <thead>
       <tr className="text-white bg-black shadow-lg rounded-xl">

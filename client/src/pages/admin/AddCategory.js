@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import axios from '../../api/axios'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 const ADD_CATEGORY_API='/admin/add-category'
 
 const AddCategory = () => {
   const token=useSelector(store=>store.user.token)
-  console.log(token)
+  const navigate=useNavigate()
 
     const [category,setCategory]=useState('')
     const [subCategory1,setSubCategory1]=useState('')
@@ -32,6 +33,7 @@ const AddCategory = () => {
       try {
        const response=await axios.post(ADD_CATEGORY_API,data,{headers})
         console.log(response)
+        navigate('/admin/add-category')
       } catch (error) {
         console.log(error)
       }
