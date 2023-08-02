@@ -31,7 +31,7 @@ useEffect(()=>{
     const getCartDetails=async()=>{
         try {
            const result= await axios.post(GET_CART_DETAILS,{userid:user.id},{headers})
-           console.log(result)
+           console.log(result.data.cart)
            
         } catch (error) {
            console.log(error)

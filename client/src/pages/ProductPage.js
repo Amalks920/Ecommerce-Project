@@ -48,7 +48,7 @@ const ProductPage = () => {
         {productId:prodId,userId:userid},
         {headers});
         
-        
+        console.log(cartResponse)
         dispatch(cacheCartProducts(product))
       
     } catch (error) {

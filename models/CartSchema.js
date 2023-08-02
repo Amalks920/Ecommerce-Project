@@ -1,6 +1,14 @@
 const mongoose=require('mongoose');
 
+
 const CartSchema=new mongoose.Schema({
+    user:{
+        type:mongoose.SchemaTypes.ObjectId,
+        ref:'User',
+        required:true,
+        unique:true
+    },
+    
     products:[{
         productId:{
         type:mongoose.SchemaTypes.ObjectId,
@@ -10,7 +18,7 @@ const CartSchema=new mongoose.Schema({
         },
         count:{
             type:Number,
-            default:0
+            default:1
         },
         _id:{
              type: mongoose.Schema.Types.ObjectId, required: false
