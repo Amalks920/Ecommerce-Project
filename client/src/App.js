@@ -48,7 +48,7 @@ function App() {
             <Route path="user-cart" element={<UserCart />}></Route>
           {/* </Route> */}
 
-          <Route path="reg" element={<Reg />}></Route>
+          <Route path="/reg" element={<Reg />}></Route>
         </Route>
 
 

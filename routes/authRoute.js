@@ -14,7 +14,10 @@ const {
   
 }=require('../controller/Product/cartController')
 
-const { getCartDetails,img }=require('../controller/Product/cartController')
+const { 
+  getCartDetails,img,decreaseCartCount,increaseCartCount,
+  deleteCartProduct
+}=require('../controller/Product/cartController')
 const handleRefreshToken = require("../config/refreshToken");
 const authMiddleware = require("../middlewares/authMiddleware");
 const { sendOtp } = require("../config/otpGenerator");
@@ -36,7 +39,9 @@ router.post('/otp',verifyOtp)
 router.post("/add-to-cart",authMiddleware,addToCart);
 router.post('/get-cart-details',authMiddleware,getCartDetails);
 router.post('/get-cart-details',authMiddleware,getCartDetails);
-
+router.post('/decrease-cart-count',authMiddleware,decreaseCartCount);
+router.post('/increase-cart-count',authMiddleware,increaseCartCount);
+router.post('/delete-cart-product',authMiddleware,deleteCartProduct);
 router.post('/image',img);
 
 

@@ -84,6 +84,7 @@ let CartExist
       if(indexOfProduct!=-1){
         findProduct.products[indexOfProduct].count++
         await findProduct.save()
+        
       }
 
 
@@ -109,8 +110,90 @@ let CartExist
 
 })
 
+const decreaseCartCount=expressAsyncHandler(async(req,res,next)=>{
+
+  let findCart
+  try {
+    console.log(req.body.userId)
+     findCart=await CartSchema.findOne({user:req.body.userId})
+    console.log(findCart)
+  } catch (error) {
+    console.log(error)
+  }
+
+  if(findCart){
+    try {
+      const indexOfProduct = findCart.products.findIndex(product => product.productId.toString() === req.body.productId);
+      console.log(indexOfProduct)
+
+      if(indexOfProduct!=-1){
+        findCart.products[indexOfProduct].count--
+        await findCart.save()
+
+        res.json({count:findCart.products[indexOfProduct].count})
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+})
+
+const deleteCartProduct=expressAsyncHandler(async(req,res,next)=>{
+  const {userId,productId}=req.body
+try {
+
+  const cart=await CartSchema.findOne({user:userId})
+  console.log(cart)
+  const indexOfProduct = cart.products.findIndex(product => product.productId.toString() === req.body.productId);
+  console.log(indexOfProduct)
+  cart.products.splice(indexOfProduct,1)
+
+  await cart.save()
+  res.json({isDeleted:true})
+} catch (error) {
+  res.sendStatus(404)
+}
+  
+})
+
+
+
+//INCREASE THE COUNT
+
+const increaseCartCount=expressAsyncHandler(async(req,res,next)=>{
+
+  let findCart
+  try {
+    console.log(req.body.userId)
+     findCart=await CartSchema.findOne({user:req.body.userId})
+    console.log(findCart)
+  } catch (error) {
+    console.log(error)
+  }
+
+  if(findCart){
+    try {
+      const indexOfProduct = findCart.products.findIndex(product => product.productId.toString() === req.body.productId);
+      console.log(indexOfProduct)
+
+      if(indexOfProduct!=-1){
+        findCart.products[indexOfProduct].count++
+        await findCart.save()
+
+        res.json({count:findCart.products[indexOfProduct].count})
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+})
+
+
+
 module.exports = {
   getCartDetails,
-  img,
+  img,decreaseCartCount,
+  deleteCartProduct,
+  increaseCartCount,
   addToCart
 };
