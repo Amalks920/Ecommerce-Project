@@ -7,10 +7,14 @@ import { setCredentials } from '../utils/loginSlice'
 import { Link, useLocation } from 'react-router-dom'
 import CarouselTransition from '../components/Carousel'
 import { setProducts } from '../utils/productSlice'
+import { createBrowserHistory } from 'history'
 
 const URL=`${BACKEND_API}/admin/get-all-products`
+let history=createBrowserHistory()
 
  const Home = () => {
+
+  // history.replace('/home')
  let dispatch=useDispatch()
   //access token
   const token=useSelector(store=>store.user.token)
@@ -49,13 +53,13 @@ useEffect(()=>{
       <div className=' h-1/2 mt-[1%]'>
         <CarouselTransition />
       </div>
-      
+     
       <div className='h-1/2   ms-[10%]  me-[10%] flex flex-col mt-[40%]'>
         
         <div className='  min-1/3 flex justify-center font-sans font-extrabold text-xl'>
           <h1>All Products</h1>
           </div>
-
+          <Link to={'/reg'}>reg</Link>
         <div className=' min-h-fit  flex flex-wrap'>
       {
         data.map((el)=>{

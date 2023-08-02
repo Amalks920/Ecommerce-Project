@@ -9,7 +9,7 @@ import axios from '../api/axios'
 const Navbar = () => {
 let user
 const navigate=useNavigate()
-const dispatch=useDispatch()
+const dispatch=useDispatch() 
 
 let token=useSelector((store)=>store.user.token)
 console.log(user)
@@ -47,7 +47,7 @@ const logout = () =>{
       </div>
       <ul className='flex justify-between w-1/3'>
         <li><Link to={'/login'}>Home</Link></li>
-        <li>Men</li>
+        <li><Link to={'/user-dashboard'}>User</Link></li>
         <li>Women</li>
         <li>Kids</li>
       </ul>

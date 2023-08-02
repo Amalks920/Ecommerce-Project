@@ -25,6 +25,7 @@ import Img from "./pages/Img";
 import EnterOtp from "./pages/EnterOtp";
 import ProductDashBoard from "./pages/admin/ProductDashBoard";
 import ViewProduct from "./pages/admin/ViewProduct";
+import UserDashboard from "./pages/UserDashboard";
 
 let isLoggedIn;
 
@@ -44,6 +45,7 @@ function App() {
           <Route path="img" element={<Img />}></Route>
           {/* <Route element={<RequireAuth />}> */}
             <Route path="home" element={<Home />}></Route>
+            <Route path="user-dashboard" element={<UserDashboard/>}></Route>
             <Route path="product-page/:id" element={<ProductPage/>}></Route>
             <Route path="user-cart" element={<UserCart />}></Route>
           {/* </Route> */}

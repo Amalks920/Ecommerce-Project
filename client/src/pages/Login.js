@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Signup } from "./Signup";
 import Home from "./Home";
 import { setCredentials } from "../utils/loginSlice";
-
+import { createBrowserHistory } from "history";
+let history=createBrowserHistory()
 const LOGIN_URL = "/user/login";
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -16,6 +17,7 @@ const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 console.log("user here");
 
 export const Login = () => {
+  // history.replace('/login')
   const user = useSelector((store) => store.user);
   //subscribing to login slice
 
