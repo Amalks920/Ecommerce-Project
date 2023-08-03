@@ -26,6 +26,7 @@ import EnterOtp from "./pages/EnterOtp";
 import ProductDashBoard from "./pages/admin/ProductDashBoard";
 import ViewProduct from "./pages/admin/ViewProduct";
 import UserDashboard from "./pages/UserDashboard";
+import ForgotPassword from "./pages/ForgotPassword";
 
 let isLoggedIn;
 
@@ -42,6 +43,7 @@ function App() {
           <Route path="signup" element={<Signup />}></Route>
           <Route path="otp-login" element={<OtpLogin />}></Route>
           <Route path="enter-otp" element={<EnterOtp />}></Route>
+          <Route path="forgot-password" element={<ForgotPassword />}></Route>
           <Route path="img" element={<Img />}></Route>
           {/* <Route element={<RequireAuth />}> */}
             <Route path="home" element={<Home />}></Route>
