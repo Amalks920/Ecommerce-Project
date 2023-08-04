@@ -21,6 +21,7 @@ const {
 const handleRefreshToken = require("../config/refreshToken");
 const authMiddleware = require("../middlewares/authMiddleware");
 const { sendOtp } = require("../config/otpGenerator");
+const { addAddress,getAddress } = require("../controller/User/addressCtrl");
 
 
 // router.get("/reg", authMiddleware, (req, res) => {
@@ -42,7 +43,11 @@ router.post('/get-cart-details',authMiddleware,getCartDetails);
 router.post('/decrease-cart-count',authMiddleware,decreaseCartCount);
 router.post('/increase-cart-count',authMiddleware,increaseCartCount);
 router.post('/delete-cart-product',authMiddleware,deleteCartProduct);
+router.get('/get-address/:id',authMiddleware,getAddress)
 router.post('/image',img);
+
+//Address
+router.post('/add-address',authMiddleware,addAddress)
 
 
 //  router.use(authMiddleware)

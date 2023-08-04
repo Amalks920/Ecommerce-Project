@@ -27,6 +27,9 @@ import ProductDashBoard from "./pages/admin/ProductDashBoard";
 import ViewProduct from "./pages/admin/ViewProduct";
 import UserDashboard from "./pages/UserDashboard";
 import ForgotPassword from "./pages/ForgotPassword";
+import UserDashBoardContainer from "./components/UserDashBoardContainer";
+import ViewAddress from "./pages/ViewAddress";
+import OrderPage from "./pages/OrderPage";
 
 let isLoggedIn;
 
@@ -44,10 +47,16 @@ function App() {
           <Route path="otp-login" element={<OtpLogin />}></Route>
           <Route path="enter-otp" element={<EnterOtp />}></Route>
           <Route path="forgot-password" element={<ForgotPassword />}></Route>
+          <Route path="order" element={<OrderPage />}></Route>
           <Route path="img" element={<Img />}></Route>
           {/* <Route element={<RequireAuth />}> */}
             <Route path="home" element={<Home />}></Route>
-            <Route path="user-dashboard" element={<UserDashboard/>}></Route>
+
+            <Route path="/user-dashboard" element={<UserDashBoardContainer/>}>
+            <Route path="/user-dashboard/add-address" element={<UserDashboard/>}></Route>
+            <Route path="/user-dashboard/address" element={<ViewAddress/>}></Route>
+            </Route>
+
             <Route path="product-page/:id" element={<ProductPage/>}></Route>
             <Route path="user-cart" element={<UserCart />}></Route>
           {/* </Route> */}

@@ -33,7 +33,7 @@ const addProduct = asyncHandler(async (req, res, next) => {
     try {
       //
       const { category, subCategory } = req.body;
-      console.log(req.body.category)
+      console.log(req.body.category);
       const { image } = req.body;
       console.log(req.body);
       let categoryInDb = await CategorySchema.findOne({ category: category });
