@@ -8,16 +8,16 @@ export const AdminHome = () => {
 
 
 
-  useEffect(()=>{
-    axios.get('admin/get-image')
-    .then((res)=>{
-      setData(res.data.res)
-    }
-    )
-    .catch((err)=>{
-      console.log(err)
-    })
-  },[])
+  // useEffect(()=>{
+  //   axios.get('admin/get-image')
+  //   .then((res)=>{
+  //     setData(res.data.res)
+  //   }
+  //   )
+  //   .catch((err)=>{
+  //     console.log(err)
+  //   })
+  // },[])
   return (
 
     <div className='flex'>

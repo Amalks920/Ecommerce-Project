@@ -5,6 +5,7 @@ const {
   userLogin,
   emailAuthentication,
   otpLogin,
+  createPassword,
   verifyOtp,
   logout,
 } = require("../controller/User/userCtrl");
@@ -22,6 +23,7 @@ const handleRefreshToken = require("../config/refreshToken");
 const authMiddleware = require("../middlewares/authMiddleware");
 const { sendOtp } = require("../config/otpGenerator");
 const { addAddress,getAddress } = require("../controller/User/addressCtrl");
+const {createOrder}=require('../controller/Product/OrderController')
 
 
 // router.get("/reg", authMiddleware, (req, res) => {
@@ -35,6 +37,7 @@ router.post("/otp-verification-gmail", emailAuthentication);
 router.get("/generate-otp", sendOtp);
 router.post('/otp-login',otpLogin)
 router.post('/otp',verifyOtp)
+router.post('/create-new-password',createPassword)
 
 //cart 
 router.post("/add-to-cart",authMiddleware,addToCart);
@@ -44,10 +47,13 @@ router.post('/decrease-cart-count',authMiddleware,decreaseCartCount);
 router.post('/increase-cart-count',authMiddleware,increaseCartCount);
 router.post('/delete-cart-product',authMiddleware,deleteCartProduct);
 router.get('/get-address/:id',authMiddleware,getAddress)
-router.post('/image',img);
+// router.post('/image',img);
 
 //Address
 router.post('/add-address',authMiddleware,addAddress)
+
+//Orders
+router.post('/place-order',authMiddleware,createOrder)
 
 
 //  router.use(authMiddleware)

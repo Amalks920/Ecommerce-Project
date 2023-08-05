@@ -9,6 +9,10 @@ const {getAllUsers,getUser,deleteUser,
     isAdmin,blockUser,getImage,addCategory,
     unBlockUser}=require('../controller/Admin/adminCtrl');
 
+    //order
+
+    const {getAllOrders}=require('../controller/Product/OrderController')
+
 router.get('/hi',(req,res,next)=>{
     res.json({'users':['userone','usertwo','userthree']})
 })
@@ -33,8 +37,11 @@ router.get('/get-a-product/:id',getAProduct)
 router.put('/delete-a-product/:id',deleteProduct)
 router.put('/update-product/:id',updateProduct)
 router.get('/get-image',getImage)
-
 router.post('/add-category',authMiddleware,addCategory);
+
+//orders
+
+router.get('/get-all-orders',getAllOrders)
 
 
 

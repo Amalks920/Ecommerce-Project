@@ -11,7 +11,9 @@ const {EMAIL,PASSWORD}=require('../../utils/emailAuth')
 const nodemailer=require('nodemailer')
 const MailGen=require('mailgen')
 const otpGenerator = require('otp-generator');
-const Otp=require('../../models/otpSchema')
+const Otp=require('../../models/otpSchema');
+const expressAsyncHandler = require('express-async-handler');
+const userSchema = require('../../models/userSchema');
 
 
 
@@ -276,6 +278,39 @@ const emailAuthentication=(req,res)=>{
 }
 
 
+const createPassword=expressAsyncHandler(async(req,res,next)=>{
+    const {oldPassword,newPassword,email}=req.body;
+    console.log(oldPassword,newPassword)
+    console.log(req.body);
+
+    if(oldPassword===newPassword){ 
+        return res.status(400).json({ error: 'New password must be different from the current password.' })
+    }
+
+    if(email){
+        try {
+        const user=await userSchema.findOne({email:email})
+
+        if(await user.isPasswordMatched(oldPassword)){
+
+            const hashedNewPassword=await bcrypt.hash(newPassword,10)
+            console.log(hashedNewPassword)
+            
+            const updatePassword=await userSchema.updateOne({email:email},{password:hashedNewPassword})
+
+        }else{
+            return res.status(400).json({ error: 'old password incorrect.' })
+
+        }
+        
+        } catch (error) {
+        console.log(error)
+        }
+    }
+
+
+})
+
 
 
 
@@ -290,7 +325,7 @@ module.exports={
     verifyOtp,
     emailAuthentication,
     logout,
-    otpLogin
+    otpLogin,createPassword
 }
 
 

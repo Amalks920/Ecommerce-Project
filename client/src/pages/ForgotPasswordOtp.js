@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { setCredentials } from '../utils/loginSlice'
 import useAuth from '../hooks/useAuth'
 
-const EnterOtp = () => {
+const ForgotPasswordOtp = () => {
   const [otp,setOtp]=useState()
   let dispatch=useDispatch()
   let navigate=useNavigate()
@@ -15,12 +15,14 @@ const EnterOtp = () => {
     e.preventDefault()
     try {
      const response= await axios.post('/user/otp',{otp:otp})
-     setAuth({user:response.data.email})
-     dispatch(setCredentials({username:response.data.name,token:response.data.accessToken,role:response.data.role,id:response.data.id}))
 
+     if(response?.data.accessToken){
+        navigate('/create-new-password')
+     }
+    
      console.log(response)
    
-     navigate('/home');
+    
     } catch (error) {
       console.log(error)
     }
@@ -81,4 +83,4 @@ const EnterOtp = () => {
   )
 }
 
-export default EnterOtp
+export default ForgotPasswordOtp

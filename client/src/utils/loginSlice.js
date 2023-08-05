@@ -31,7 +31,8 @@ const userSlice = createSlice({
 
     setOtpLogin:(state,action)=>{
         state.email=action.payload.email
-    }
+    },
+    
   }
 
 })

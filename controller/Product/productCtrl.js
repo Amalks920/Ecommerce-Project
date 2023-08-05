@@ -16,11 +16,6 @@ const { default: mongoose } = require("mongoose");
 const assetsFolder = path.join(DIR_NAME, "upload/images/");
 const ObjectId = mongoose.Types.ObjectId;
 
-// cloudinary.uploader.upload(,
-//   { public_id: "ds,fkn" },
-//   function(error, result) {
-//     if(error)console.log(error.message)
-//     console.log(result) });
 
 const addProduct = asyncHandler(async (req, res, next) => {
   const { productName } = req.body;
@@ -240,10 +235,7 @@ const addToCart = async (req, res, next) => {
   }
 };
 
-// const updateCartCount=asyncHandler(async(req,res,next)=>{
-//   console.log('updatecartcount')
-//   res.json({msg:"success"})
-// })
+
 
 module.exports = {
   addProduct,

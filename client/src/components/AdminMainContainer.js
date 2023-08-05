@@ -3,6 +3,7 @@ import Navbar from './Navbar'
 import {Outlet} from 'react-router-dom'
 import Sidebar from './Sidebar'
 import { useSelector } from 'react-redux'
+import AdminNavbar from '../pages/admin/AdminNavbar'
 
 const AdminMainContainer = () => {
   const userToken=useSelector(store=>store.user.token)
@@ -10,7 +11,7 @@ const AdminMainContainer = () => {
   return (
     <div className='border  h-screen overflow-x-hidden bg-slate-50'>
 
-        {/* <Navbar /> */}
+          <AdminNavbar/>
          
          <div className='flex border h-full border-black'>
           <div className='w-1/6 h-full'>

@@ -30,6 +30,11 @@ import ForgotPassword from "./pages/ForgotPassword";
 import UserDashBoardContainer from "./components/UserDashBoardContainer";
 import ViewAddress from "./pages/ViewAddress";
 import OrderPage from "./pages/OrderPage";
+import Order from "./pages/ConfirmOrder";
+import ConfirmOrder from "./pages/ConfirmOrder";
+import ViewOrder from "./pages/admin/ViewOrder";
+import ForgotPasswordOtp from "./pages/ForgotPasswordOtp";
+import CreateNewPassword from "./pages/CreateNewPassword";
 
 let isLoggedIn;
 
@@ -47,7 +52,11 @@ function App() {
           <Route path="otp-login" element={<OtpLogin />}></Route>
           <Route path="enter-otp" element={<EnterOtp />}></Route>
           <Route path="forgot-password" element={<ForgotPassword />}></Route>
+          <Route path="forgot-password-otp" element={<ForgotPasswordOtp/>}></Route>
+          <Route path="create-new-password" element={<CreateNewPassword/>}></Route>
+          
           <Route path="order" element={<OrderPage />}></Route>
+          <Route path="confirm-order" element={<ConfirmOrder />}></Route>
           <Route path="img" element={<Img />}></Route>
           {/* <Route element={<RequireAuth />}> */}
             <Route path="home" element={<Home />}></Route>
@@ -55,6 +64,7 @@ function App() {
             <Route path="/user-dashboard" element={<UserDashBoardContainer/>}>
             <Route path="/user-dashboard/add-address" element={<UserDashboard/>}></Route>
             <Route path="/user-dashboard/address" element={<ViewAddress/>}></Route>
+            
             </Route>
 
             <Route path="product-page/:id" element={<ProductPage/>}></Route>
@@ -83,6 +93,7 @@ function App() {
         <Route path="/admin/add-product" element={<AddProduct />}></Route>
         <Route path="/admin/add-category" element={<AddCategory />}></Route>
         <Route path="/admin/view-products" element={<ViewProduct />}></Route>
+        <Route path="/admin/view-orders" element={<ViewOrder/>}></Route>
         
         <Route
           path="/admin/product-management"

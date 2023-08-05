@@ -9,17 +9,16 @@ import { Signup } from "./Signup";
 import Home from "./Home";
 import { setCredentials } from "../utils/loginSlice";
 import { createBrowserHistory } from "history";
-let history=createBrowserHistory()
-const LOGIN_URL = "/user/login";
+
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const CREATE_NEW_PASSWORD_URL='/user/create-new-password'
 
-console.log("user here");
 
-export const Login = () => {
-  // history.replace('/login')
-  const user = useSelector((store) => store.user);
-  //subscribing to login slice
+
+export const CreateNewPassword = () => {
+  console.log('email');
+const email=useSelector(store=>store.user.email)
+console.log(email)
 
   const { setAuth } = useAuth();
   let dispatch = useDispatch();
@@ -30,76 +29,56 @@ export const Login = () => {
   const location = useLocation();
   const from = location;
 
-  const [email, setEmail] = useState("");
-  const [validEmail, setValidEmail] = useState(false);
+  const [oldPassword, setOldPassword] = useState("");
+  const [validOldPassword, setValidOldPassword] = useState(false);
 
-  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  const [validPassword, setValidPassword] = useState(false);
+  const [validNewPassword, setValidNewPassword] = useState(false);
 
-  console.log(email, password);
   useEffect(() => {
     userRef.current.focus();
   }, []);
 
   useEffect(() => {
     setErrMsg("");
-  }, [email, password]);
+  }, [oldPassword,newPassword]);
 
   useEffect(() => {
-    const result = passwordRegex.test(password);
-    console.log(result);
-    console.log(password);
-    setValidPassword(result);
-  }, [password]);
+    const result = passwordRegex.test(oldPassword);
+    setValidOldPassword(result);
+  }, [oldPassword]);
 
   useEffect(() => {
-    const result = emailRegex.test(email);
-    console.log("result");
-    console.log(result);
-    console.log(email);
-    setValidEmail(result);
-  }, [email]);
+    const result = passwordRegex.test(newPassword);
+   
+    setValidNewPassword(result);
+  }, [newPassword]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await axios.post(
-        LOGIN_URL,
-        JSON.stringify({ email: email, password: password }),
+        CREATE_NEW_PASSWORD_URL,
+        JSON.stringify({ oldPassword: oldPassword, newPassword: newPassword,email:email }),
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: false,
         }
       );
+     
 
-      console.log("user there");
-      console.log(user);
-
-      setEmail("");
-      setAuth({ user: email });
-
-      //dispatch the setCredentials action which stores
-      //username and token in login slice
-
-      dispatch(
-        setCredentials({
-          username: response.data.name,
-          token: response.data.accessToken,
-          role: response.data.role,
-          id: response.data.id,
-        })
-      );
-
-      setPassword("");
+      setOldPassword("");
+      setNewPassword("")
 
       navigate("/home");
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err?.response?.status === 400) {
-        setErrMsg("Missing username or Password");
+        console.log(err.response.data.error)
+        setErrMsg(err.response.data.error);
       } else if (err?.response?.status === 401) {
         setErrMsg("unAuthorized");
       } else {
@@ -111,16 +90,16 @@ export const Login = () => {
 
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
-      <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
+      <div className="w-full p-6 m-auto bg-white  rounded-md shadow-2xl h-[400px] pt-[3%] lg:max-w-xl">
         <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
-          Sign in
+          Create Password
         </h1>
         {
           <p
             ref={errRef}
             className={
               errMsg
-                ? "errmsg text-red-800 text-center mt-[2%] font-bold uppercase"
+                ? "errmsg text-red-800 text-center mt-[5%] font-bold uppercase"
                 : "offscreen"
             }
             aria-live="assertive">
@@ -133,62 +112,55 @@ export const Login = () => {
             <label
               htmlFor="email"
               className="block text-sm font-semibold text-gray-800">
-              Email
+              Enter Old Password
             </label>
-            {!validEmail && email.length != 0 && (
+            {!validOldPassword && oldPassword.length != 0 && (
               <p className="text-red-500">Invalid Email</p>
             )}
 
             <input
-              type="email"
-              id="email"
+              type="password"
+              id="password"
               ref={userRef}
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
+              onChange={(e) => setOldPassword(e.target.value)}
+              value={oldPassword}
               required
               className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
           </div>
           <div className="mb-2">
-            {!validPassword && password.length != 0 && (
+            {!validNewPassword && newPassword.length != 0 && (
               <p className="text-red-500">Invalid Password</p>
             )}
 
             <label
               htmlFor="password"
               className="block text-sm font-semibold text-gray-800">
-              Password
+              Create New Password
             </label>
             <input
               ref={userRef}
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
+              onChange={(e) => setNewPassword(e.target.value)}
+              value={newPassword}
               required
               type="password"
               className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
           </div>
-          <a href="/forgot-password" className="text-xs text-purple-600 hover:underline">
-            Forget Password?
-          </a>
+          
           <button
-            disabled={!validEmail || !validPassword ? true : false}
-            className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
-            Login
-          </button>
+            disabled={!validNewPassword || !validOldPassword ? true : false}
+            className="mt-4 w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
+              Create New Password
+            </button>
         </form>
-        <div className="mt-6"></div>
 
-        <p className="mt-8 text-xs font-light text-center text-gray-700">
-          {" "}
-          Don't have an account?{" "}
-          <Link
-            to={"/signup"}
-            className="font-medium text-purple-600 hover:underline">
-            Sign up
-          </Link>
-        </p>
+
+        
       </div>
     </div>
   );
 };
+
+
+export default CreateNewPassword;
