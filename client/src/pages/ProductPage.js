@@ -22,7 +22,7 @@ const ProductPage = () => {
   console.log(cart)
 
   const products = useSelector((store) => {
-    return store.products.products[2];
+    return store.products.products;
   });
   let product = products.filter((products) => {
     if (products._id === id) return id === products._id;

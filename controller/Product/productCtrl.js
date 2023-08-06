@@ -102,7 +102,7 @@ const addProduct = asyncHandler(async (req, res, next) => {
 
 const getAllProducts = asyncHandler(async (req, res, next) => {
   try {
-    const allProducts = await ProductModel.find({ isSoftDeleted: false });
+    const allProducts = await ProductModel.find({ isSoftDeleted: false }).populate('category')
 
     console.log(allProducts);
 

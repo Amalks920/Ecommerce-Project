@@ -22,6 +22,10 @@ let history=createBrowserHistory()
   const token=useSelector(store=>store.user.token)
   const products=useSelector(store=>store.products)
   const [isMenFiltered,setIsMenFiltered]=useState(false)
+  const [isWomenFiltered,setIsWomenFiltered]=useState(false)
+  const [isKidsFiltered,setIsKidsFiltered]=useState(false)
+  const [isFiltered,setIsFiltered]=useState(false)
+
 
   console.log('productsss')
   console.log(products)
@@ -69,28 +73,59 @@ let history=createBrowserHistory()
           <span className='border'>
             <button
             onClick={()=>{
-           const filteredData=   products.products.filter((product)=>{
-                return product.size=='2xl'
+           const filteredData=products.products.filter((product)=>{
+                return product.category.category=='Men'
               })
-              if(isMenFiltered){
+              if(isFiltered){
                 setData(products.products) 
-                setIsMenFiltered(false)
+                setIsFiltered(false)
               }else{
                 setData(filteredData)
-                setIsMenFiltered(true)
+                setIsFiltered(true)
               }
               
               
             }}
              className='hover:bg-slate-800 hover:text-white ho px-20 py-1'>Men</button>
-            <button className='hover:bg-slate-800 hover:text-white px-20 py-1'>Women</button>
-            <button className='hover:bg-slate-800 hover:text-white px-20 py-1'>Kids</button>
+            <button 
+               onClick={()=>{
+                const filteredData=products.products.filter((product)=>{
+                     return product.category.category=='Women'
+                   })
+                   if(isFiltered){
+                     setData(products.products) 
+                     setIsFiltered(false)
+                   }else{
+                     setData(filteredData)
+                     setIsFiltered(true)
+                   }
+                   
+                   
+                 }}
+            className='hover:bg-slate-800 hover:text-white px-20 py-1'>Women</button>
 
+            <button
+            onClick={()=>{
+              const filteredData=products.products.filter((product)=>{
+                   return product.category.category=='Kids'
+                 })
+                 if(isFiltered){
+                   setData(products.products) 
+                   setIsFiltered(false)
+                 }else{
+                   setData(filteredData)
+                   setIsFiltered(true)
+                 }
+                 
+                 
+               }}
+            className='hover:bg-slate-800 hover:text-white px-20 py-1'>Kids</button>
 
+               
           </span>
-
+          <Link className="relative left-[20%]">View All Products</Link>
           </div>
-          <Link to={'/reg'}>reg</Link>
+         
         <div className=' min-h-fit  flex flex-wrap'>
       {
         data.map((el)=>{
