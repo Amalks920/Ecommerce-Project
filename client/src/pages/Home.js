@@ -18,16 +18,21 @@ let history=createBrowserHistory()
  let dispatch=useDispatch()
   //access token
   const token=useSelector(store=>store.user.token)
+  const products=useSelector(store=>store.products)
+  const [isMenFiltered,setIsMenFiltered]=useState(false)
+
+  console.log('productsss')
+  console.log(products)
 
   const [data,setData]=useState([])
 
-  
+  console.log(data)
 
 
-useEffect(()=>{
-  dispatch(setProducts(data))
+// useEffect(()=>{
+//   dispatch(setProducts(data))
 
-})
+// },[])
 
   let headers
   if(token){
@@ -39,7 +44,7 @@ useEffect(()=>{
   useEffect(()=>{
     axios.get(URL,{headers})
     .then((res)=>{
-
+      dispatch(setProducts(res.data.products))
       setData(res.data.products)
        
     })
@@ -57,7 +62,28 @@ useEffect(()=>{
       <div className='h-1/2   ms-[10%]  me-[10%] flex flex-col mt-[40%]'>
         
         <div className='  min-1/3 flex justify-center font-sans font-extrabold text-xl'>
-          <h1>All Products</h1>
+          <span className='border'>
+            <button
+            onClick={()=>{
+           const filteredData=   products.products.filter((product)=>{
+                return product.size=='2xl'
+              })
+              if(isMenFiltered){
+                setData(products.products) 
+                setIsMenFiltered(false)
+              }else{
+                setData(filteredData)
+                setIsMenFiltered(true)
+              }
+              
+              
+            }}
+             className='hover:bg-slate-800 hover:text-white ho px-20 py-1'>Men</button>
+            <button className='hover:bg-slate-800 hover:text-white px-20 py-1'>Women</button>
+            <button className='hover:bg-slate-800 hover:text-white px-20 py-1'>Kids</button>
+
+
+          </span>
           </div>
           <Link to={'/reg'}>reg</Link>
         <div className=' min-h-fit  flex flex-wrap'>

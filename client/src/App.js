@@ -35,6 +35,7 @@ import ConfirmOrder from "./pages/ConfirmOrder";
 import ViewOrder from "./pages/admin/ViewOrder";
 import ForgotPasswordOtp from "./pages/ForgotPasswordOtp";
 import CreateNewPassword from "./pages/CreateNewPassword";
+import UpdateOrders from "./pages/admin/UpdateOrders";
 
 let isLoggedIn;
 
@@ -94,7 +95,8 @@ function App() {
         <Route path="/admin/add-category" element={<AddCategory />}></Route>
         <Route path="/admin/view-products" element={<ViewProduct />}></Route>
         <Route path="/admin/view-orders" element={<ViewOrder/>}></Route>
-        
+        <Route path="/admin/update-orders" element={<UpdateOrders/>}></Route>
+
         <Route
           path="/admin/product-management"
           element={<ProductManagement />}></Route>

@@ -3,6 +3,7 @@ const mongoose=require('mongoose')
 const OrderSchema = require("../../models/OrderSchema");
 const CartSchema = require("../../models/CartSchema");
 const AddressSchema = require("../../models/AddressSchema");
+const { update } = require("lodash");
 const ObjectId=mongoose.Types.ObjectId
 
 const createOrder=expressAsyncHandler(async(req,res,next)=>{
@@ -108,8 +109,21 @@ const getAllOrders=expressAsyncHandler(async(req,res,next)=>{
     }
 })
 
+const editOrderStatus=expressAsyncHandler(async(req,res,next)=>{
+    console.log(req.body)
+    const {orderId,status}=req.body;
+    try {
+    const updatedOrder=await OrderSchema.findByIdAndUpdate(orderId,{orderStatus:status})
+    console.log(updatedOrder)
+    } catch (error) {
+        console.log(error)
+    }
+    
+})
+
 
 module.exports={
     createOrder,
-    getAllOrders
+    getAllOrders,
+    editOrderStatus
 }

@@ -42,16 +42,11 @@ const logout = () =>{
 
   return (
     <div className='w-screen fixed z-20 top-0 h-28 bg-white shadow-2xl flex justify-evenly items-center'>
-      <div className='w-1/6'>
+      <div className='w-1/12'>
         <h1 className='font-bold text-2xl'>E-Comx</h1>
       </div>
-      <ul className='flex justify-between w-1/3'>
-        <li><Link to={'/login'}>Home</Link></li>
-        <li><Link to={'/user-dashboard'}>User</Link></li>
-        <li>Women</li>
-        <li>Kids</li>
-      </ul>
      
+      <input className='border-none w-1/3 h-[50%] bg-slate-300'/>
       
         {
           
