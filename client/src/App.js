@@ -58,7 +58,7 @@ function App() {
           <Route path="order" element={<OrderPage />}></Route>
           <Route path="confirm-order" element={<ConfirmOrder />}></Route>
           <Route path="img" element={<Img />}></Route>
-          {/* <Route element={<RequireAuth />}> */}
+          <Route element={<RequireAuth />}>
             <Route path="home" element={<Home />}></Route>
 
             <Route path="/user-dashboard" element={<UserDashBoardContainer/>}>
@@ -69,7 +69,7 @@ function App() {
 
             <Route path="product-page/:id" element={<ProductPage/>}></Route>
             <Route path="user-cart" element={<UserCart />}></Route>
-          {/* </Route> */}
+          </Route>
 
           <Route path="/reg" element={<Reg />}></Route>
         </Route>

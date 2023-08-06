@@ -8,6 +8,8 @@ import { Link, useLocation } from 'react-router-dom'
 import CarouselTransition from '../components/Carousel'
 import { setProducts } from '../utils/productSlice'
 import { createBrowserHistory } from 'history'
+import ImageZoom from "react-image-zooom";
+
 
 const URL=`${BACKEND_API}/admin/get-all-products`
 let history=createBrowserHistory()
@@ -56,8 +58,13 @@ useEffect(()=>{
      
       <div className='h-1/2   ms-[10%]  me-[10%] flex flex-col mt-[40%]'>
         
-        <div className='  min-1/3 flex justify-center font-sans font-extrabold text-xl'>
-          <h1>All Products</h1>
+        <div className='  min-1/3 flex justify-center font-sans font-extrabold text-xl '>
+          <button className='bg-white border border-black text-black  w-[10%] shadow-2xl hover:bg-slate-700 hover:text-white'>Men</button>
+          <button className='bg-white border border-black text-black  w-[10%] shadow-2xl hover:bg-slate-700 hover:text-white'>Women</button>
+          <button onClick={()=>{
+           
+            console.log(data)
+            }} className='bg-white text-black border border-black  w-[10%] shadow-2xl hover:bg-slate-700 hover:text-white'>Kids</button>
           </div>
           <Link to={'/reg'}>reg</Link>
         <div className=' min-h-fit  flex flex-wrap'>

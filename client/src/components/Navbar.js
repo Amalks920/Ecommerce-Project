@@ -15,6 +15,8 @@ let token=useSelector((store)=>store.user.token)
 console.log(user)
 
 
+
+
 const logout = () =>{
   
   
@@ -55,7 +57,7 @@ const logout = () =>{
       
         {
           
-        token ?<button onClick={logout} className='bg-slate-600 text-white font-bold w-56 h-14'>{`Logout`} </button> :<button className='bg-slate-600 text-white font-bold w-1/12 h-1/2'><Link to='/login'>Login</Link> </button>
+        token ?<button onClick={()=>{logout()}} className='bg-slate-600 text-white font-bold w-56 h-14'>{`Logout`} </button> :<button className='bg-slate-600 text-white font-bold w-1/12 h-1/2'><Link to='/login'>Login</Link> </button>
         }
         
 

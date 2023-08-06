@@ -8,7 +8,8 @@ export function CarouselTransition() {
 const slides=[
 
   {
-    url:"https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=8"
+    // url:"https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=8"
+    url:"https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/7208a6aeba4e65b7.jpg?q=1"
 
   },
 
