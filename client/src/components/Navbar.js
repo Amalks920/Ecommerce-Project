@@ -46,7 +46,7 @@ const logout = () =>{
   return (
     <div className='w-screen fixed z-20 top-0 h-28 bg-white shadow-2xl flex justify-evenly items-center'>
       <div className='w-1/12'>
-        <h1 className='font-bold text-2xl'>E-Comx</h1>
+        <h1 className='font-bold text-2xl'><Link to={'/home'}>E-Comx</Link></h1>
       </div>
       <ul>
         <li className='uppercase text-slate-700 text-xl'><Link to={'/user-dashboard'}>User</Link></li>

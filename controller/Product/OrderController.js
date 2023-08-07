@@ -122,8 +122,21 @@ const editOrderStatus=expressAsyncHandler(async(req,res,next)=>{
 })
 
 
+const getOrder=expressAsyncHandler(async(req,res,next)=>{
+    console.log(req.params.id)
+
+    try {
+        const dbResponse=await OrderSchema.findOne({user:req.params.id})
+        console.log(dbResponse)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+
 module.exports={
     createOrder,
     getAllOrders,
-    editOrderStatus
+    editOrderStatus,
+    getOrder
 }
