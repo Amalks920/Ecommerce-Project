@@ -36,6 +36,8 @@ import ViewOrder from "./pages/admin/ViewOrder";
 import ForgotPasswordOtp from "./pages/ForgotPasswordOtp";
 import CreateNewPassword from "./pages/CreateNewPassword";
 import UpdateOrders from "./pages/admin/UpdateOrders";
+import ViewAllProducts from "./pages/ViewAllProducts";
+import ViewOrdersUser from "./pages/ViewOrdersUser";
 
 let isLoggedIn;
 
@@ -61,10 +63,14 @@ function App() {
           <Route path="img" element={<Img />}></Route>
           <Route element={<RequireAuth />}>
             <Route path="home" element={<Home />}></Route>
+            <Route path="/view-all-products" element={<ViewAllProducts/>}></Route>
+
 
             <Route path="/user-dashboard" element={<UserDashBoardContainer/>}>
             <Route path="/user-dashboard/add-address" element={<UserDashboard/>}></Route>
             <Route path="/user-dashboard/address" element={<ViewAddress/>}></Route>
+            <Route path="/user-dashboard/view-orders-user" element={<ViewOrdersUser/>}></Route>
+
             
             </Route>
 

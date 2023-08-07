@@ -10,6 +10,7 @@ const Navbar = () => {
 let user
 const navigate=useNavigate()
 const dispatch=useDispatch() 
+const [searchSuggestion,setSearchSuggestion]=useState('')
 
 let token=useSelector((store)=>store.user.token)
 console.log(user)
@@ -47,13 +48,24 @@ const logout = () =>{
       <div className='w-1/12'>
         <h1 className='font-bold text-2xl'>E-Comx</h1>
       </div>
+      <ul>
+        <li className='uppercase text-slate-700 text-xl'><Link to={'/user-dashboard'}>User</Link></li>
+      </ul>
      
-      <input className='border-none w-1/3 h-[50%] bg-slate-300'/>
+      <input value={searchSuggestion} onChange={(e)=>{setSearchSuggestion(e.target.value)}} className='border-none w-1/3 h-[50%] bg-slate-300 ps-60'   placeholder='Search Here'/>
+      <button className='h-[55%] ms-[-6.2%] w-[6%] border text-white font-bold bg-slate-900'>Search</button>
+      
+      
+      {
+        searchSuggestion.length!=0?<div className='absolute top-24 rounded-2xl left-[29.3%] w-[33.5%] h-[500px] bg-slate-200  shadow-2xl'></div>:null
+      }
+      
       
         {
           
         token ?<button onClick={()=>{logout()}} className='bg-slate-600 text-white font-bold w-56 h-14'>{`Logout`} </button> :<button className='bg-slate-600 text-white font-bold w-1/12 h-1/2'><Link to='/login'>Login</Link> </button>
         }
+
         
 
         <div>

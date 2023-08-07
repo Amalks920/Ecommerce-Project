@@ -123,7 +123,7 @@ let history=createBrowserHistory()
 
                
           </span>
-          <Link className="relative left-[20%]">View All Products</Link>
+          <Link to={'/view-all-products'} className="relative left-[20%]">View All Products</Link>
           </div>
          
         <div className=' min-h-fit  flex flex-wrap'>
