@@ -51,6 +51,8 @@ const createOrder=expressAsyncHandler(async(req,res,next)=>{
 
 
        const address=await AddressSchema.findOne({user:req.body.user})
+       console.log(address)
+       console.log(req.body.user)
        console.log(address._id)
 
        let userId=new ObjectId(req.body.user)
@@ -126,10 +128,13 @@ const getOrder=expressAsyncHandler(async(req,res,next)=>{
     console.log(req.params.id)
 
     try {
-        const dbResponse=await OrderSchema.findOne({user:req.params.id})
+        const dbResponse=await OrderSchema.findOne({user:req.params.id}).populate('address')
+        console.log('orderschema')
         console.log(dbResponse)
+    res.json({response:dbResponse})
     } catch (error) {
-        console.log(error)
+        return res.status(400).json({ error: 'cannot find orders' })
+
     }
 })
 

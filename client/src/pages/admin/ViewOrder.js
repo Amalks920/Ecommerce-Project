@@ -29,14 +29,7 @@ console.log(orders)
   try {
     const response=await axios.get(GET_ORDER_API,{headers})
     
-    // const productsData=response.data.response.map((el)=>{
-    //   return el.items
-    // })
-    // const addressData=response.data.response.map((el)=>{
-    //   return el.address
-    // })
-   
-    // setOrderData(response.data.response)
+    console.log(response)
     console.log('e ')
    const data=response?.data?.response
   //  const p=data.map(el=>el.products)
