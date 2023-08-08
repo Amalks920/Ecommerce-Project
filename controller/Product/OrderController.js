@@ -76,33 +76,7 @@ const createOrder=expressAsyncHandler(async(req,res,next)=>{
 const getAllOrders=expressAsyncHandler(async(req,res,next)=>{
     try {
         const allOrders=await OrderSchema.find({}).populate('address')
-        // aggregate().project({
-        //     user:1,
-        //     productId:"$items.productId",
-        //     orderStatus:1,
-        //     address:1,
-        //     isPaid:1
-        // })
-        // .lookup({
-        //     from:"products",
-        //     localField:'productId',
-        //     foreignField:"_id",
-        //     as:"products"
-        // })
-        // .lookup({
-        //     from:"addresses",
-        //     localField:"address",
-        //     foreignField:"_id",
-        //     as:"address"
-        // })
-        // .project(
-        //     {
-        //         productName:"$products"
-        //     }
-        // )
-        
-        // .populate('items.productId').populate('address')
-        
+
         console.log(allOrders)
          res.json({response:allOrders})
     } catch (error) {
@@ -139,9 +113,22 @@ const getOrder=expressAsyncHandler(async(req,res,next)=>{
 })
 
 
+const deleteOrder=expressAsyncHandler(async(req,res,next)=>{
+    console.log(req.params.id)
+
+    try {
+     const deletedOrder=await OrderSchema.deleteOne({_id:req.params.id})
+     console.log(deletedOrder)
+     res.json({msg:deletedOrder})
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+
 module.exports={
     createOrder,
     getAllOrders,
     editOrderStatus,
-    getOrder
+    getOrder,deleteOrder
 }

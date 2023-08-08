@@ -23,7 +23,8 @@ const handleRefreshToken = require("../config/refreshToken");
 const authMiddleware = require("../middlewares/authMiddleware");
 const { sendOtp } = require("../config/otpGenerator");
 const { addAddress,getAddress } = require("../controller/User/addressCtrl");
-const {createOrder,editOrderStatus,getOrder}=require('../controller/Product/OrderController')
+const {createOrder,editOrderStatus,
+  getOrder,deleteOrder}=require('../controller/Product/OrderController')
 
 
 // router.get("/reg", authMiddleware, (req, res) => {
@@ -55,7 +56,8 @@ router.get('/get-address/:id',getAddress)
 //Orders
 router.post('/place-order',authMiddleware,createOrder)
 router.post('/edit-order-status',authMiddleware,editOrderStatus)
-router.get('/get-order/:id',getOrder)
+router.get('/get-order/:id',authMiddleware,getOrder)
+router.delete('/delete-order/:id',authMiddleware,deleteOrder)
 
 
 //  router.use(authMiddleware)

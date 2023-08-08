@@ -21,6 +21,7 @@ const dispatch=useDispatch()
 const token=useSelector(store=>store.user.token)
 const cart=useSelector(store=>store.cart)
 const [address,setAddress]=useState('')
+const [cartData,setCartData]=useState([])
 
 
 let headers;
@@ -38,9 +39,12 @@ console.log(cart)
     
   }
 
+ 
+console.log(cartData.map(el=>el))
+
   //get address
  
-  const totalAmount=cart.cart.map(el=>el.productId.price*el.count).reduce((total,element)=>total+element,0)
+  const totalAmount=cartData.map(el=>el.productId.price*el.count).reduce((total,element)=>total+element,0)
 
 
   const getAddress=async()=>{
@@ -54,12 +58,6 @@ console.log(cart)
     }
   }
 
-
-
-  useEffect(()=>{
-    getAddress()
-  },[])
-  
   const placeOrder=async()=>{
     try {
      const response=await axios.post(PLACE_ORDER_URL,data,{headers})
@@ -70,6 +68,29 @@ console.log(cart)
       console.log(error)
     }
   }
+
+  const getCartDetails = async () => {
+    try {
+      const result = await axios.post(
+        GET_CART,
+        { userid: userId },
+        { headers }
+      );
+     
+      setCartData(result.data.cart)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+
+  useEffect(()=>{
+    getCartDetails()
+    getAddress()
+  },[])
+  
+
   
   return (
     <div className=' h-fit p-[1%] pt-[8%]'>
@@ -91,12 +112,12 @@ console.log(cart)
          
             <div className='h-fit mt-7  flex flex-col shadow-2xl'>
             {
-            cart?.cart?.map((el)=>{
+             cartData?.map((el)=>{
 
            
-            return <div className='w-full h-[300px] border-b-2 border-b-slate-600  p-[5%] '>
+            return  <div className='w-full h-[300px] border-b-2 border-b-slate-600  p-[5%] '>
               <div className='h-[75%] flex  '>
-              <img className='' src={el.productId.image} height={20}/>
+              <img className='' src={el?.productId?.image} />
 
               <div className='w-[50%]'>
               <p className='ms-3 uppercase text-xl  font-thin'>{el?.productId?.productName}</p>
@@ -104,17 +125,17 @@ console.log(cart)
               </div>
 
               <div className='ms-[8%] mt-[5%] font-mono'>{el?.count} Nos</div>
-              <div className='ms-[9%] mt-[5%] text-green-600 text-2xl font-mono'><h1>{el.productId.price} RS</h1></div>
+              <div className='ms-[9%] mt-[5%] text-green-600 text-2xl font-mono'><h1>{el?.productId?.price} RS</h1></div>
 
               </div>
 
               <div className=' h-[40%] flex justify-center items-center'>
                 
-                <h1><span className=' text-2xl font-thin'>Total : </span><span className='text-3xl text-slate-700 font-mono'>{el?.count*el?.productId?.price} RS</span></h1>
+                <h1><span className=' text-2xl font-thin'>Total : </span>{el?.productId.price*el?.count}<span className='text-3xl text-slate-700 font-mono'> RS</span></h1>
               </div>
             </div>
             
-            })  
+             })  
           }  
           <div className='h-[100px] justify-center flex  items-center'><p className='font-mono text-2xl'>Total Amount :{totalAmount}</p></div>
              </div>         

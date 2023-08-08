@@ -47,12 +47,9 @@ const UserSidebar = () => {
             <Link to={"/user-dashboard/view-orders-user"}>My Purchases</Link>
           </li>
         )}
-        <li className=" p-5  hover:text-violet-900 cursor-pointer font-bold">
-          <Link to={"/user-dashboard/address"}>Manage Address</Link>
-        </li>
-        <li className=" p-5  hover:text-violet-900 cursor-pointer font-bold">
-          My Wishlist
-        </li>
+
+      
+
       </ul>
     </div>
   );

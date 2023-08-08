@@ -16,8 +16,6 @@ const authMiddleware=asyncHandler(async (req,res,next)=>{
 
  const token=authHeader.split(' ')[1]
 
-
-
  jwt.verify(
     token,
     process.env.ACCESS_TOKEN_PRIVATE_KEY,

@@ -1,39 +1,49 @@
 import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
 import { useSelector } from "react-redux";
-import { GET_A_ORDER } from "../utils/constants";
+import { DELETE_ORDER, GET_A_ORDER } from "../utils/constants";
 import { setProducts } from "../utils/productSlice";
 import { map } from "lodash";
 
 const ViewOrdersUser = () => {
+  const token=useSelector(store=>store.user.token)
   const userid = useSelector((store) => store.user.id);
   const products = useSelector((store) => store.products);
   const [productData, setProductData] = useState([]);
-  const [orderId,setOrderId]=useState()
   const [data, setData] = useState([]);
+  const [refreshGetOrder,setRefreshGetOrder]=useState(false)
   console.log(userid);
   console.log(products);
   console.log("products data");
- let p=productData.map(el=>el.items)
- console.log(p)
 
-  //    const p1=products.products.map(el=>el)
-  //    const p2=productData.map(el=>el.productId)
 
-  //    const productsToDisplay=p1.filter((element)=>p2.includes(element._id))
-  //    console.log('p')
-  //    console.log(productsToDisplay)
+console.log(token)
+  let headers;
+  if (token) {
+    headers = {
+      Authorization: `Bearer ${token}`,
+    };
+  }
   
+let p= productData.map((el) => {          
+    return  el.items
+  })
+  .map((el) => el.map((el) =>{
+               
+    return  el.productId 
+}
+     ))
 
+ console.log(p.map(el=>el._id))
   
 
   useEffect(() => {
     getOrders();
-  }, []);
+  }, [refreshGetOrder]);
 
   const getOrders = async () => {
     try {
-      const response = await axios.get(`${GET_A_ORDER}/${userid}`);
+      const response = await axios.get(`${GET_A_ORDER}/${userid}`,{headers});
       console.log("respponsef");
       console.log(response.data.response);
       setProductData(response.data.response);
@@ -42,8 +52,16 @@ const ViewOrdersUser = () => {
     }
   };
 
-  const cancelOrder=async () =>{
-  
+  const cancelOrder=async (indexOfOrder) =>{
+    console.log(productData[indexOfOrder]._id)
+    try {
+      const response=await axios.delete(`${DELETE_ORDER}/${productData[indexOfOrder]._id}`,{headers})
+      console.log(response)
+      console.log(response.data.msg)
+      if(response?.data?.msg) setRefreshGetOrder(refreshGetOrder?false:true)
+    } catch (error) {
+     console.log(error)
+    }
   }
 
   return (
@@ -55,18 +73,9 @@ const ViewOrdersUser = () => {
         </div>
 
         <div className="border mb-[3%] h-fit">
-          {productData
-            .map((el) => {
-               
-                
-                
-              return el.items;
-            })
-            .map((el) => el.map((el) =>{
-               
-                return  el.productId 
-            }
-                 ))
+          {p
+          
+           
             .map((el) => {
               return (
                 <div className="h-1/2 flex flex-col    p-[2%] shadow-2xl">
@@ -80,7 +89,7 @@ const ViewOrdersUser = () => {
                   })}
                   <div className="h-[100px]  flex justify-between  pt-[2%] p-[4%]">
                     <button
-                    onClick={()=>{cancelOrder()}}
+                   onClick={()=>{cancelOrder(p.indexOf(el))}}
                      className="hover:bg-slate-700 hover:text-white border h-[50px] border-slate-700 p-[1%]">CANCEL ORDER</button>
                    
                   </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useRef } from 'react'
 import {AdvancedImage} from '@cloudinary/react';
 import {Cloudinary} from "@cloudinary/url-gen";
 import {sepia} from "@cloudinary/url-gen/actions/effect";
@@ -9,6 +9,7 @@ import ImageZoom from "react-image-zooom";
 const Img = () => {
     const [image, setImage] = useState();
     const [file1,setFiles1]=useState();
+    const inputRef=useRef(null)
 
 
     const cld = new Cloudinary({
@@ -57,10 +58,16 @@ const Img = () => {
         };
       }
 
+      const handleImageClick=(e)=>{
+        const file=e.target.files[0]
+        console.log(file)
+      }
+
   return (
    <div className='mt-[10%] border border-black h-[700px]'>
+    <input onChange={handleImageClick} type='file' ref={inputRef}/>
      {/* <AdvancedImage cldImg={myImage} /> */}
-     <ImageZoom src={`https://res.cloudinary.com/diwjdka8p/image/upload/v1690970995/qp0akpk6nurq1pwol3ad.webp`}/>
+     {/* <ImageZoom src={`https://res.cloudinary.com/diwjdka8p/image/upload/v1690970995/qp0akpk6nurq1pwol3ad.webp`}/> */}
 
    </div>
   )
