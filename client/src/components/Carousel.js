@@ -49,7 +49,7 @@ const goToSlide = (slideIndex) => {
 
 
 return (
-  <div className='mt-[3%] w-screen h-screen m-auto   group'>
+  <div className='mt-[15%] w-[95%]  h-[50%] m-auto   group'>
   <div
     style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
     className='w-full h-full rounded-2xl bg-center bg-cover duration-500'

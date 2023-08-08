@@ -6,71 +6,131 @@ import axios from '../api/axios';
 import ImageZoom from "react-image-zooom";
 
 
-const Img = () => {
-    const [image, setImage] = useState();
-    const [file1,setFiles1]=useState();
-    const inputRef=useRef(null)
+
+function Img() {
+  const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [res, setRes] = useState({});
+  const handleSelectFile = (e) => setFile(e.target.files[0]);
+  console.log(file)
+  const handleUpload = async () => {
+    try {
+      setLoading(true);
+      const data = new FormData();
+      data.append("my_file", file);
+      const res = await axios.post("/user/image", data);
+      setRes(res.data);
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="App h-screen mt-[10%]">
+      <label htmlFor="file" className="btn-grey">
+        {" "}
+        select file
+      </label>
+      {file && <center> {file.name}</center>}
+      <input
+        id="file"
+        type="file"
+        onChange={handleSelectFile}
+        multiple={false}
+      />
+      <code>
+        {Object.keys(res).length > 0
+          ? Object.keys(res).map((key) => (
+              <p className="output-item" key={key}>
+                <span>{key}:</span>
+                <span>
+                  {typeof res[key] === "object" ? "object" : res[key]}
+                </span>
+              </p>
+            ))
+          : null}
+      </code>
+      {file && (
+        <>
+          <button onClick={handleUpload} className="bg-black">
+            {loading ? "uploading..." : "upload to cloudinary"}
+          </button>
+        </>
+      )}
+    </div>
+  );
+}
 
 
-    const cld = new Cloudinary({
-      cloud: {
-        cloudName: 'diwjdka8p'
-      }
-    }); 
-
-    const myImage = cld.image('qp0akpk6nurq1pwol3ad');
-
-  //   myImage
-  // .effect(sepia());  // Apply a sepia effect.
-
-    console.log(file1)
 
 
-    const sendFile=(e)=>{
-        let data={
-            image:image
-        }
-        e.preventDefault()
-        const formData = new FormData();
-    axios
-    .post("/user/image", data)
-    .then((res) => {
-      // dispatch(setProductDetails(res.data))
+// const Img = () => {
+//     const [image, setImage] = useState();
+//     const [file1,setFiles1]=useState();
+//     const inputRef=useRef(null)
 
-      console.log(res);
-    })
-    .catch((err) => {
-      // dispatch(setProductDetailsError(err.message))
-      console.log(err);
-    });
+
+//     const cld = new Cloudinary({
+//       cloud: {
+//         cloudName: 'diwjdka8p'
+//       }
+//     }); 
+
+//     const myImage = cld.image('qp0akpk6nurq1pwol3ad');
+
+//   //   myImage
+//   // .effect(sepia());  // Apply a sepia effect.
+
+//     console.log(file1)
+
+
+//     const sendFile=(e)=>{
+//         let data={
+//             image:image
+//         }
+//         e.preventDefault()
+//         const formData = new FormData();
+//     axios
+//     .post("/user/image", data)
+//     .then((res) => {
+//       // dispatch(setProductDetails(res.data))
+
+//       console.log(res);
+//     })
+//     .catch((err) => {
+//       // dispatch(setProductDetailsError(err.message))
+//       console.log(err);
+//     });
 
   
 
-    }
+//     }
 
-    function previewFiles(file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
+//     function previewFiles(file) {
+//         const reader = new FileReader();
+//         reader.readAsDataURL(file);
     
-        reader.onloadend = () => {
-          setImage(reader.result);
-          console.log(image);
-        };
-      }
+//         reader.onloadend = () => {
+//           setImage(reader.result);
+//           console.log(image);
+//         };
+//       }
 
-      const handleImageClick=(e)=>{
-        const file=e.target.files[0]
-        console.log(file)
-      }
+//       const handleImageClick=(e)=>{
+//         const file=e.target.files[0]
+//         console.log(file)
+//       }
 
-  return (
-   <div className='mt-[10%] border border-black h-[700px]'>
-    <input onChange={handleImageClick} type='file' ref={inputRef}/>
-     {/* <AdvancedImage cldImg={myImage} /> */}
-     {/* <ImageZoom src={`https://res.cloudinary.com/diwjdka8p/image/upload/v1690970995/qp0akpk6nurq1pwol3ad.webp`}/> */}
+//   return (
+//    <div className='mt-[10%] border border-black h-[700px]'>
+//     <input onChange={handleImageClick} type='file' ref={inputRef}/>
+//      {/* <AdvancedImage cldImg={myImage} /> */}
+//      {/* <ImageZoom src={`https://res.cloudinary.com/diwjdka8p/image/upload/v1690970995/qp0akpk6nurq1pwol3ad.webp`}/> */}
 
-   </div>
-  )
-}
+//    </div>
+//   )
+// }
 
 export default Img

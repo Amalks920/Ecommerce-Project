@@ -15,8 +15,10 @@ const {
   
 }=require('../controller/Product/cartController')
 
+const {whatsappOtp, sendSmsOtp}=require('../config/twilio')
+
 const { 
-  getCartDetails,img,decreaseCartCount,increaseCartCount,
+  getCartDetails,decreaseCartCount,increaseCartCount,
   deleteCartProduct
 }=require('../controller/Product/cartController')
 const handleRefreshToken = require("../config/refreshToken");
@@ -24,8 +26,10 @@ const authMiddleware = require("../middlewares/authMiddleware");
 const { sendOtp } = require("../config/otpGenerator");
 const { addAddress,getAddress } = require("../controller/User/addressCtrl");
 const {createOrder,editOrderStatus,
-  getOrder,deleteOrder}=require('../controller/Product/OrderController')
+  getOrder,deleteOrder}=require('../controller/Product/OrderController');
 
+const {upload}=require('../config/multer')
+const {img}=require('../controller/imgCtrl')
 
 // router.get("/reg", authMiddleware, (req, res) => {
 //   // console.log(req.body)
@@ -40,6 +44,8 @@ router.post('/otp-login',otpLogin)
 router.post('/otp',verifyOtp)
 router.post('/create-new-password',createPassword)
 
+router.get('/send-sms-otp',sendSmsOtp)
+
 //cart 
 router.post("/add-to-cart",authMiddleware,addToCart);
 router.post('/get-cart-details',authMiddleware,getCartDetails);
@@ -47,7 +53,7 @@ router.post('/decrease-cart-count',authMiddleware,decreaseCartCount);
 router.post('/increase-cart-count',authMiddleware,increaseCartCount);
 router.post('/delete-cart-product',authMiddleware,deleteCartProduct);
 router.get('/get-address/:id',authMiddleware,getAddress)
-// router.post('/image',img);
+router.post('/image',upload.single('my_file'),img);
 
 //Address
 router.post('/add-address',authMiddleware,addAddress)

@@ -19,16 +19,7 @@ const getCartDetails = expressAsyncHandler(async (req, res, next) => {
   
 });
 
-const img = expressAsyncHandler(async (req, res, next) => {
-  const { image } = req.body;
 
-  try {
-    let cloud = await cloudinary.uploader.upload(image, { timeout: 60000 });
-    console.log(cloud);
-  } catch (error) {
-    console.log(error);
-  }
-});
 
 
 
@@ -192,7 +183,7 @@ const increaseCartCount=expressAsyncHandler(async(req,res,next)=>{
 
 module.exports = {
   getCartDetails,
-  img,decreaseCartCount,
+  decreaseCartCount,
   deleteCartProduct,
   increaseCartCount,
   addToCart
