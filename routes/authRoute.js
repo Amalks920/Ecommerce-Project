@@ -42,7 +42,6 @@ router.post('/create-new-password',createPassword)
 //cart 
 router.post("/add-to-cart",authMiddleware,addToCart);
 router.post('/get-cart-details',authMiddleware,getCartDetails);
-router.post('/get-cart-details',authMiddleware,getCartDetails);
 router.post('/decrease-cart-count',authMiddleware,decreaseCartCount);
 router.post('/increase-cart-count',authMiddleware,increaseCartCount);
 router.post('/delete-cart-product',authMiddleware,deleteCartProduct);
@@ -51,6 +50,7 @@ router.get('/get-address/:id',authMiddleware,getAddress)
 
 //Address
 router.post('/add-address',authMiddleware,addAddress)
+router.get('/get-address/:id',getAddress)
 
 //Orders
 router.post('/place-order',authMiddleware,createOrder)

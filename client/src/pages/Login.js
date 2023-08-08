@@ -14,7 +14,7 @@ const LOGIN_URL = "/user/login";
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-console.log("user here");
+
 
 export const Login = () => {
   // history.replace('/login')
@@ -37,7 +37,7 @@ export const Login = () => {
   const [errMsg, setErrMsg] = useState("");
   const [validPassword, setValidPassword] = useState(false);
 
-  console.log(email, password);
+
   useEffect(() => {
     userRef.current.focus();
   }, []);
@@ -48,8 +48,6 @@ export const Login = () => {
 
   useEffect(() => {
     const result = passwordRegex.test(password);
-    console.log(result);
-    console.log(password);
     setValidPassword(result);
   }, [password]);
 
@@ -74,8 +72,6 @@ export const Login = () => {
         }
       );
 
-      console.log("user there");
-      console.log(user);
 
       setEmail("");
       setAuth({ user: email });

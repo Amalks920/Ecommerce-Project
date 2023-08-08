@@ -14,17 +14,17 @@ const OrderSchema=new mongoose.Schema({
         type:mongoose.SchemaTypes.ObjectId,
         ref:"Product",
         required:true,
-    quantity: {
-            type: Number,
-            required: true,
-            min: 1,
-        },
-        price: {
-            type: Number,
-            required: true,
-            min: 0,
-        },
-     }
+     },
+     quantity: {
+        type: Number,
+        required: true,
+        min: 1,
+    },
+    price: {
+        type: Number,
+        required: true,
+        min: 0,
+    },
       }
     ],
     orderStatus:{
@@ -39,6 +39,7 @@ const OrderSchema=new mongoose.Schema({
     },
     paymentMode:{
         type:String,
+        default:'COD'
         // required:true
     },
     isPaid:{
@@ -49,6 +50,12 @@ const OrderSchema=new mongoose.Schema({
         type:mongoose.SchemaTypes.ObjectId,
         ref:'Address'
         // required:true
+    },
+    createdAt:{
+        type:Date,
+        default:()=>{
+            Date.now()
+        }
     }
 })
 

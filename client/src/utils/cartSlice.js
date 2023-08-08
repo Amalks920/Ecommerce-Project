@@ -10,16 +10,24 @@ const cartSlice=createSlice({
     reducers:{
         cacheCartProducts:(state,action)=>{
             
+           state.cart=action.payload
+            
+        },
+         pushCartProducts:(state,action)=>{
+            
            state.cart.push(action.payload)
             
         },
         updateCount:(state,action)=>{
             state.count++
+        },
+        deleteCart:(state,action)=>{
+            state.cart=null;
         }
     }
 
 })
 
-export const {cacheCartProducts}=cartSlice.actions
+export const {cacheCartProducts,deleteCart,pushCartProducts}=cartSlice.actions
 
 export default cartSlice.reducer;

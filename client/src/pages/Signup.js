@@ -14,6 +14,9 @@ const usernameRegex = /^[A-z][A-z0-9-_]{3,23}$/;
 const emailRegex=  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const mobileRegex= /^(?:(?:\+|00)(\d{1,3})[\s-]?)?(\d{10})$/;
+
+
+
 export const Signup = () => {
   const userRef = useRef();
   const errRef = useRef();
@@ -45,22 +48,15 @@ export const Signup = () => {
     userRef.current.focus();
   }, []);
 
- console.log(validName)
-
   //validation for username
   useEffect(() => {
     const result = usernameRegex.test(name);
-    console.log(result);
-    console.log(name);
     setValidName(result);
   }, [name]);
 
   //validation for email
   useEffect(() => {
     const result = emailRegex.test(email);
-    console.log('result')
-    console.log(result);
-    console.log(email);
     setValidEmail(result);
   }, [email]);
 
@@ -68,16 +64,12 @@ export const Signup = () => {
   //validation for mobile
   useEffect(() => {
     const result = mobileRegex.test(mobile);
-    console.log(result);
-    console.log(mobile);
     setValidMobile(result);
   }, [mobile]);
   
 
   useEffect(() => {
     const result = passwordRegex.test(password);
-    console.log(result);
-    console.log(password);
     setValidPassword(result);
   }, [password]);
 
@@ -85,11 +77,7 @@ export const Signup = () => {
     setErrMsg("");
   }, [name, password,email,mobile]);
 
-  console.log(email);
-  // const onSubmit = methods.handleSubmit(data => {
-  //     // data.role='user'
-  //
-  //   })
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const v1 = usernameRegex.test(name);
@@ -112,7 +100,6 @@ export const Signup = () => {
     console.log(res?.message);
     navigate("/login");
   };
-  console.log(errMsg);
 
   return (
     <div>

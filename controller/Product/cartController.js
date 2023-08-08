@@ -180,7 +180,7 @@ const increaseCartCount=expressAsyncHandler(async(req,res,next)=>{
         findCart.products[indexOfProduct].count++
         await findCart.save()
 
-        res.json({count:findCart.products[indexOfProduct].count})
+        res.json({count:findCart.products[indexOfProduct].count,product:findCart.products[indexOfProduct]})
       }
     } catch (error) {
       console.log(error)

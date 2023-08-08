@@ -18,7 +18,7 @@ const createOrder=expressAsyncHandler(async(req,res,next)=>{
        })
        .unwind('products')
        .project({
-        productId:"$products.productId",count:"$products.count",
+        productId:"$products.productId",quantity:"$products.count",
         
        })
        .lookup({
@@ -29,7 +29,7 @@ const createOrder=expressAsyncHandler(async(req,res,next)=>{
        })
        .project({
         productId:1,
-        count:1,
+        quantity:1,
         price:{
             $map:{
                 input:"$price",
@@ -40,7 +40,7 @@ const createOrder=expressAsyncHandler(async(req,res,next)=>{
        })
        .project({
         productId:1,
-        count:1,
+        quantity:1,
         price:{$arrayElemAt: ['$price', 0] }
        })
 
@@ -67,9 +67,9 @@ const createOrder=expressAsyncHandler(async(req,res,next)=>{
      } )
         console.log(newOrder)
     const deleteCart=await CartSchema.deleteOne({user:userId})
-    console.log(deleteCart)
+    res.json({isDeleted:true})
     } catch (error) {
-        console.log(error)
+        res.status(404).json({msg:"error ocuured while deleting"})
     }
 })
 
@@ -128,7 +128,7 @@ const getOrder=expressAsyncHandler(async(req,res,next)=>{
     console.log(req.params.id)
 
     try {
-        const dbResponse=await OrderSchema.findOne({user:req.params.id}).populate('address')
+        const dbResponse=await OrderSchema.find({user:req.params.id}).populate('items.productId')
         console.log('orderschema')
         console.log(dbResponse)
     res.json({response:dbResponse})

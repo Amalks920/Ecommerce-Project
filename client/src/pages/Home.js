@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { BACKEND_API } from '../utils/constants'
-import axios from 'axios'
+import { BACKEND_API, GET_CART } from '../utils/constants'
+import axios from '../api/axios'
 import ProductCard from '../components/ProductCard'
 import { setCredentials } from '../utils/loginSlice'
 import { Link, useLocation } from 'react-router-dom'
@@ -9,6 +9,7 @@ import CarouselTransition from '../components/Carousel'
 import { setProducts } from '../utils/productSlice'
 import { createBrowserHistory } from 'history'
 import ImageZoom from "react-image-zooom";
+import { cacheCartProducts } from '../utils/cartSlice'
 
 
 const URL=`${BACKEND_API}/admin/get-all-products`
@@ -20,19 +21,22 @@ let history=createBrowserHistory()
  let dispatch=useDispatch()
   //access token
   const token=useSelector(store=>store.user.token)
+  const userid=useSelector(store=>store.user.id)
   const products=useSelector(store=>store.products)
+  const cart=useSelector(store=>store.cart)
+
+
+
   const [isMenFiltered,setIsMenFiltered]=useState(false)
   const [isWomenFiltered,setIsWomenFiltered]=useState(false)
   const [isKidsFiltered,setIsKidsFiltered]=useState(false)
   const [isFiltered,setIsFiltered]=useState(false)
 
 
-  console.log('productsss')
-  console.log(products)
+
 
   const [data,setData]=useState([])
 
-  console.log(data)
 
 
 // useEffect(()=>{
@@ -44,6 +48,22 @@ let history=createBrowserHistory()
   if(token){
      headers={
       'Authorization':`Bearer ${token}`
+    }
+  }
+
+
+  useEffect(()=>{
+      getCart()
+  },[])
+
+  const getCart=async()=>{
+    try {
+      const response=await axios.post(GET_CART,{userid},{headers})
+     
+      dispatch(cacheCartProducts(response.data.cart))
+
+    } catch (error) {
+      console.log(error.message)
     }
   }
 

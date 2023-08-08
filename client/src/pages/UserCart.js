@@ -4,6 +4,7 @@ import axios from "../api/axios";
 import { useDispatch } from "react-redux";
 import { get } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { pushCartProducts } from "../utils/cartSlice";
 
 const GET_CART_DETAILS = `/user/get-cart-details`;
 const INCREASE_CART_COUNT = "/user/increase-cart-count";
@@ -75,6 +76,8 @@ const UserCart = () => {
         { headers }
       );
       setCartCount(response.data.count);
+      console.log('rde')
+      console.log(cartProductData)
     } catch (error) {
       console.log(error);
     }
@@ -97,19 +100,23 @@ const UserCart = () => {
 
 
   // find total amount
-  console.log('cart product')
   const totalPrice=cartProductData.reduce((total,count)=>{
     return total+Number(count.productId.price)},0)
 
     const totalCount=cartProductData.reduce((total,count)=>{
-      console.log("countt"+count.count)
       return total+Number(count.count)
     },0)
 
-    console.log(totalPrice,totalCount)
     
-  
+    
+    {
+      if(cartProductData.length===0) return <div className="h-screen flex items-center justify-center">
+        <h1 className="text-3xl">Cart is Empty</h1>
+        
+        </div>
+    }
   return (
+   
     <div className=" border border-b-green-800 h-screen w-screen flex items-center justify-center">
       <div className=" bg-black min-w-[60%] flex flex-col shadow-2xl p-[2%] w-[2%] rounded-2xl">
         <h1 className="text-center font-bold text-2xl text-white">

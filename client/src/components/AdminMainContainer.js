@@ -7,7 +7,7 @@ import AdminNavbar from '../pages/admin/AdminNavbar'
 
 const AdminMainContainer = () => {
   const userToken=useSelector(store=>store.user.token)
-  console.log(userToken)
+  
   return (
     <div className='border  h-screen overflow-x-hidden bg-slate-50'>
 

@@ -33,7 +33,7 @@ const ViewAddress = () => {
  
 
   return (
-    <div className="ms-[15%] h-fit w-[50%] mt-56">
+    <div className="ms-[35%] h-screen w-[50%] mt-56">
       <div className="grid grid-cols-1 gap-1">
         <div className="border h-[100px] bg-slate-300 text-center text-2xl pt-10">
           MANAGE ADDRESS

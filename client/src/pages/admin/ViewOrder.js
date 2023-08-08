@@ -22,18 +22,17 @@ useEffect(()=>{
     getAllOrders()
 },[])
 
-console.log(orders)
+
 
  const getAllOrders=async()=>{
 
   try {
     const response=await axios.get(GET_ORDER_API,{headers})
     
-    console.log(response)
-    console.log('e ')
+   
    const data=response?.data?.response
   //  const p=data.map(el=>el.products)
- 
+  console.log(data)
    setProduct(data) 
   //  setOrderData(data)
   } catch (error) {
@@ -41,6 +40,9 @@ console.log(orders)
   }
 
  } 
+
+
+
 
 
   return (
@@ -58,7 +60,7 @@ console.log(orders)
       <th className="border border-black p-10">Date</th>
       <th className="border border-black p-10">Ship To</th>
       <th className="border border-black p-10">Status</th>
-      <th className="border border-black p-10">Amount</th>
+      <th className="border border-black p-10">Total Amount</th>
     </tr>
 {
   orders.map((el)=>{
@@ -73,19 +75,33 @@ console.log(orders)
 
     
   <td className=" p-10 ">email</td>
-  <td className=" p-10"></td>
+  <td className=" p-10">{el.address.city}</td>
   
   <td className=" p-10">
     <button className='bg-green-400 px-10 text-green-700 py-1 rounded-full'>{el.orderStatus}</button>
   </td>
 
-  <td className=" p-10">mobile</td>
+  <td className=" p-10 ">{el.items.reduce((total,ele)=>{
+      return ele.quantity*ele.price+total
+  },0)}</td>
+
+  
+    
+     
+     
+     
+     
+
+      
+  
+    
 
  
 
     </tr>
      })
 }
+
   </thead>
   <tbody>
  

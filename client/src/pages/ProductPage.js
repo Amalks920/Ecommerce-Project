@@ -3,7 +3,7 @@ import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
 import { useParams } from "react-router-dom";
 import store from "../utils/store";
 import axios from "../api/axios";
-import { cacheCartProducts } from "../utils/cartSlice";
+import { cacheCartProducts, pushCartProducts } from "../utils/cartSlice";
 import { useDispatch } from "react-redux";
 import ImageZoom from "react-image-zooom";
 
@@ -50,7 +50,7 @@ const ProductPage = () => {
         {headers});
         
         console.log(cartResponse)
-        dispatch(cacheCartProducts(product))
+        dispatch(pushCartProducts(product))
       
     } catch (error) {
       console.log(error);
