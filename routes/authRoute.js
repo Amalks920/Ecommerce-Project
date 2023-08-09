@@ -28,13 +28,14 @@ const { addAddress,getAddress } = require("../controller/User/addressCtrl");
 const {createOrder,editOrderStatus,
   getOrder,deleteOrder}=require('../controller/Product/OrderController');
 
-const {upload}=require('../config/multer')
-const {img}=require('../controller/imgCtrl')
 
-// router.get("/reg", authMiddleware, (req, res) => {
-//   // console.log(req.body)
-//   res.json({ msg: "success" });
-// });
+
+const {upload}=require('../config/multer')
+const {img}=require('../controller/imgCtrl');
+const expressAsyncHandler = require("express-async-handler");
+
+
+
 router.get("/refresh", handleRefreshToken);
 router.post("/register", createUser);
 router.post("/login", userLogin);
@@ -43,7 +44,6 @@ router.get("/generate-otp", sendOtp);
 router.post('/otp-login',otpLogin)
 router.post('/otp',verifyOtp)
 router.post('/create-new-password',createPassword)
-
 router.get('/send-sms-otp',sendSmsOtp)
 
 //cart 

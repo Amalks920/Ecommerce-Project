@@ -46,21 +46,19 @@ useEffect(()=>{
 
 
   return (
-    <div>
-    <div className="flex justify-left ps-[4%] font-bold text-lg  items-center h-[120px] shadow-xl">
-      <h1 className="text-2xl">VIEW PRODUCT</h1>
-    </div>
+    <div className='h-fit mt-[15%]'>
+   
   <table className="table-auto mt-20 w-3/4 ml-60  shadow-2xl rounded-md">
   <thead>
     <tr className="text-white bg-black shadow-lg rounded-xl">
     
       
       
-      <th className="border border-black p-10">Order</th>
-      <th className="border border-black p-10">Date</th>
-      <th className="border border-black p-10">Ship To</th>
-      <th className="border border-black p-10">Status</th>
-      <th className="border border-black p-10">Total Amount</th>
+      <th className=" p-10">Order Id</th>
+      <th className=" p-10">Payment Mode</th>
+      <th className=" p-10">Ship To</th>
+      <th className=" p-10">Status</th>
+      <th className=" p-10">Total Amount</th>
     </tr>
 {
   orders.map((el)=>{
@@ -71,14 +69,16 @@ useEffect(()=>{
      
 
      
-   <td className=" p-10 ">{el._id}</td>
+   <td className=" p-10 ">#{el._id}</td>
 
     
-  <td className=" p-10 ">email</td>
+  <td className=" p-10 ">{el.paymentMode}</td>
   <td className=" p-10">{el.address.city}</td>
   
   <td className=" p-10">
-    <button className='bg-green-400 px-10 text-green-700 py-1 rounded-full'>{el.orderStatus}</button>
+    {el.orderStatus==="pending" &&<button className='bg-yellow-400 px-10 text-yellow-700 py-1 rounded-full'>{el.orderStatus}</button>}
+    {el.orderStatus==="cancelled" &&<button className='bg-red-400 px-10 text-red-700 py-1 rounded-full'>{el.orderStatus}</button>}
+
   </td>
 
   <td className=" p-10 ">{el.items.reduce((total,ele)=>{

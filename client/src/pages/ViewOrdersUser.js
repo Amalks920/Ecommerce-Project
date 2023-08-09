@@ -6,36 +6,35 @@ import { setProducts } from "../utils/productSlice";
 import { map } from "lodash";
 
 const ViewOrdersUser = () => {
-  const token=useSelector(store=>store.user.token)
+  const token = useSelector((store) => store.user.token);
   const userid = useSelector((store) => store.user.id);
   const products = useSelector((store) => store.products);
   const [productData, setProductData] = useState([]);
   const [data, setData] = useState([]);
-  const [refreshGetOrder,setRefreshGetOrder]=useState(false)
+  const [refreshGetOrder, setRefreshGetOrder] = useState(false);
   console.log(userid);
   console.log(products);
   console.log("products data");
 
-
-console.log(token)
+  console.log(token);
   let headers;
   if (token) {
     headers = {
       Authorization: `Bearer ${token}`,
     };
   }
-  
-let p= productData.map((el) => {          
-    return  el.items
-  })
-  .map((el) => el.map((el) =>{
-               
-    return  el.productId 
-}
-     ))
 
- console.log(p.map(el=>el._id))
-  
+  let p = productData
+    .map((el) => {
+      return el.items;
+    })
+    .map((el) =>
+      el.map((el) => {
+        return el.productId;
+      })
+    );
+
+  console.log(p.map((el) => el._id));
 
   useEffect(() => {
     getOrders();
@@ -43,7 +42,7 @@ let p= productData.map((el) => {
 
   const getOrders = async () => {
     try {
-      const response = await axios.get(`${GET_A_ORDER}/${userid}`,{headers});
+      const response = await axios.get(`${GET_A_ORDER}/${userid}`, { headers });
       console.log("respponsef");
       console.log(response.data.response);
       setProductData(response.data.response);
@@ -52,57 +51,68 @@ let p= productData.map((el) => {
     }
   };
 
-  const cancelOrder=async (indexOfOrder) =>{
-    console.log(productData[indexOfOrder]._id)
+  const cancelOrder = async (indexOfOrder) => {
+    console.log(productData[indexOfOrder]._id);
     try {
-      const response=await axios.delete(`${DELETE_ORDER}/${productData[indexOfOrder]._id}`,{headers})
-      console.log(response)
-      console.log(response.data.msg)
-      if(response?.data?.msg) setRefreshGetOrder(refreshGetOrder?false:true)
+      const response = await axios.delete(
+        `${DELETE_ORDER}/${productData[indexOfOrder]._id}`,
+        { headers }
+      );
+      console.log(response);
+      console.log(response.data.msg);
+      if (response?.data?.msg)
+        setRefreshGetOrder(refreshGetOrder ? false : true);
     } catch (error) {
-     console.log(error)
+      console.log(error);
     }
-  }
+  };
+  console.log(productData)
 
   return (
     <div className="w-[80%] ms-[17%] h-fit border border-black pt-[10%] p-[5%]">
-      <div className="p-[3%]  w-full h-fit shadow-2xl">
+      <div className="p-[3%]  w-full h-fit ">
         <div className=" mb-[6%] flex flex-col">
           <h1 className="text-3xl font-bold">My Purchases</h1>
           <div className="mt-[3%] flex border h-[100px]"></div>
         </div>
 
-        <div className="border mb-[3%] h-fit">
-          {p
-          
-           
-            .map((el) => {
-              return (
-                <div className="h-1/2 flex flex-col    p-[2%] shadow-2xl">
-                    
-                  {el.map((el2) => {
-                     
-                    return <div className=" p-[2%] h-[200px] flex">
-                    <img src={el2.image} width={100} />
-                    <h1 className="text-2xl uppercase p-5 font-thin">{el2.productName}</h1>
+        <div className=" mb-[3%] h-fit">
+          {p.map((el) => {
+            return (
+              <div className="h-1/2 flex flex-col m-[5%]    p-[2%] shadow-2xl">
+                {el.map((el2) => {
+                  return (
+                    <div className=" p-[2%] h-[200px] flex">
+                      <img src={el2.image} width={100} />
+                      <div className="p-5">
+                      <h1 className="text-2xl uppercase  font-thin">
+                        {el2.productName}
+                      </h1>
+                      <p className="mt-4"> {el2.description}</p>
+                      </div>
                     </div>
-                  })}
-                  <div className="h-[100px]  flex justify-between  pt-[2%] p-[4%]">
-                    <button
-                   onClick={()=>{cancelOrder(p.indexOf(el))}}
-                     className="hover:bg-slate-700 hover:text-white border h-[50px] border-slate-700 p-[1%]">CANCEL ORDER</button>
-                   
-                  </div>
-                  
-                 </div>
-               
-              );
-            })}
-             </div>
+                  );
+                })}
+                
+
+                <div className="h-[100px]  flex justify-between  pt-[2%] p-[4%]">
+                  <button
+                    onClick={() => {
+                      cancelOrder(p.indexOf(el));
+                    }}
+                    className="hover:bg-slate-700 hover:text-white border h-[50px] border-slate-700 p-[1%]">
+                    CANCEL ORDER
+                  </button>
+                </div>
+
+              </div>
+            );
+          })}
         </div>
       </div>
- 
+    </div>
   );
+  
 };
 
 export default ViewOrdersUser;

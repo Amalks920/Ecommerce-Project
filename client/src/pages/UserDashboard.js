@@ -52,7 +52,7 @@ let data={
       }
 
   return (
-    <div className='border  flex h-full'>
+    <div className='border  flex h-fit ms-[20%] mt-[5%]'>
      
       <div className='mt-[6%] mb-14 me-8  text-white w-full'>
       

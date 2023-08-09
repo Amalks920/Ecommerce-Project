@@ -71,7 +71,7 @@ console.log(orders)
       
       
       <th className="border border-black p-10">Order</th>
-      <th className="border border-black p-10">Date</th>
+      <th className="border border-black p-10">paymentMode</th>
       <th className="border border-black p-10">Ship To</th>
       <th className="border border-black p-10">Status</th>
       <th className="border border-black p-10">Amount</th>
@@ -90,8 +90,8 @@ console.log(orders)
    <td className=" p-10 ">{el._id}</td>
 
     
-  <td className=" p-10 ">email</td>
-  <td className=" p-10"></td>
+  <td className=" p-10 ">{el.paymentMode}</td>
+  <td className=" p-10">{el.address.city}</td>
   
   <td className=" p-10">
     <select onChange={(e)=>{

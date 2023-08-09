@@ -10,6 +10,11 @@ const Sidebar = () => {
   const navigate=useNavigate()
 const dispatch=useDispatch()
 const [isOrderNavOpen,setIsNavOpen]=useState(false)
+const [isCategoryNavOpen,setIsCategoryNavOpen]=useState(false)
+const [isProductNavOpen,setIsProductNavOpen]=useState(false)
+const [isCustomerNavOpen,setIsCustomerNavOpen]=useState(false)
+
+
 
 
 const logout = () =>{
@@ -28,7 +33,7 @@ const logout = () =>{
 }
 
   return (
-    <div className='w-80 h-screen border bg-black pt-16 fixed   text-white rounded-2xl'>
+    <div className='w-80 h-screen  bg-black pt-16 fixed   text-white '>
     <ul className='p-5 font-mono items-start  flex flex-col justify-start w-full text-lg'>
       <Link className='w-full pb-10' to="/">
         <li className='ps-10 w-full  p-3 hover:text-violet-900 hover:border-r-8 border-r-violet-500'><span className='flex'><RxDashboard size={25}/><h1 className='text-2xl ms-6'>Dashboard</h1></span></li>
@@ -54,10 +59,50 @@ const logout = () =>{
        }
       </div>
 
-     <Link to={'/admin/product-dashboard'} className='w-full pb-10' ><li className=' p-3 ps-14 w-full hover:text-violet-900   hover:border-r-8 border-r-violet-500 '>Products</li></Link>
-     <Link to={'/admin/user-management'}  className='w-full pb-10' ><li className=' p-3 ps-14  w-full hover:text-violet-900   hover:border-r-8 border-r-violet-500 '>Customers</li></Link>
-     <Link to={'/admin/add-category'} className='w-full pb-10' ><li className=' p-3 ps-14  w-full hover:text-violet-900       hover:border-r-8 border-r-violet-500 '>Category</li></Link>
-     <Link className='w-full pb-10' ><li className=' p-3 ps-24 w-full hover:text-black    hover:border '>Products</li></Link>
+<div>
+      <Link
+      onClick={()=>{
+        isCategoryNavOpen?setIsCategoryNavOpen(false):setIsCategoryNavOpen(true)
+      }}
+     to={'/admin/add-category'}  ><li  className='ps-10 w-full  p-3 hover:text-violet-900 hover:border-r-8 border-r-violet-500'
+     ><h1 className='text-2xl ms-10'>Category</h1></li></Link>
+     { isCategoryNavOpen &&
+      <>
+        <Link to={'/admin/view-orders'} className=' w-full pb-10' ><li className='ps-10 w-full  p-3 hover:text-violet-900 hover:border-r-8 border-r-violet-500'>View Orders</li></Link>
+        <Link to={'/admin/update-orders'} className=' w-full pb-10' ><li className='  p-3 ps-16 mt-5 w-full text-violet-900   border-r-8 border-r-violet-500 '>Edit Orders</li></Link>
+
+        </>
+       }
+       </div>
+
+     <Link
+     onClick={()=>{
+      isProductNavOpen?setIsProductNavOpen(false):setIsProductNavOpen(true)
+    }}
+       className='w-full pb-10' ><li className=' p-3 ps-14 w-full hover:text-violet-900   hover:border-r-8 border-r-violet-500 '><h1 className='text-2xl ms-6 mt-10'>Products</h1></li></Link>
+     { isProductNavOpen &&
+      <>
+        <Link to={'/admin/add-product'} className=' w-full pb-10' ><li className='  p-3 ps-16 mt-5 w-full text-violet-900   border-r-8 border-r-violet-500 '>Add Products</li></Link>
+        <Link to={'/admin/view-products'} className=' w-full pb-10' ><li className='  p-3 ps-16 mt-5 w-full text-violet-900   border-r-8 border-r-violet-500 '>Update Products</li></Link>
+
+        </>
+       }
+
+     <Link 
+     onClick={()=>{
+      isCustomerNavOpen?setIsCustomerNavOpen(false):setIsCustomerNavOpen(true)
+     }}
+      className='w-full pb-10' ><li className=' p-3 ps-14  w-full hover:text-violet-900   hover:border-r-8 border-r-violet-500 '>
+      <h1 className='text-2xl ms-6'>Customers</h1>
+      </li></Link>
+      { isCustomerNavOpen &&
+      <>
+        <Link to={'/admin/user-management'} className=' w-full pb-10' ><li className='  p-3 ps-16 mt-5 w-full text-violet-900   border-r-8 border-r-violet-500 '>Add Products</li></Link>
+
+        </>
+       }
+    
+      
     {/* <li className=' p-3 ps-24 w-full hover:text-black    hover:border hover:bg-slate-100'><buttton  onClick={logout}  className="">Logout</buttton></li> */}
 
 

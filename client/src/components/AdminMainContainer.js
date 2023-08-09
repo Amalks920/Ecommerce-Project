@@ -9,7 +9,7 @@ const AdminMainContainer = () => {
   const userToken=useSelector(store=>store.user.token)
   
   return (
-    <div className='border  h-screen overflow-x-hidden bg-slate-50'>
+    <div className='border  h-screen overflow-x-hidden fixed'>
 
           <AdminNavbar/>
          
