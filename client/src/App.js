@@ -38,6 +38,7 @@ import CreateNewPassword from "./pages/CreateNewPassword";
 import UpdateOrders from "./pages/admin/UpdateOrders";
 import ViewAllProducts from "./pages/ViewAllProducts";
 import ViewOrdersUser from "./pages/ViewOrdersUser";
+import PrepaidPayment from "./pages/PrepaidPayment";
 
 let isLoggedIn;
 
@@ -60,6 +61,7 @@ function App() {
           
           <Route path="order" element={<OrderPage />}></Route>
           <Route path="confirm-order" element={<ConfirmOrder />}></Route>
+          <Route path="prepaid-payment" element={<PrepaidPayment/>}></Route>
           <Route path="img" element={<Img />}></Route>
           <Route element={<RequireAuth />}>
             <Route path="home" element={<Home />}></Route>

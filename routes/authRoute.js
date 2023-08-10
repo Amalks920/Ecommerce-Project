@@ -25,8 +25,11 @@ const handleRefreshToken = require("../config/refreshToken");
 const authMiddleware = require("../middlewares/authMiddleware");
 const { sendOtp } = require("../config/otpGenerator");
 const { addAddress,getAddress } = require("../controller/User/addressCtrl");
+
 const {createOrder,editOrderStatus,
   getOrder,deleteOrder}=require('../controller/Product/OrderController');
+
+  const {razorPay,capturePayment}=require('../controller/User/paymentCtrl')
 
 
 
@@ -53,7 +56,8 @@ router.post('/decrease-cart-count',authMiddleware,decreaseCartCount);
 router.post('/increase-cart-count',authMiddleware,increaseCartCount);
 router.post('/delete-cart-product',authMiddleware,deleteCartProduct);
 router.get('/get-address/:id',authMiddleware,getAddress)
-router.post('/image',upload.single('my_file'),img);
+
+// router.post('/image',upload.single('my_file'),img);
 
 //Address
 router.post('/add-address',authMiddleware,addAddress)
@@ -65,6 +69,9 @@ router.post('/edit-order-status',authMiddleware,editOrderStatus)
 router.get('/get-order/:id',authMiddleware,getOrder)
 router.delete('/delete-order/:id',authMiddleware,deleteOrder)
 
+
+router.post('/prepaid',razorPay)
+router.post('/capture/:paymentId',capturePayment)
 
 //  router.use(authMiddleware)
 router.get("/logout", logout);

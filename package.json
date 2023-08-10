@@ -35,6 +35,7 @@
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.3",
     "otp-generator": "^4.0.1",
+    "razorpay": "^2.9.1",
     "twilio": "^4.13.0",
     "two-step-auth": "^1.1.2"
   },

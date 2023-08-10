@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from '../api/axios'
@@ -15,6 +15,9 @@ const PLACE_ORDER_URL='/user/place-order'
 
 const OrderPage = () => {
 
+
+  const paymentRef=useRef()
+  console.log(paymentRef)
 const userId=useSelector(store=>store.user.id)
 const navigate=useNavigate()
 const dispatch=useDispatch()
@@ -22,6 +25,7 @@ const token=useSelector(store=>store.user.token)
 const cart=useSelector(store=>store.cart)
 const [address,setAddress]=useState('')
 const [cartData,setCartData]=useState([])
+const [paymentInput,setPaymentInput]=useState('')
 
 
 let headers;
@@ -31,16 +35,13 @@ if (token) {
   };
 }
 
-console.log('cart  cart')
-console.log(cart)
 
   let data={
     user:userId
     
   }
 
- 
-console.log(cartData.map(el=>el))
+
 
   //get address
  
@@ -82,6 +83,12 @@ console.log(cartData.map(el=>el))
       console.log(error);
     }
   };
+
+   const paymentNavigateHandler=()=>{
+   
+    paymentInput==="PREPAID" && navigate('/prepaid-payment')
+
+}
 
 
 
@@ -151,14 +158,23 @@ console.log(cartData.map(el=>el))
  
           <div className='w-[50%] mt-[10%] ms-[10%] h-[300px] flex flex-col justify-center items-center shadow-2xl'>
             <h1 className='text-2xl font-bold mb-[20%]'>Select Payment Method</h1>
-              <select className='w-[60%] h-[15%]'>
+              <select onChange={(e)=>{setPaymentInput(e.target.value)}}   className='w-[60%] h-[15%]'>
                 <option>none</option>
                 <option>COD</option>
                 <option>PREPAID</option>
                 <option>UPI</option>
+
               </select>
+              <button 
+              
+               onClick={
+                ()=>{
+                paymentNavigateHandler()
+                }
+               } className='absolute bg-slate-700 w-[10%] h-[5%] left-[64%] text-white font-bold text-xl top-[60%]'>Pay</button> 
+
+
           </div>
-          <button onClick={placeOrder} className='absolute bg-slate-700 w-[10%] h-[5%] left-[64%] text-white font-bold text-xl top-[60%]'>Place Order</button> 
 </div>
         </div>
            
