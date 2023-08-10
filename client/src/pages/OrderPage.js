@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from '../api/axios'
 import { GET_ADDRESS,GET_CART } from '../utils/constants'
-import { deleteCart } from '../utils/cartSlice'
+import { deleteCart } from '../utils/cartSlice';
+import { Payment,createPayment } from '../utils/utilFunctions'
 
 
-
+console.log(createPayment)
 
 
 
@@ -28,6 +29,9 @@ const [cartData,setCartData]=useState([])
 const [paymentInput,setPaymentInput]=useState('')
 
 
+
+
+
 let headers;
 if (token) {
   headers = {
@@ -40,6 +44,9 @@ if (token) {
     user:userId
     
   }
+
+  
+ 
 
 
 
@@ -88,6 +95,13 @@ if (token) {
    
     paymentInput==="PREPAID" && navigate('/prepaid-payment')
 
+} 
+
+const paymentHandler=async ()=>{
+  const paymentOrder=await createPayment()
+
+  paymentOrder?.data?.response?.id?Payment(paymentOrder?.data?.response?.id):console.log('error occured')
+  
 }
 
 
@@ -169,7 +183,7 @@ if (token) {
               
                onClick={
                 ()=>{
-                paymentNavigateHandler()
+                  paymentHandler()
                 }
                } className='absolute bg-slate-700 w-[10%] h-[5%] left-[64%] text-white font-bold text-xl top-[60%]'>Pay</button> 
 
