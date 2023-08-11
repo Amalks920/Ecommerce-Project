@@ -3,18 +3,19 @@ import React from "react";
 const CustomInput = (props) => {
   const { type, label, i_id, i_class, name, val, onChng, onBlr } = props;
   return (
-    <div className=" w-full h-full">
+    <div className=" w-full   flex flex-col"><label htmlFor={label} className=" text-2xl  text-slate-600">{label}</label>
+
       <input
         type={type}
         className={` ${i_class}`}
         id={i_id}
-        placeholder={label}
+        placeholder={label}  
         name={name}
         value={val}
         onChange={onChng}
         onBlur={onBlr}
       />
-      <label htmlFor={label}>{label}</label>
+      
     </div>
   );
 };

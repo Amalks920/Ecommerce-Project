@@ -9,25 +9,45 @@ const AdminMainContainer = () => {
   const userToken=useSelector(store=>store.user.token)
   
   return (
-    <div className='border  h-screen overflow-x-hidden fixed'>
+    // <div className='border  h-screen overflow-x-hidden fixed'>
 
-          <AdminNavbar/>
+    //       <AdminNavbar/>
          
-         <div className='flex border h-full border-black'>
-          <div className='w-1/6 h-full'>
-         {
-          userToken?<Sidebar/>:null
-         }
-          </div>
+    //      <div className='flex border h-full border-black'>
+       
 
-         <div className="w-full">
-        <Outlet/>
-        </div> 
+    //    {
+    //       userToken?
+    //       <div className='w-1/6 h-full'>
+    //      <Sidebar/>
+        
+    //       </div>:null
+    //        }
+          
 
-        </div>
+    //      <div className="w-full">
+    //     <Outlet/>
+    //     </div> 
+
+    //     </div>
         
         
+    // </div>
+    <div className="border h-screen overflow-x-hidden fixed w-full">
+  <AdminNavbar />
+
+  <div className="flex border h-full border-black">
+    {userToken && (
+      <div className="w-1/6 h-full">
+        <Sidebar />
+      </div>
+    )}
+
+    <div className="w-full">
+      <Outlet />
     </div>
+  </div>
+</div>
   )
 }
 
