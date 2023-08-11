@@ -6,6 +6,7 @@ const cookieParser=require('cookie-parser')
 const PORT=process.env.PORT || 4000
 const authRouter=require('./routes/authRoute')
 const adminRouter=require('./routes/adminRoute')
+const couponRouter=require('./routes/couponRoute')
 const {errorHandler,notFound}=require('./middlewares/errorHandler')
 const cors=require('cors')
 const cloudinary=require('./cloudinary/cloudinary')
@@ -28,6 +29,7 @@ app.use(cookieParser())
 
 app.use('/api/user',authRouter)
 app.use('/api/admin',adminRouter)
+app.use('/api/coupon',couponRouter)
 
 
 app.use(notFound)

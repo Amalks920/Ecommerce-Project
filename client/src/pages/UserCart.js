@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { get } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { pushCartProducts } from "../utils/cartSlice";
+import CouponModal from "../components/CouponModal";
 
 const GET_CART_DETAILS = `/user/get-cart-details`;
 const INCREASE_CART_COUNT = "/user/increase-cart-count";
@@ -19,9 +20,16 @@ const UserCart = () => {
   const user = useSelector((store) => store.user);
   const [cartProductData, setCartProductData] = useState([]);
   const [cartCount, setCartCount] = useState();
+  const [modalOpen, setModalOpen] = useState(false);
+
   
-  console.log(user.id);
-  console.log(token);
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
 
   let headers;
   if (token) {
@@ -100,12 +108,18 @@ const UserCart = () => {
 
 
   // find total amount
-  const totalPrice=cartProductData.reduce((total,count)=>{
-    return total+Number(count.productId.price)},0)
 
     const totalCount=cartProductData.reduce((total,count)=>{
       return total+Number(count.count)
     },0)
+
+    const totalPrice=cartProductData.reduce((total,products)=>{
+      return total+products.count*products.productId.price
+    },0)
+
+    console.log('totalprice',+totalPrice)
+
+    console.log(cartProductData)
 
     
     
@@ -205,19 +219,29 @@ const UserCart = () => {
           // })
         }
       </div>
-
+      <CouponModal
+                 open={modalOpen}
+                 hideModal={handleCloseModal}
+                  title={'Enter Coupon Code.'}/>
 
       <div className="w-1/4 ms-[5%] h-1/2 shadow-2xl text-center ">
+                 
+
         <div><h1 className="text-4xl border-b p-14 border-b-black mb-5 font-bold">ORDER SUMMARY</h1></div>
         <div className="flex justify-between p-10">
           <h1 className="text-2xl">Total Price</h1>
-          <h1 className="text-slate-700 text-4xl">₹<span className="text-green-700"> {totalCount*totalPrice}</span></h1>
+          <h1 className="text-slate-700 text-4xl">₹<span className="text-green-700"> {totalPrice}</span></h1>
           
           </div>
           <h1>total Items {totalCount}</h1>
           <div className="mt-11 ">
-          <Link className="text-orange-700 text-xl">Apply Coupon?</Link>
+          <Link
+            onClick={()=>{
+            handleOpenModal()
+            }}
+           className="text-orange-700 text-xl">Apply Coupon?</Link>
           </div>
+
 
        <Link to={'/order'}> <button className="bg-slate-600 mt-8 p-4 w-[50%] text-2xl text-white">checkout</button></Link>
       </div>

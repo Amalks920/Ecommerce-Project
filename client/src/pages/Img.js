@@ -5,12 +5,16 @@ import {sepia} from "@cloudinary/url-gen/actions/effect";
 import axios from '../api/axios';
 import ImageZoom from "react-image-zooom";
 
-
+import CustomInput from '../components/CustomInput';
+import CustomModal from '../components/CustomModal';
 
 function Img() {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [res, setRes] = useState({});
+  const [modalOpen, setModalOpen] = useState(false);
+
+ 
   const handleSelectFile = (e) => setFile(e.target.files[0]);
   console.log(file)
   const handleUpload = async () => {
@@ -27,8 +31,27 @@ function Img() {
     }
   };
 
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
   return (
     <div className="App h-screen mt-[10%]">
+      <button
+      onClick={()=>{
+       handleOpenModal()
+      }}
+      >open</button>
+                <CustomInput type={'number'} i_id={'amal'} i_class={'border border-black w-[100px] h-[100px]'} label={'lsdk'}/>
+                <CustomModal
+                 open={modalOpen}
+                 hideModal={handleCloseModal}
+                  title={'do you want to delete'}/>
+
       <label htmlFor="file" className="btn-grey">
         {" "}
         select file
@@ -57,6 +80,7 @@ function Img() {
           <button onClick={handleUpload} className="bg-black">
             {loading ? "uploading..." : "upload to cloudinary"}
           </button>
+
         </>
       )}
     </div>
