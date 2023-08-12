@@ -7,7 +7,7 @@ const CustomInput = (props) => {
 
       <input
         type={type}
-        className={` ${i_class}`}
+        className={`   ${i_class}`}
         id={i_id}
         placeholder={label}  
         name={name}

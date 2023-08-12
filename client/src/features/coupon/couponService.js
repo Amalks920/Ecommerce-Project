@@ -2,7 +2,7 @@ import axios from "../../api/axios";
 import { config } from "../../utils/axiosConfig";
 
 const getCoupons = async () => {
-  const response = await axios.get(`/coupon/`, config);
+  const response = await axios.get(`/coupon/get-all-coupons`, config);
 
   return response.data;
 };
@@ -31,9 +31,15 @@ const getCoupon = async (id) => {
   return response.data;
 };
 
+const getAllCoupon=async () => {
+  const response =await axios.get('/coupon/get-all-coupons',config)
+
+  return response.data
+}
+
 const deleteCoupon = async (id) => {
   const response = await axios.delete(`/coupon/${id}`, config);
-
+  console.log(response)
   return response.data;
 };
 const couponService = {
@@ -42,6 +48,7 @@ const couponService = {
   deleteCoupon,
   getCoupon,
   updateCoupon,
+  getAllCoupon
 };
 
 export default couponService;

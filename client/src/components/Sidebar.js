@@ -5,6 +5,24 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { logout } from '../utils/loginSlice'
 import { RxDashboard } from 'react-icons/rx'
+import {
+  Card,
+  Typography,
+  List,
+  ListItem,
+  ListItemPrefix,
+  ListItemSuffix,
+  Chip,
+} from "@material-tailwind/react";
+import {
+  PresentationChartBarIcon,
+  ShoppingBagIcon,
+  UserCircleIcon,
+  Cog6ToothIcon,
+  InboxIcon,
+  PowerIcon,
+} from "@heroicons/react/24/solid";
+
 
 const Sidebar = () => {
   const navigate=useNavigate()
@@ -33,6 +51,7 @@ const logout = () =>{
     console.log(err)
   })
 }
+
 
   return (
 //     <div className='w-80 h-screen  bg-black pt-16 fixed   text-white '>
@@ -128,8 +147,9 @@ const logout = () =>{
 
    
 //   </div>
-<div className="w-80 h-screen bg-black pt-16 fixed text-white">
+/* <div className="w-80 h-screen bg-black pt-16 fixed text-white">
   <ul className="p-5 font-mono items-start flex flex-col justify-start w-full text-lg">
+
     <Link to="/">
       <li className="pb-10">
         <span className="flex items-center">
@@ -154,7 +174,7 @@ const logout = () =>{
       {isOrderNavOpen && (
         <>
           <Link to="/admin/view-orders" className="pb-10">
-            <li className="p-3 pl-16 mt-5 text-violet-900 border-r-8 border-r-violet-500">
+            <li className="p-3 mt-5 text-violet-900 border-r-8 border-r-violet-500">
               View Orders
             </li>
           </Link>
@@ -257,7 +277,77 @@ const logout = () =>{
       )}
     </div>
   </ul>
-</div>
+</div> */
+
+<Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl bg-black shadow-blue-gray-900/5">
+      <div className="mb-2 p-4">
+        <Typography variant="h5" color="blue-gray">
+          Sidebar
+        </Typography>
+      </div>
+      <List>
+        <ListItem>
+          <ListItemPrefix>
+            <PresentationChartBarIcon className="h-5 w-5" />
+          </ListItemPrefix>
+          Dashboard
+        </ListItem>
+        <ListItem>
+          <ListItemPrefix>
+            <ShoppingBagIcon className="h-5 w-5" />
+          </ListItemPrefix>
+          E-Commerce
+        </ListItem>
+
+        <ListItem onClick={()=>{
+          setIsCouponNavOpen(!isCouponNavOpen)
+        }}>
+          <ListItemPrefix>
+            <InboxIcon className="h-5 w-5" />
+          </ListItemPrefix>
+          Coupon
+        </ListItem>
+
+      { isCouponNavOpen? <>
+       <Link to={'/admin/add-coupon'}> <ListItem className='text-white' >
+          <ListItemPrefix>
+            <InboxIcon className="h-5 w-5" />
+          </ListItemPrefix>
+          Add Coupon
+        </ListItem>
+        </Link>  
+     <Link to={'/admin/view-coupon'}> <ListItem  className='text-white'>
+          <ListItemPrefix>
+            <InboxIcon className="h-5 w-5" />
+          </ListItemPrefix>
+          View Coupon
+        </ListItem>
+        </Link> 
+        </>:null
+      }
+
+        <ListItem>
+          <ListItemPrefix>
+            <UserCircleIcon className="h-5 w-5" />
+          </ListItemPrefix>
+          Profile
+        </ListItem>
+        <ListItem>
+          <ListItemPrefix>
+            <Cog6ToothIcon className="h-5 w-5" />
+          </ListItemPrefix>
+          Settings
+        </ListItem>
+        <ListItem>
+          <ListItemPrefix>
+            <PowerIcon className="h-5 w-5" />
+          </ListItemPrefix>
+          Log Out
+        </ListItem>
+      </List>
+    </Card>
+
+
 
   )
 }

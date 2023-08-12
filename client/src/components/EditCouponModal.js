@@ -10,14 +10,23 @@ import {
   Input,
   Checkbox,
 } from "@material-tailwind/react";
+import { updateACoupon } from "../features/coupon/couponSlice";
+import { useDispatch, useSelector } from "react-redux";
  
-export function Img() {
+export function EditCouponModal() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
- 
+  const dispatch=useDispatch()
+
+
+
+  const editCoupon=()=>{
+        dispatch(updateACoupon)
+  }
+    
   return (
     <>
-      <Button className="mt-[20%]" onClick={handleOpen}>Sign In</Button>
+      <Button onClick={handleOpen} fullWidth>Edit</Button>
       <Dialog
         size="xs"
         open={open}
@@ -31,22 +40,25 @@ export function Img() {
             className="mb-4 grid h-28 place-items-center"
           >
             <Typography variant="h3" color="white">
-              Sign In
+             Edit Coupon 
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input label="Email" size="lg" />
-            <Input label="Password" size="lg" />
-            <div className="-ml-2.5">
-              <Checkbox label="Remember Me" />
-            </div>
+            <Input label="Coupon Name" size="lg" />
+            <Input type="date" label="expiry date" size="lg" />
+            <Input type="number" label="discount" size="lg" />
+           
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" onClick={handleOpen} fullWidth>
-              Sign In
+            <Button 
+            onClick={()=>{
+                editCoupon()
+            }}
+            variant="gradient" fullWidth>
+              Edit Coupon
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">
-              Don&apos;t have an account?
+           
               <Typography
                 as="a"
                 href="#signup"
@@ -55,7 +67,7 @@ export function Img() {
                 className="ml-1 font-bold"
                 onClick={handleOpen}
               >
-                Sign up
+             
               </Typography>
             </Typography>
           </CardFooter>
@@ -65,4 +77,5 @@ export function Img() {
   );
 }
 
-export default Img
+
+export default EditCouponModal

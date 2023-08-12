@@ -33,10 +33,11 @@ const AdminMainContainer = () => {
         
         
     // </div>
-    <div className="border h-screen overflow-x-hidden fixed w-full">
+    <div className=" h-screen overflow-x-hidden  w-screen">
+      <div className='shadow-2xl'>
   <AdminNavbar />
-
-  <div className="flex border h-full border-black">
+  </div>
+  <div className="flex  h-full">
     {userToken && (
       <div className="w-1/6 h-full">
         <Sidebar />

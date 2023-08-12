@@ -3,7 +3,7 @@ import couponService from "./couponService";
 
 
 export const getAllCoupon = createAsyncThunk(
-  "coupon/get-coupons",
+  "coupon/get-all-coupons",
   async (thunkAPI) => {
     try {
       return await couponService.getCoupons();
@@ -25,7 +25,7 @@ export const createCoupon =  createAsyncThunk(
   );
 
   export const deleteACoupon = createAsyncThunk(
-    "coupon/delete-coupon",
+    "coupon/",
     async (id, thunkAPI) => {
       try {
         return await couponService.deleteCoupon(id);

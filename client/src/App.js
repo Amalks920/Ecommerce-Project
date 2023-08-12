@@ -40,6 +40,7 @@ import ViewAllProducts from "./pages/ViewAllProducts";
 import ViewOrdersUser from "./pages/ViewOrdersUser";
 import PrepaidPayment from "./pages/PrepaidPayment";
 import AddCoupon from "./pages/admin/AddCoupon";
+import ViewCoupon from "./pages/admin/ViewCoupon";
 
 let isLoggedIn;
 
@@ -106,6 +107,7 @@ function App() {
         <Route path="/admin/view-orders" element={<ViewOrder/>}></Route>
         <Route path="/admin/update-orders" element={<UpdateOrders/>}></Route>
         <Route path="/admin/add-coupon" element={<AddCoupon/>}></Route>
+        <Route path="/admin/view-coupon" element={<ViewCoupon/>}></Route>
 
         <Route
           path="/admin/product-management"

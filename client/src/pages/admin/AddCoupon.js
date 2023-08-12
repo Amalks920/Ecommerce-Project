@@ -164,10 +164,10 @@ let schema = yup.object().shape({
                  onBlr={formik.handleBlur("name")}
                  val={formik.values.name}
                  label="Enter Coupon Name"
-                 i_class={'w-1/2 h-[50px] text-slate-600 bg-slate-300'}/>
+                 i_class={'w-1/2 h-[50px] text-slate-600 bg-blue-100'}/>
                   <ToastContainer />
                  <div className="error text-red-600">
-                  
+                 
             {formik.touched.name && formik.errors.name}
           </div>
             </div>
@@ -182,7 +182,7 @@ let schema = yup.object().shape({
                 val={formik.values.expiry}
                 label="Enter Expiry Data"
                 id="date"
-                 i_class={'w-1/2 h-[50px] text-slate-600 bg-slate-300'}/>
+                 i_class={'w-1/2 h-[50px] text-slate-600 bg-blue-100'}/>
 
 <           div className="error text-red-600">
             {formik.touched.expiry && formik.errors.expiry}
@@ -198,12 +198,12 @@ let schema = yup.object().shape({
                  val={formik.values.discount}
                  label="Enter Discount"
                  id="discount"
-                 i_class={'w-1/2 h-[50px] text-slate-600 bg-slate-300'}/>
+                 i_class={'w-1/2 h-[50px] text-slate-600 bg-blue-100'}/>
                   <div className="error text-red-600">
             {formik.touched.discount && formik.errors.discount}
           </div>
             </div>
-            <button type="submit" className=" relative border rounded-xl w-[300px] p-3 bg-slate-600 text-white right-[300px] top-4">
+            <button type="submit" className=" relative border rounded-xl w-[300px] p-3 bg-black text-white right-[300px] top-4">
             {getCouponId !== undefined ? "Edit" : "Add"} Coupon
             </button>
 
