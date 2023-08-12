@@ -6,6 +6,7 @@ import { get } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { pushCartProducts } from "../utils/cartSlice";
 import CouponModal from "../components/CouponModal";
+import OrderSummaryCard from "../components/OrderSummaryCard";
 
 const GET_CART_DETAILS = `/user/get-cart-details`;
 const INCREASE_CART_COUNT = "/user/increase-cart-count";
@@ -131,7 +132,7 @@ const UserCart = () => {
     }
   return (
    
-    <div className=" border border-b-green-800 h-screen w-screen flex items-center justify-center">
+    <div className=" border border-b-green-800 h-screen w-screen md:flex-row flex items-center justify-center">
       <div className=" bg-black min-w-[60%] flex flex-col shadow-2xl p-[2%] w-[2%] rounded-2xl">
         <h1 className="text-center font-bold text-2xl text-white">
           CART ITEMS
@@ -224,10 +225,10 @@ const UserCart = () => {
                  hideModal={handleCloseModal}
                   title={'Enter Coupon Code.'}/>
 
-      <div className="w-1/4 ms-[5%] h-1/2 shadow-2xl text-center ">
+      <div className="w-1/4 ms-[5%] h-1/2  text-center ">
                  
-
-        <div><h1 className="text-4xl border-b p-14 border-b-black mb-5 font-bold">ORDER SUMMARY</h1></div>
+        <OrderSummaryCard/>
+        {/* <div><h1 className="text-4xl border-b p-14 border-b-black mb-5 font-bold">ORDER SUMMARY</h1></div>
         <div className="flex justify-between p-10">
           <h1 className="text-2xl">Total Price</h1>
           <h1 className="text-slate-700 text-4xl">₹<span className="text-green-700"> {totalPrice}</span></h1>
@@ -240,11 +241,14 @@ const UserCart = () => {
             handleOpenModal()
             }}
            className="text-orange-700 text-xl">Apply Coupon?</Link>
-          </div>
+          </div> 
 
 
        <Link to={'/order'}> <button className="bg-slate-600 mt-8 p-4 w-[50%] text-2xl text-white">checkout</button></Link>
-      </div>
+       */}
+
+</div>  
+      
     </div>
   );
 };
