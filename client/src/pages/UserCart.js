@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { pushCartProducts } from "../utils/cartSlice";
 import CouponModal from "../components/CouponModal";
 import OrderSummaryCard from "../components/OrderSummaryCard";
+import { getCart, increaseCartCount,decreaseCartCount,resetState } from "../features/cart/cartSlice";
 
 const GET_CART_DETAILS = `/user/get-cart-details`;
 const INCREASE_CART_COUNT = "/user/increase-cart-count";
@@ -17,13 +18,15 @@ const UserCart = () => {
   const dispatch = useDispatch();
 
   const token = useSelector((store) => store.user.token);
-  const cart = useSelector((store) => store.cart);
+  const cart=useSelector((store)=>store.cart )
+  const isChanged = useSelector((store) => store.cart.isChanged);
+ 
   const user = useSelector((store) => store.user);
   const [cartProductData, setCartProductData] = useState([]);
   const [cartCount, setCartCount] = useState();
   const [modalOpen, setModalOpen] = useState(false);
 
-  
+ 
   const handleOpenModal = () => {
     setModalOpen(true);
   };
@@ -40,56 +43,45 @@ const UserCart = () => {
   }
 
   //update cart count
-
   useEffect(() => {
-    getCartDetails();
-  }, [cartCount]);
+    dispatch(getCart({userid:user.id}))
+  },[]);
 
-  const getCartDetails = async () => {
-    try {
-      const result = await axios.post(
-        GET_CART_DETAILS,
-        { userid: user.id },
-        { headers }
-      );
-      setCartProductData(result.data.cart);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
+
+
 
   
 
   //decrease count of product in cart
   const decreaseCount = async (prodId) => {
-    try {
-      console.log(prodId);
-      const response = await axios.post(
-        DECREASE_CART_COUNT,
-        { userId: user.id, productId: prodId },
-        { headers }
-      );
-      setCartCount(response.data.count);
-    } catch (error) {
-      console.log(error);
+    let data={
+      userId:user.id,
+      productId:prodId
     }
+    
+    // dispatch(decreaseCartCount(data))
+    // try {
+    //   console.log(prodId);
+    //   const response = await axios.post(
+    //     DECREASE_CART_COUNT,
+    //     { userId: user.id, productId: prodId },
+    //     { headers }
+    //   );
+    //   setCartCount(response.data.count);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   //increase count of products in cart
   const increaseCount = async (prodId) => {
-    try {
-      console.log(prodId);
-      const response = await axios.post(
-        INCREASE_CART_COUNT,
-        { userId: user.id, productId: prodId },
-        { headers }
-      );
-      setCartCount(response.data.count);
-      console.log('rde')
-      console.log(cartProductData)
-    } catch (error) {
-      console.log(error);
+    let data={
+      userId:user.id,
+      productId:prodId
     }
+    dispatch(increaseCartCount(data))
+    dispatch(getCart({userid:user.id}))
   };
 
   const deleteProduct = async (prodId) => {
@@ -118,14 +110,12 @@ const UserCart = () => {
       return total+products.count*products.productId.price
     },0)
 
-    console.log('totalprice',+totalPrice)
-
-    console.log(cartProductData)
+    
 
     
     
     {
-      if(cartProductData.length===0) return <div className="h-screen flex items-center justify-center">
+      if(cart?.cart?.cart?.length===0) return <div className="h-screen flex items-center justify-center">
         <h1 className="text-3xl">Cart is Empty</h1>
         
         </div>
@@ -139,9 +129,9 @@ const UserCart = () => {
         </h1>
 
         {
-          cartProductData.map((el) => {
+          cart?.cart?.cart?.map((el) => {
             const { productName, image, _id,stockQuantity,price } = el.productId;
-            //    return el.map((el)=>{
+            console.log(el)
             console.log(stockQuantity);
 
             return (

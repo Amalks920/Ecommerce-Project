@@ -59,7 +59,7 @@ const TABLE_ROWS = [
 
 const ViewCoupon = () => {
   const coupon=useSelector(store=>store.coupon)
-  console.log(coupon.coupons)
+  
   const dispatch=useDispatch()
 
 

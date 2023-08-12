@@ -10,16 +10,13 @@ const {
   logout,
 } = require("../controller/User/userCtrl");
 
-const {
-  addToCart,
-  
-}=require('../controller/Product/cartController')
+
 
 const {whatsappOtp, sendSmsOtp}=require('../config/twilio')
 
 const { 
   getCartDetails,decreaseCartCount,increaseCartCount,
-  deleteCartProduct
+  deleteCartProduct,addToCart
 }=require('../controller/Product/cartController')
 const handleRefreshToken = require("../config/refreshToken");
 const authMiddleware = require("../middlewares/authMiddleware");
@@ -50,10 +47,10 @@ router.post('/create-new-password',createPassword)
 router.get('/send-sms-otp',sendSmsOtp)
 
 //cart 
-router.post("/add-to-cart",authMiddleware,addToCart);
-router.post('/get-cart-details',authMiddleware,getCartDetails);
+router.post("/add-to-cart",addToCart);
+router.post('/get-cart-details',getCartDetails);
 router.post('/decrease-cart-count',authMiddleware,decreaseCartCount);
-router.post('/increase-cart-count',authMiddleware,increaseCartCount);
+router.post('/increase-cart-count',increaseCartCount);
 router.post('/delete-cart-product',authMiddleware,deleteCartProduct);
 router.get('/get-address/:id',authMiddleware,getAddress)
 

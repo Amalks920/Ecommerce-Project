@@ -6,6 +6,7 @@ import axios from "../api/axios";
 import { cacheCartProducts, pushCartProducts } from "../utils/cartSlice";
 import { useDispatch } from "react-redux";
 import ImageZoom from "react-image-zooom";
+import { createCart } from "../features/cart/cartSlice";
 
 const ADD_TO_CART_API = `/user/add-to-cart`;
 
@@ -41,20 +42,20 @@ const ProductPage = () => {
   }
 
   //add to cart
-  const addToCart = async () => {
-    
-    
-    try {
-      const cartResponse = await axios.post(ADD_TO_CART_API,
-        {productId:prodId,userId:userid},
-        {headers});
+  const addToCart =  () => {
+    const data={productId:prodId,userId:userid}
+    dispatch(createCart(data))
+    // try {
+    //   const cartResponse = await axios.post(ADD_TO_CART_API,
+    //     {productId:prodId,userId:userid},
+    //     {headers});
         
-        console.log(cartResponse)
-        dispatch(pushCartProducts(product))
+    //     console.log(cartResponse)
+    //     dispatch(pushCartProducts(product))
       
-    } catch (error) {
-      console.log(error);
-    }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   return (
