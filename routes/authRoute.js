@@ -49,9 +49,9 @@ router.get('/send-sms-otp',sendSmsOtp)
 //cart 
 router.post("/add-to-cart",addToCart);
 router.post('/get-cart-details',getCartDetails);
-router.post('/decrease-cart-count',authMiddleware,decreaseCartCount);
+router.post('/decrease-cart-count',decreaseCartCount);
 router.post('/increase-cart-count',increaseCartCount);
-router.post('/delete-cart-product',authMiddleware,deleteCartProduct);
+router.post('/delete-cart-product',deleteCartProduct);
 router.get('/get-address/:id',authMiddleware,getAddress)
 
 // router.post('/image',upload.single('my_file'),img);

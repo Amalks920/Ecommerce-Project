@@ -10,3 +10,9 @@ export const ADD_TO_CART_API='/user/add-to-cart';
 export const GET_CART='/user/get-cart-details';
 export const INCREASE_CART_COUNT='/user/increase-cart-count'
 export const DECREASE_CART_COUNT='/user/decrease-cart-count'
+export const DELETE_CART_PRODUCT='/user/delete-cart-product'
+
+
+//products
+
+export const GET_PRODUCTS='/products/get-all-products'

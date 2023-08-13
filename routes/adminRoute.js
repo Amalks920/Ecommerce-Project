@@ -9,6 +9,8 @@ const {getAllUsers,getUser,deleteUser,
     isAdmin,blockUser,getImage,addCategory,
     unBlockUser}=require('../controller/Admin/adminCtrl');
 
+const {addProduct}=require('../controller/Product/productCtrl')
+
     //order
 
     const {getAllOrders}=require('../controller/Product/OrderController')
@@ -24,18 +26,10 @@ router.put('/block-user/:id',blockUser)
 router.put('/unblock-user/:id',unBlockUser)
 
 
-//product management
-const {addProduct,getAllProducts,getAProduct,
-       deleteProduct,updateProduct
-}=require('../controller/Product/productCtrl');
-
 router.post('/add-product',addProduct)
 //
 
-router.get('/get-all-products',authMiddleware,getAllProducts)
-router.get('/get-a-product/:id',getAProduct)
-router.put('/delete-a-product/:id',deleteProduct)
-router.put('/update-product/:id',updateProduct)
+
 // router.get('/get-image',getImage)
 router.post('/add-category',authMiddleware,addCategory);
 

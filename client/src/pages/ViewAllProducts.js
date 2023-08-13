@@ -13,7 +13,7 @@ console.log(products.products)
     <div className='h-screen flex flex-wrap mt-[5%]'>
 
         {
-            products.products.map((el)=>{
+            products.products.products.map((el)=>{
 
             
            return  <ProductCard products={el} />

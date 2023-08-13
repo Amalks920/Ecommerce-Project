@@ -8,8 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Signup } from "./Signup";
 import Home from "./Home";
 import { setCredentials } from "../utils/loginSlice";
-import { createBrowserHistory } from "history";
-let history=createBrowserHistory()
+
+import { login,resetState } from "../features/auth/authSlice";
+
 const LOGIN_URL = "/user/login";
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -19,6 +20,9 @@ const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 export const Login = () => {
   // history.replace('/login')
   const user = useSelector((store) => store.user);
+  const auth=useSelector(store=>store.auth)
+  console.log('autht')
+  console.log(auth.user)
   //subscribing to login slice
 
   const { setAuth } = useAuth();
@@ -37,6 +41,14 @@ export const Login = () => {
   const [errMsg, setErrMsg] = useState("");
   const [validPassword, setValidPassword] = useState(false);
 
+
+ console.log(auth)
+
+
+
+
+
+  
 
   useEffect(() => {
     userRef.current.focus();
@@ -62,47 +74,49 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post(
-        LOGIN_URL,
-        JSON.stringify({ email: email, password: password }),
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: false,
-        }
-      );
+    let data={
+      email:email,
+      password:password
+    }
+    dispatch(login(data))
+    // try {
+    //   const response = await axios.post(
+    //     LOGIN_URL,
+    //     JSON.stringify({ email: email, password: password }),
+    //     {
+    //       headers: { "Content-Type": "application/json" },
+    //       withCredentials: false,
+    //     }
+    //   );
 
 
       setEmail("");
-      setAuth({ user: email });
+      // setAuth({ user: email });
 
       //dispatch the setCredentials action which stores
       //username and token in login slice
 
-      dispatch(
-        setCredentials({
-          username: response.data.name,
-          token: response.data.accessToken,
-          role: response.data.role,
-          id: response.data.id,
-        })
-      );
+      // dispatch(
+      //   setCredentials({ // try {
+      //     //   const response = await axios.post(
+      //     //     LOGIN_URL,
+      //     //     JSON.stringify({ email: email, password: password }),
+      //     //     {
+      //     //       headers: { "Content-Type": "application/json" },
+      //     //       withCredentials: false,
+      //     //     }
+      //     //   );
+      //     username: response.data.name,
+      //     token: response.data.accessToken,
+      //     role: response.data.role,
+      //     id: response.data.id,
+      //   })
+      // );
 
       setPassword("");
 
-      navigate("/home");
-    } catch (err) {
-      if (!err?.response) {
-        setErrMsg("No Server Response");
-      } else if (err?.response?.status === 400) {
-        setErrMsg("Missing username or Password");
-      } else if (err?.response?.status === 401) {
-        setErrMsg("unAuthorized");
-      } else {
-        setErrMsg("Login Failed");
-      }
-      // errRef.current.focus();
-    }
+      auth.user?navigate("/home"):navigate('/login')
+   
   };
 
   return (

@@ -3,7 +3,6 @@ import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
 import { useParams } from "react-router-dom";
 import store from "../utils/store";
 import axios from "../api/axios";
-import { cacheCartProducts, pushCartProducts } from "../utils/cartSlice";
 import { useDispatch } from "react-redux";
 import ImageZoom from "react-image-zooom";
 import { createCart } from "../features/cart/cartSlice";
@@ -14,17 +13,18 @@ const ProductPage = () => {
   const { id } = useParams();
   const dispatch=useDispatch();
  
-  
+  console.log('prodduct paes')
  
   //subscribe to userslice
   const token = useSelector((store) => store.user.token);
-  const userid = useSelector((store) => store.user.id);
+  const userid = useSelector((store) => store?.auth?.user?.id);
   const cart=useSelector(store=>store.cart)
   console.log(cart)
 
   const products = useSelector((store) => {
-    return store.products.products;
+    return store.products.products.products;
   });
+  console.log(products)
   let product = products.filter((products) => {
     if (products._id === id) return id === products._id;
   });

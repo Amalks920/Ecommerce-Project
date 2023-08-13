@@ -35,18 +35,30 @@ export const decreaseCartCount = createAsyncThunk(
     }
   );
 
-export const getCart = createAsyncThunk("/get-cart", async (userid,thunkAPI) => {
+export const getCart = createAsyncThunk("/get-cart", async (data,thunkAPI) => {
   try {
-    return await cartService.getCart(userid);
+    return await cartService.getCart(data);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
 });
 
+export const deleteCartProduct=createAsyncThunk('/delete-cart',async (data,thunkAPI) => {
+  try {
+      return await cartService.deleteCartProduct(data)
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error)
+  }
+})
+
 export const resetState = createAction("Reset_all");
 
+const getCartFromLocalStorage = localStorage.getItem("cart")
+  ? JSON.parse(localStorage.getItem("cart"))
+  : null;
+
 const initialState = {
-  cart: [],
+  cart:getCartFromLocalStorage ,
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -81,8 +93,14 @@ const cartSlice = createSlice({
       .addCase(decreaseCartCount.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(decreaseCartCount.fulfilled, (state) => {
-        state.isDecreased = true;
+      .addCase(decreaseCartCount.fulfilled, (state) => { 
+        state.isLoading=false
+        state.isChanged++
+      })
+      .addCase(deleteCartProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteCartProduct.fulfilled, (state) => {
         state.isLoading=false
         state.isChanged++
       })
@@ -93,7 +111,7 @@ const cartSlice = createSlice({
         
         state.isLoading=false
         state.cart = action.payload;
-      
+        
         console.log(action.payload);
       });
   },

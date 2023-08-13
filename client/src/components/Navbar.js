@@ -3,10 +3,12 @@ import React, { useState,useEffect } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { deleteUser } from '../utils/loginSlice'
 import { Link } from 'react-router-dom'
-import { logout } from '../utils/loginSlice'
+import { logout } from '../features/auth/authSlice'
 import { useNavigate } from 'react-router-dom'
 import axios from '../api/axios'
+
 const Navbar = () => {
+  const auth=useSelector(store=>store.auth)
 let user
 const navigate=useNavigate()
 const dispatch=useDispatch() 
@@ -18,22 +20,24 @@ console.log(user)
 
 
 
-const logout = () =>{
+const loggout = () =>{
   
-  
-  axios.get('/user/logout')
-  .then((res)=>{
-    console.log(res)
-    dispatch(logout)
-    navigate('/login')
+  dispatch(logout())
+  // axios.get('/user/logout')
+  // .then((res)=>{
+  //   console.log(res)
+  //   dispatch(logout)
+  //   navigate('/login')
 
-  })
-  .catch((err)=>{
-    console.log(err)
-  })
+  // })
+  // .catch((err)=>{
+  //   console.log(err)
+  // })
 
    
 }
+
+
 
 
 
@@ -63,7 +67,7 @@ const logout = () =>{
       
         {
           
-        token ?<button onClick={()=>{logout()}} className='bg-slate-600 text-white font-bold w-56 h-14'>{`Logout`} </button> :<button className='bg-slate-600 text-white font-bold w-1/12 h-1/2'><Link to='/login'>Login</Link> </button>
+        auth?.user ?<button onClick={()=>{loggout()}} className='bg-black text-white font-bold w-56 h-14'>{`Logout`} </button> :<button className='bg-black text-white font-bold w-1/12 h-1/2'><Link to='/login'>Login</Link> </button>
         }
 
         

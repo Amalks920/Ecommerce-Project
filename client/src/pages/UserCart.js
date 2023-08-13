@@ -7,25 +7,23 @@ import { Link } from "react-router-dom";
 import { pushCartProducts } from "../utils/cartSlice";
 import CouponModal from "../components/CouponModal";
 import OrderSummaryCard from "../components/OrderSummaryCard";
-import { getCart, increaseCartCount,decreaseCartCount,resetState } from "../features/cart/cartSlice";
+import { getCart, increaseCartCount,decreaseCartCount,resetState,deleteCartProduct } from "../features/cart/cartSlice";
 
-const GET_CART_DETAILS = `/user/get-cart-details`;
-const INCREASE_CART_COUNT = "/user/increase-cart-count";
-const DECREASE_CART_COUNT = "/user/decrease-cart-count";
+
 const DELETE_CART_PRODUCT = "/user/delete-cart-product";
 
 const UserCart = () => {
   const dispatch = useDispatch();
 
-  const token = useSelector((store) => store.user.token);
   const cart=useSelector((store)=>store.cart )
+
   const isChanged = useSelector((store) => store.cart.isChanged);
  
-  const user = useSelector((store) => store.user);
+  const auth = useSelector((store) => store.auth);
   const [cartProductData, setCartProductData] = useState([]);
   const [cartCount, setCartCount] = useState();
   const [modalOpen, setModalOpen] = useState(false);
-
+console.log(cart,isChanged)
  
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -35,17 +33,12 @@ const UserCart = () => {
     setModalOpen(false);
   };
 
-  let headers;
-  if (token) {
-    headers = {
-      Authorization: `Bearer ${token}`,
-    };
-  }
-
+  
+console.log(auth?.user?.id)
   //update cart count
   useEffect(() => {
-    dispatch(getCart({userid:user.id}))
-  },[]);
+    dispatch(getCart({userid:auth?.user?.id}))
+  },[isChanged]);
 
 
 
@@ -56,11 +49,11 @@ const UserCart = () => {
   //decrease count of product in cart
   const decreaseCount = async (prodId) => {
     let data={
-      userId:user.id,
+      userId:auth?.user?.id,
       productId:prodId
     }
     
-    // dispatch(decreaseCartCount(data))
+    dispatch(decreaseCartCount(data))
     // try {
     //   console.log(prodId);
     //   const response = await axios.post(
@@ -73,30 +66,38 @@ const UserCart = () => {
     //   console.log(error);
     // }
   };
-
+console.log(cart)
   //increase count of products in cart
   const increaseCount = async (prodId) => {
     let data={
-      userId:user.id,
+      userId:auth?.user?.id,
       productId:prodId
     }
     dispatch(increaseCartCount(data))
-    dispatch(getCart({userid:user.id}))
+   
   };
 
   const deleteProduct = async (prodId) => {
-    try {
-      const deleteResponse = await axios.post(
-        DELETE_CART_PRODUCT,
-        { userId: user.id, productId: prodId },
-        { headers }
-      );
-        if(deleteResponse.data.isDeleted){
-            setCartCount(null)
-        }
-    } catch (error) {
-      console.log(error);
+    console.log('prododo ids');
+    console.log(auth)
+    let data={
+      productId:prodId,
+      userId:auth?.user?.id
     }
+
+     dispatch(deleteCartProduct(data))
+    // try {
+    //   const deleteResponse = await axios.post(
+    //     DELETE_CART_PRODUCT,
+    //     { userId: user.id, productId: prodId },
+    //     { headers }
+    //   );
+    //     if(deleteResponse.data.isDeleted){
+    //         setCartCount(null)
+    //     }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
 

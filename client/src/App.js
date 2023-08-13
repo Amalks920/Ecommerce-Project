@@ -65,10 +65,11 @@ function App() {
           <Route path="confirm-order" element={<ConfirmOrder />}></Route>
           <Route path="prepaid-payment" element={<PrepaidPayment/>}></Route>
           <Route path="img" element={<Img />}></Route>
-          <Route element={<RequireAuth />}>
+          {/* <Route element={<RequireAuth />}> */}
             <Route path="home" element={<Home />}></Route>
             <Route path="/view-all-products" element={<ViewAllProducts/>}></Route>
-
+            <Route path="product-page/:id" element={<ProductPage/>}></Route>
+            <Route path="user-cart" element={<UserCart />}></Route>
 
             <Route path="/user-dashboard" element={<UserDashBoardContainer/>}>
             <Route path="/user-dashboard/add-address" element={<UserDashboard/>}></Route>
@@ -76,10 +77,9 @@ function App() {
             <Route path="/user-dashboard/view-orders-user" element={<ViewOrdersUser/>}></Route>
 
             
-            </Route>
+            {/* </Route> */}
 
-            <Route path="product-page/:id" element={<ProductPage/>}></Route>
-            <Route path="user-cart" element={<UserCart />}></Route>
+            
           </Route>
 
           <Route path="/reg" element={<Reg />}></Route>

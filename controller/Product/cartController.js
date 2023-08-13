@@ -9,6 +9,7 @@ const ObjectId = mongoose.Types.ObjectId;
 const getCartDetails = expressAsyncHandler(async (req, res, next) => {
   // const user = await userSchema.findById(req.body.userid);
   // const cart = await user.populate("cart");
+  console.log(req.body)
 
   const cart= await CartSchema.findOne({user:req.body.userid})
   console.log('carttt')
@@ -130,7 +131,9 @@ const decreaseCartCount=expressAsyncHandler(async(req,res,next)=>{
 })
 
 const deleteCartProduct=expressAsyncHandler(async(req,res,next)=>{
+  console.log(req.body)
   const {userId,productId}=req.body
+  console.log(userId,productId)
 try {
 
   const cart=await CartSchema.findOne({user:userId})

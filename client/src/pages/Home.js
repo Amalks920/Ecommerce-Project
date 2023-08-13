@@ -3,17 +3,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import { BACKEND_API, GET_CART } from '../utils/constants'
 import axios from '../api/axios'
 import ProductCard from '../components/ProductCard'
-import { setCredentials } from '../utils/loginSlice'
+// import { setCredentials } from '../utils/loginSlice'
 import { Link, useLocation } from 'react-router-dom'
 import CarouselTransition from '../components/Carousel'
 import { setProducts } from '../utils/productSlice'
-import { createBrowserHistory } from 'history'
 import ImageZoom from "react-image-zooom";
-import { cacheCartProducts } from '../utils/cartSlice'
+// import { cacheCartProducts } from '../utils/cartSlice'
+import { getCart } from '../features/cart/cartSlice'
+import { getProducts } from '../features/products/productSlice'
 
 
 const URL=`${BACKEND_API}/admin/get-all-products`
-let history=createBrowserHistory()
+
 
  const Home = () => {
 
@@ -21,7 +22,7 @@ let history=createBrowserHistory()
  let dispatch=useDispatch()
   //access token
   const token=useSelector(store=>store.user.token)
-  const userid=useSelector(store=>store.user.id)
+  const user=useSelector(store=>store.auth)
   const products=useSelector(store=>store.products)
   const cart=useSelector(store=>store.cart)
 
@@ -37,8 +38,8 @@ let history=createBrowserHistory()
 
   const [data,setData]=useState([])
 
-
-
+console.log('proooddddcuuuucts')
+console.log(products.products.products)
 // useEffect(()=>{
 //   dispatch(setProducts(data))
 
@@ -53,29 +54,39 @@ let history=createBrowserHistory()
 
 
   useEffect(()=>{
-      getCart()
+        let data={
+          userid:user?.user?.id
+        }
+      dispatch(getCart(data))
+
   },[])
-
-  const getCart=async()=>{
-    try {
-      const response=await axios.post(GET_CART,{userid},{headers})
-     
-      dispatch(cacheCartProducts(response.data.cart))
-
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
 
   useEffect(()=>{
-    axios.get(URL,{headers})
-    .then((res)=>{
-      dispatch(setProducts(res.data.products))
-      setData(res.data.products)
-       
-    })
-  .catch((err)=>console.log(err.message))
+    dispatch(getProducts())
   },[])
+
+  // const getUserCart=async()=>{
+
+    
+  //   // try {
+  //   //   const response=await axios.post(GET_CART,{userid},{headers})
+     
+  //   //   dispatch(cacheCartProducts(response.data.cart))
+
+  //   // } catch (error) {
+  //   //   console.log(error.message)
+  //   // }
+  // }
+
+  // useEffect(()=>{
+  //   axios.get(URL,{headers})
+  //   .then((res)=>{
+  //     dispatch(setProducts(res.data.products))
+  //     setData(res.data.products)
+       
+  //   })
+  // .catch((err)=>console.log(err.message))
+  // },[])
 
 
   return (
@@ -93,7 +104,7 @@ let history=createBrowserHistory()
           <span className='border'>
             <button
             onClick={()=>{
-           const filteredData=products.products.filter((product)=>{
+           const filteredData=products.products.products.filter((product)=>{
                 return product.category.category=='Men'
               })
               if(isFiltered){
@@ -109,7 +120,7 @@ let history=createBrowserHistory()
              className='hover:bg-slate-800 hover:text-white ho px-20 py-1'>Men</button>
             <button 
                onClick={()=>{
-                const filteredData=products.products.filter((product)=>{
+                const filteredData=products.products.products.filter((product)=>{
                      return product.category.category=='Women'
                    })
                    if(isFiltered){
@@ -126,7 +137,7 @@ let history=createBrowserHistory()
 
             <button
             onClick={()=>{
-              const filteredData=products.products.filter((product)=>{
+              const filteredData=products.products.products.filter((product)=>{
                    return product.category.category=='Kids'
                  })
                  if(isFiltered){
@@ -148,7 +159,7 @@ let history=createBrowserHistory()
          
         <div className=' min-h-fit  flex flex-wrap'>
       {
-        data.map((el)=>{
+        products.products.products.map((el)=>{
         
          return <ProductCard products={el} />
          
