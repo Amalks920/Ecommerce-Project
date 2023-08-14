@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { DELETE_ORDER, GET_A_ORDER } from "../utils/constants";
 import { setProducts } from "../utils/productSlice";
 import { map } from "lodash";
+import { getAOrder } from "../features/order/orderSlice";
 
 const ViewOrdersUser = () => {
   const token = useSelector((store) => store.user.token);
-  const userid = useSelector((store) => store.user.id);
+  const userid = useSelector((store) => store.auth.user.id);
   const products = useSelector((store) => store.products);
+  const orders=useSelector((store)=>store.order)
+
   const [productData, setProductData] = useState([]);
   const [data, setData] = useState([]);
   const [refreshGetOrder, setRefreshGetOrder] = useState(false);
-  console.log(userid);
-  console.log(products);
-  console.log("products data");
+  const dispatch=useDispatch()
 
   console.log(token);
   let headers;
@@ -23,7 +24,7 @@ const ViewOrdersUser = () => {
       Authorization: `Bearer ${token}`,
     };
   }
-
+  console.log(productData)
   let p = productData
     .map((el) => {
       return el.items;
@@ -34,6 +35,9 @@ const ViewOrdersUser = () => {
       })
     );
 
+
+
+
   console.log(p.map((el) => el._id));
 
   useEffect(() => {
@@ -41,14 +45,17 @@ const ViewOrdersUser = () => {
   }, [refreshGetOrder]);
 
   const getOrders = async () => {
-    try {
-      const response = await axios.get(`${GET_A_ORDER}/${userid}`, { headers });
-      console.log("respponsef");
-      console.log(response.data.response);
-      setProductData(response.data.response);
-    } catch (error) {
-      console.log(error);
-    }
+
+    dispatch(getAOrder(userid))
+   
+    // try {
+    //   const response = await axios.get(`${GET_A_ORDER}/${userid}`, { headers });
+    //   console.log("respponsef");
+    //   console.log(response.data.response);
+    //   setProductData(response.data.response);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   const cancelOrder = async (indexOfOrder) => {

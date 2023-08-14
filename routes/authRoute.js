@@ -60,11 +60,7 @@ router.get('/get-address/:id',authMiddleware,getAddress)
 router.post('/add-address',authMiddleware,addAddress)
 router.get('/get-address/:id',getAddress)
 
-//Orders
-router.post('/place-order',authMiddleware,createOrder)
-router.post('/edit-order-status',authMiddleware,editOrderStatus)
-router.get('/get-order/:id',authMiddleware,getOrder)
-router.delete('/delete-order/:id',authMiddleware,deleteOrder)
+
 
 
 router.post('/prepaid',razorPay)

@@ -8,8 +8,8 @@ const ObjectId=mongoose.Types.ObjectId
 
 const createOrder=expressAsyncHandler(async(req,res,next)=>{
     try {
-        
     let cart=await CartSchema.findOne({user:req.body.user})
+    
         .populate('products.productId')
         // let newOrder=await OrderSchema.create(req.body)
        const order=await CartSchema.aggregate()
@@ -44,31 +44,29 @@ const createOrder=expressAsyncHandler(async(req,res,next)=>{
         price:{$arrayElemAt: ['$price', 0] }
        })
 
-       console.log(order)
-
-       console.log("order")
-       console.log(order)
+    
 
 
        const address=await AddressSchema.findOne({user:req.body.user})
-       console.log(address)
-       console.log(req.body.user)
-       console.log(address._id)
+
 
        let userId=new ObjectId(req.body.user)
-
+       console.log(userId)
        let newOrder=await OrderSchema.create({
-        user:userId,
+        user:req.body.user,
         
             items:order,
             address:address._id
         
         
      } )
-        console.log(newOrder)
-    const deleteCart=await CartSchema.deleteOne({user:userId})
+
+     console.log(newOrder)
+        console.log(req.body.user+"useeer")
+    const deleteCart=await CartSchema.deleteOne({user:req.body.user})
     res.json({isDeleted:true})
     } catch (error) {
+        console.log(error)
         res.status(404).json({msg:"error ocuured while deleting"})
     }
 })

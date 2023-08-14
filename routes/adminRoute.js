@@ -11,13 +11,6 @@ const {getAllUsers,getUser,deleteUser,
 
 const {addProduct}=require('../controller/Product/productCtrl')
 
-    //order
-
-    const {getAllOrders}=require('../controller/Product/OrderController')
-
-router.get('/hi',(req,res,next)=>{
-    res.json({'users':['userone','usertwo','userthree']})
-})
 router.get('/get-all-users',authMiddleware,getAllUsers)
 router.get('/get-a-user/:id',authMiddleware,isAdmin,getUser)
 router.delete('/:id',authMiddleware,deleteUser)
@@ -32,11 +25,6 @@ router.post('/add-product',addProduct)
 
 // router.get('/get-image',getImage)
 router.post('/add-category',authMiddleware,addCategory);
-
-//orders
-
-router.get('/get-all-orders',getAllOrders)
-
 
 
 module.exports=router;  

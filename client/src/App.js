@@ -41,6 +41,8 @@ import ViewOrdersUser from "./pages/ViewOrdersUser";
 import PrepaidPayment from "./pages/PrepaidPayment";
 import AddCoupon from "./pages/admin/AddCoupon";
 import ViewCoupon from "./pages/admin/ViewCoupon";
+import Coupons from "./pages/Coupons";
+import Wishlist from "./pages/Wishlist";
 
 let isLoggedIn;
 
@@ -65,6 +67,8 @@ function App() {
           <Route path="confirm-order" element={<ConfirmOrder />}></Route>
           <Route path="prepaid-payment" element={<PrepaidPayment/>}></Route>
           <Route path="img" element={<Img />}></Route>
+          <Route path="coupons" element={<Coupons/>}/>
+          {/* <Route path="cod" /></Route> */}
           {/* <Route element={<RequireAuth />}> */}
             <Route path="home" element={<Home />}></Route>
             <Route path="/view-all-products" element={<ViewAllProducts/>}></Route>
@@ -75,6 +79,7 @@ function App() {
             <Route path="/user-dashboard/add-address" element={<UserDashboard/>}></Route>
             <Route path="/user-dashboard/address" element={<ViewAddress/>}></Route>
             <Route path="/user-dashboard/view-orders-user" element={<ViewOrdersUser/>}></Route>
+            <Route path="/user-dashboard/wishlist" element={<Wishlist/>}></Route>
 
             
             {/* </Route> */}

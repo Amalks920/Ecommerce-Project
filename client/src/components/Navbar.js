@@ -7,6 +7,10 @@ import { logout } from '../features/auth/authSlice'
 import { useNavigate } from 'react-router-dom'
 import axios from '../api/axios'
 
+// React Icons
+import { BsCart4 } from 'react-icons/bs'
+
+
 const Navbar = () => {
   const auth=useSelector(store=>store.auth)
 let user
@@ -56,8 +60,8 @@ const loggout = () =>{
         <li className='uppercase text-slate-700 text-xl'><Link to={'/user-dashboard'}>User</Link></li>
       </ul>
      
-      <input value={searchSuggestion} onChange={(e)=>{setSearchSuggestion(e.target.value)}} className='border-none w-1/3 h-[50%] bg-slate-300 ps-60'   placeholder='Search Here'/>
-      <button className='h-[55%] ms-[-6.2%] w-[6%] border text-white font-bold bg-slate-900'>Search</button>
+      <input value={searchSuggestion} onChange={(e)=>{setSearchSuggestion(e.target.value)}} className='border-none w-1/3 h-[50%] bg-blue-gray-100 ps-60'   placeholder='Search Here'/>
+      <button className='h-[55%] ms-[-6.2%] w-[6%] border text-white font-bold bg-blue-gray-900'>Search</button>
       
       
       {
@@ -72,9 +76,11 @@ const loggout = () =>{
 
         
 
-        <div>
+        <div className='flex justify-evenly gap-24'>
         
-        <div className='text-green-500'><Link to={'/user-cart'}>Cart</Link></div>
+        <div className='text-green-500'><Link to={'/user-cart'}><BsCart4 size={50} /></Link></div>
+        <div className='text-green-500'><Link to={'/user-dashboard/wishlist'}>Wishlist</Link></div>
+
         </div>
         
     </div>

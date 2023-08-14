@@ -8,8 +8,18 @@ import {
     Tooltip,
     IconButton,
   } from "@material-tailwind/react";
+  import { useNavigate } from "react-router-dom";
+
+ 
    
   export function OrderSummaryCard() {
+
+    const navigate=useNavigate()
+
+    const handleCheckoutButton=()=>{
+        navigate('/order')
+    }
+
     return (
         <div className="relative mt-6 flex w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-2xl border py-20">
         <div className="p-6 flex flex-col justify-center items-center">
@@ -25,7 +35,7 @@ import {
             <span>Total Items : </span><span>12</span>
           </p>
           <div className="p-6 mt-10 pt-0">
-          <Button>GO TO CHECKOUT</Button>
+          <Button onClick={handleCheckoutButton}>GO TO CHECKOUT</Button>
         </div>
         </div>
         

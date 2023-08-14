@@ -6,6 +6,8 @@ import axios from "../api/axios";
 import { useDispatch } from "react-redux";
 import ImageZoom from "react-image-zooom";
 import { createCart } from "../features/cart/cartSlice";
+import { ToastContainer,toast } from "react-toastify";
+import { Button } from "@material-tailwind/react";
 
 const ADD_TO_CART_API = `/user/add-to-cart`;
 
@@ -45,6 +47,8 @@ const ProductPage = () => {
   const addToCart =  () => {
     const data={productId:prodId,userId:userid}
     dispatch(createCart(data))
+    toast.success('Product added to cart')
+
     // try {
     //   const cartResponse = await axios.post(ADD_TO_CART_API,
     //     {productId:prodId,userId:userid},
@@ -75,7 +79,8 @@ const ProductPage = () => {
         <div><h1 className="text-xl">PRICE : <span className="text-green-600 text-3xl">${product[0].price}</span></h1></div>
 
         <div className=" flex ">
-       <button onClick={addToCart} className="w-full h-[50px] bg-orange-600 me-1 rounded-lg text-white font-bold">ADD TO CART</button>
+       <Button onClick={addToCart} className="w-full h-[50px] bg-orange-600 me-1 rounded-lg text-white font-bold">ADD TO CART</Button>
+       <ToastContainer className={'mt-28'}/>
        </div>
       </div>
         <div>

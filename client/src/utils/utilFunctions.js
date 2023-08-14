@@ -4,9 +4,9 @@ import axios from '../api/axios'
 
 
 
-export const createPayment=async()=>{
+export const createPayment=async(totalprice)=>{
     let data={
-        amount:100
+        amount:totalprice*100
     }
 
     try {
