@@ -3,13 +3,16 @@ import React, { useState,useEffect } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { deleteUser } from '../utils/loginSlice'
 import { Link } from 'react-router-dom'
-import { logout } from '../features/auth/authSlice'
+import { logout, resetState } from '../features/auth/authSlice'
 import { useNavigate } from 'react-router-dom'
 import axios from '../api/axios'
+import useLoggeout from '../hooks/useLoggeout'
 
 // React Icons
 import { BsCart4 } from 'react-icons/bs'
 import { Button } from '@material-tailwind/react'
+import { getProducts } from '../features/products/productSlice'
+import { toast,ToastContainer } from 'react-toastify'
 
 
 const Navbar = () => {
@@ -19,27 +22,22 @@ const navigate=useNavigate()
 const dispatch=useDispatch() 
 const [searchSuggestion,setSearchSuggestion]=useState('')
 
+
 let token=useSelector((store)=>store.user.token)
 console.log(user)
 
 
 
 
-const loggout = () =>{
-  
+
+const loggout=()=>{
   dispatch(logout())
-  // axios.get('/user/logout')
-  // .then((res)=>{
-  //   console.log(res)
-  //   dispatch(logout)
-  //   navigate('/login')
-
-  // })
-  // .catch((err)=>{
-  //   console.log(err)
-  // })
-
+  dispatch(resetState())
+  
+  setTimeout(()=>{
    
+    navigate('/login')
+  },100)
 }
 
 
@@ -54,6 +52,7 @@ const loggout = () =>{
 
   return (
     <div className='w-screen fixed z-20 top-0 h-28 bg-white shadow-2xl flex justify-evenly items-center'>
+      <ToastContainer/>
       <div className='w-1/12'>
         <h1 className='font-bold text-2xl'><Link to={'/home'}>E-Comx</Link></h1>
       </div>
@@ -72,7 +71,12 @@ const loggout = () =>{
       
         {
           
-        auth?.user ?<Button onClick={()=>{loggout()}} className='bg-black text-white font-bold w-56 h-14'>{`Logout`} </Button> :<Button className='bg-black text-white font-bold w-1/12 h-1/2'><Link to='/login'>Login</Link> </Button>
+        auth?.user ?<Button onClick={()=>
+          {
+            loggout()
+           
+          }
+        } className='bg-black text-white font-bold w-56 h-14'>{`Logout`} </Button> :<Button className='bg-black text-white font-bold w-1/12 h-1/2'><Link to='/login'>Login</Link> </Button>
         }
 
         

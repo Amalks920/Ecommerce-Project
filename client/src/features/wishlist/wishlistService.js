@@ -19,13 +19,14 @@ const createWishlist=async(data)=>{
 const getWishlist=async(userId)=>{
     try {
         const response=await axios.get(`${GET_WISHLIST}/${userId}`,config)
-
+        console.log(response.data)
         if(response.data){
             localStorage.setItem("wishlist", JSON.stringify(response.data));
         }
 
         return response.data
     } catch (error) {
+        localStorage.removeItem('wishlist')
         return error.message
     }
 }

@@ -4,7 +4,7 @@ import { BACKEND_API, GET_CART } from '../utils/constants'
 import axios from '../api/axios'
 import ProductCard from '../components/ProductCard'
 // import { setCredentials } from '../utils/loginSlice'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import CarouselTransition from '../components/Carousel'
 import { setProducts } from '../utils/productSlice'
 import ImageZoom from "react-image-zooom";
@@ -19,14 +19,21 @@ import { getWishlist } from '../features/wishlist/wishlistSlice'
 
  const Home = () => {
 
+  const [isLoggedIn,setIsLoggedIn]=useState(false)
+
   // history.replace('/home')
  let dispatch=useDispatch()
+ let navigate=useNavigate()
   //access token
   const user=useSelector(store=>store.auth)
   const products=useSelector(store=>store.products)
   const cart=useSelector(store=>store.cart)
 
-console.log(user)
+// console.log(user?.isLoggedIn)
+// console.log(isLoggedIn)
+// if(!user?.isLoggedIn){
+//   navigate('/login')
+// }
 
   const [isMenFiltered,setIsMenFiltered]=useState(false)
   const [isWomenFiltered,setIsWomenFiltered]=useState(false)

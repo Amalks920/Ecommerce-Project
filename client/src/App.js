@@ -69,7 +69,7 @@ function App() {
           <Route path="img" element={<Img />}></Route>
           <Route path="coupons" element={<Coupons/>}/>
           {/* <Route path="cod" /></Route> */}
-          {/* <Route element={<RequireAuth />}> */}
+          <Route element={<RequireAuth />}>
             <Route path="home" element={<Home />}></Route>
             <Route path="/view-all-products" element={<ViewAllProducts/>}></Route>
             <Route path="product-page/:id" element={<ProductPage/>}></Route>
@@ -82,7 +82,7 @@ function App() {
             <Route path="/user-dashboard/wishlist" element={<Wishlist/>}></Route>
 
             
-            {/* </Route> */}
+            </Route>
 
             
           </Route>

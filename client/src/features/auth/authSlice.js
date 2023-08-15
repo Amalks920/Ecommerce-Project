@@ -20,12 +20,17 @@ export const login = createAsyncThunk(
   "auth/login",
   async (userData, thunkAPI) => {
     try {
-      return await authService.login(userData);
+      const response= await authService.login(userData);
+      console.log(response)
+      return response
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
+
+export const resetState = createAction("Reset_all");
+
 
 export const logout=createAsyncThunk(
   "auth/logout",
@@ -43,7 +48,7 @@ export const authSlice=createSlice({
   name:"auth",
   initialState:initialState,
   reducers:{},
-  xtraReducers: (buildeer) => {
+  extraReducers: (buildeer) => {
     buildeer
       .addCase(login.pending, (state) => {
         state.isLoading = true;
@@ -62,13 +67,14 @@ export const authSlice=createSlice({
         state.isLoading = false;
       })
       .addCase(logout.pending,(state)=>{
-        console.log('HII')
+        
         state.isLoading=true;
       })
       .addCase(logout.fulfilled,(state)=>{
-        console.log('loggout')
+        state.isLoggedIn=false;
+        state.user=null
         localStorage.removeItem('user')
-        state.loggedIn=false;
+        
       })
     }
 })

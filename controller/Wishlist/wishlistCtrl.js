@@ -18,8 +18,13 @@ const createWishlist = expressAsyncHandler(async (req, res, next) => {
       { $push: { products: req.body.products } }
     );
 
-    const response=await Promise.all([existingWishlist,wishlistResponse,updatedWishlist])
-        if(response) response.status(200).json({msg:"updated"})
+    try {
+      const response=await Promise.all([existingWishlist,wishlistResponse,updatedWishlist])
+      if(response) response.status(200).json({msg:"updated"})
+    } catch (error) {
+      res.status(404).json(error)
+    }
+
   }
 
   // try {

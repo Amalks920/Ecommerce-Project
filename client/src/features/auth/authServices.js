@@ -23,7 +23,7 @@ const logout= async (user) => {
       localStorage.clear()
      
     }
-    return response.data
+    return response
 
   } catch (error) {
     return error.message

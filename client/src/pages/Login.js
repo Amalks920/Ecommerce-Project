@@ -40,16 +40,10 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [validPassword, setValidPassword] = useState(false);
-
-
- console.log(auth)
-
-
-
-
-
   
 
+
+  console.log(auth.isError)
   useEffect(() => {
     userRef.current.focus();
   }, []);
@@ -71,6 +65,9 @@ export const Login = () => {
     setValidEmail(result);
   }, [email]);
 
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -79,43 +76,16 @@ export const Login = () => {
       password:password
     }
     dispatch(login(data))
-    // try {
-    //   const response = await axios.post(
-    //     LOGIN_URL,
-    //     JSON.stringify({ email: email, password: password }),
-    //     {
-    //       headers: { "Content-Type": "application/json" },
-    //       withCredentials: false,
-    //     }
-    //   );
+   
+    if(auth.isSuccess) navigate('/home')
 
-
+    auth.accessToken?navigate("/home"):navigate('/login')
       setEmail("");
-      // setAuth({ user: email });
 
-      //dispatch the setCredentials action which stores
-      //username and token in login slice
-
-      // dispatch(
-      //   setCredentials({ // try {
-      //     //   const response = await axios.post(
-      //     //     LOGIN_URL,
-      //     //     JSON.stringify({ email: email, password: password }),
-      //     //     {
-      //     //       headers: { "Content-Type": "application/json" },
-      //     //       withCredentials: false,
-      //     //     }
-      //     //   );
-      //     username: response.data.name,
-      //     token: response.data.accessToken,
-      //     role: response.data.role,
-      //     id: response.data.id,
-      //   })
-      // );
 
       setPassword("");
 
-      auth.user?navigate("/home"):navigate('/login')
+      
    
   };
 
@@ -139,6 +109,9 @@ export const Login = () => {
         }
 
         <form onSubmit={handleSubmit} className="mt-6">
+          {
+            auth.isError && <p className="text-red-800 text-center text-2xl">Login Failed</p>
+          }
           <div className="mb-2">
             <label
               htmlFor="email"

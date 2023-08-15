@@ -8,10 +8,11 @@ const Wishlist = () => {
   const user=useSelector(store=>store.auth)
   const dispatch=useDispatch()
 
-  console.log('eooewoshlis')
-  console.log(wishlist)
+ useEffect(()=>{
+  dispatch(getWishlist(user?.user?.id))
+ },[])
 
-
+console.log(wishlist)
 
  
 

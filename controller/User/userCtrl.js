@@ -178,7 +178,7 @@ const logout=asyncHandler(async (req,res,next)=>{
     console.log(token)
     if(!token){
         console.log('no token available in cookies')
-        res.status(201).json({msg:"no cookies"})
+        res.status(200).json({msg:"no cookies"})
     }
 
     try {

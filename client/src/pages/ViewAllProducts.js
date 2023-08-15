@@ -64,11 +64,16 @@ console.log(filteredProducts)
     <div className='h-screen flex flex-wrap mt-[5%]'>
 
         {
-            filteredProducts.map((el)=>{
+          filteredProducts.length!=0 &&  filteredProducts?.map((el)=>{
 
             
            return  <ProductCard products={el} />
         })
+        }
+        {
+          filteredProducts.length===0 && products?.products?.products?.map((el)=>{
+            return <ProductCard products={el}/>
+          })
         }
         
     </div>
