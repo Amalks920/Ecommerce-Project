@@ -1,14 +1,44 @@
-import React from 'react'
+import { Button } from '@material-tailwind/react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { createWishlist, getWishlist } from '../features/wishlist/wishlistSlice'
+import { isPromise } from 'formik'
+import { ToastContainer, toast } from 'react-toastify'
+
 
 
 const ProductCard = (props) => {
+
+  const userId=useSelector(store=>store.auth.user.id)
+  const wishlist=useSelector(store=>store.wishlist)
+
+
+
  
+  let dispatch=useDispatch()
+
+
+
+  
+  const addToWishlist=(productId)=>{
+
+
+    let data={  
+      user:userId,
+      products:productId,
+    }
+    //dispatch(getWishlist(userId))
+       dispatch(createWishlist(data))
+      
+      
+  }
  
   const {_id,productName,price,image,brandName}=props.products
   return (
-    <Link to={`/product-page/${_id}`}>
+    
     <div className="relative m-10  flex w-full max-w-xs flex-col overflow-hidden rounded-lg min-h-fit border border-gray-100 bg-white shadow-md">
+      
     <a className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl" href="#">
      
       <img className="object-cover" src={image} width={1000} height={30} alt="product image" />
@@ -25,6 +55,12 @@ const ProductCard = (props) => {
     <span className="text-3xl font-bold text-blue-900">${price}</span>
     
   </p>
+  <ToastContainer/>
+  <Button
+  onClick={()=>{
+    addToWishlist(_id)
+  }}
+   className='rounded-full' color='red' ripple={true}>Wishlist</Button>
 </div>
 
 <div className="flex items-center">
@@ -32,19 +68,17 @@ const ProductCard = (props) => {
 
 </div>
 
-  <a
-    href="#"
-    className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
-  >
+<Link to={`/product-page/${_id}`}  className="flex items-center justify-center rounded-md bg-black px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
+>
     <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
       <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
     </svg>
     Add to cart
-  </a>
+  </Link>
 </div>
 
   </div>
-  </Link>
+ 
   
   )
 }

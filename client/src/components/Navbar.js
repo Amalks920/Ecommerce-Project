@@ -9,6 +9,7 @@ import axios from '../api/axios'
 
 // React Icons
 import { BsCart4 } from 'react-icons/bs'
+import { Button } from '@material-tailwind/react'
 
 
 const Navbar = () => {
@@ -71,7 +72,7 @@ const loggout = () =>{
       
         {
           
-        auth?.user ?<button onClick={()=>{loggout()}} className='bg-black text-white font-bold w-56 h-14'>{`Logout`} </button> :<button className='bg-black text-white font-bold w-1/12 h-1/2'><Link to='/login'>Login</Link> </button>
+        auth?.user ?<Button onClick={()=>{loggout()}} className='bg-black text-white font-bold w-56 h-14'>{`Logout`} </Button> :<Button className='bg-black text-white font-bold w-1/12 h-1/2'><Link to='/login'>Login</Link> </Button>
         }
 
         

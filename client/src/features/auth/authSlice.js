@@ -10,6 +10,7 @@ const initialState = {
   isError: false,
   isLoading: false,
   isSuccess: false,
+  isLoggedIn:false,
   message: "",
 };
 
@@ -38,8 +39,6 @@ export const logout=createAsyncThunk(
   }
   )
 
-
-
 export const authSlice=createSlice({
   name:"auth",
   initialState:initialState,
@@ -54,7 +53,7 @@ export const authSlice=createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
-        state.message = "success";
+        state.isLoggedIn=true
       })
       .addCase(login.rejected, (state, action) => {
         state.isError = true;
@@ -69,6 +68,7 @@ export const authSlice=createSlice({
       .addCase(logout.fulfilled,(state)=>{
         console.log('loggout')
         localStorage.removeItem('user')
+        state.loggedIn=false;
       })
     }
 })

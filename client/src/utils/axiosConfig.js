@@ -10,3 +10,12 @@ export const config = {
     Accept: "application/json",
   },
 };
+
+export const configLogout = {
+  headers: {
+    Authorization: `Bearer ${
+      getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.refreshToken : ""
+    }`,
+    Accept: "application/json",
+  },
+};

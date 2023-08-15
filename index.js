@@ -10,6 +10,7 @@ const adminRouter=require('./routes/adminRoute')
 const couponRouter=require('./routes/couponRoute')
 const productRouter=require('./routes/productRoute')
 const orderRouter=require('./routes/orderRoute')
+const wishlistRouter=require('./routes/wishlistRoute')
 
 const {errorHandler,notFound}=require('./middlewares/errorHandler')
 const cors=require('cors')
@@ -34,6 +35,7 @@ app.use('/api/admin',adminRouter)
 app.use('/api/coupon',couponRouter)
 app.use('/api/products',productRouter)
 app.use('/api/order',orderRouter)
+app.use('/api/wishlist',wishlistRouter)
 
 
 app.use(notFound)

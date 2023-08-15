@@ -57,7 +57,6 @@ console.log(findUser)
 const userLogin=asyncHandler(async (req,res,next)=>{
     const {email,password}=req.body
     //check if user exist or not
-    console.log(email)
     try {
        let findUser=await User.findOne({email:email})
        
@@ -76,7 +75,6 @@ const userLogin=asyncHandler(async (req,res,next)=>{
         
         const refreshToken=generateToken(findUser?._id,process.env.REFRESH_TOKEN_PRIVATE_KEY,'1d')
       
-        console.log(accessToken);
             //save the refresh token in the database for future reference
         const updateUser=await User.findByIdAndUpdate(
             findUser._id,
@@ -101,7 +99,8 @@ const userLogin=asyncHandler(async (req,res,next)=>{
         res.json({              
         email:email,isBlocked:isBlocked,
         mobile:mobile,name:name,role:role,
-        accessToken:accessToken,id:_id
+        accessToken:accessToken,id:_id,
+        refreshToken:refreshToken
                 })
                
         }else{   
@@ -124,12 +123,11 @@ const otpLogin=asyncHandler(async(req,res,next)=>{
 })
 
 const verifyOtp=asyncHandler(async(req,res,next)=>{
-        console.log(req.body)
+
 
         try {
 
             const otp=await Otp.findOne({otp:req.body.otp})
-            console.log(otp)
 
             const findUser=await User.find({email:otp.Email})
 
@@ -137,7 +135,7 @@ const verifyOtp=asyncHandler(async(req,res,next)=>{
         
         const refreshToken=generateToken(findUser?._id,process.env.REFRESH_TOKEN_PRIVATE_KEY,'1d')
       
-        console.log(accessToken);
+
             //save the refresh token in the database for future reference
         const updateUser=await User.findByIdAndUpdate(
             findUser._id,
@@ -175,7 +173,8 @@ const verifyOtp=asyncHandler(async(req,res,next)=>{
 
 
 const logout=asyncHandler(async (req,res,next)=>{
-    const token=req.cookies['jwt']
+    console.log(req.cookies)
+    const token=req.headers['authorization']
     console.log(token)
     if(!token){
         console.log('no token available in cookies')
@@ -197,7 +196,7 @@ const logout=asyncHandler(async (req,res,next)=>{
     console.log('updated')
     let loggoutUser=await User.findOneAndUpdate({refreshToken:token},{refreshToken:null},{new:true})
     res.clearCookie('jwt',{httpOnly:true,maxAge:24*60*60*1000})
-        res.json({msg:"user loggedout"})
+        res.status(200).json({msg:"user loggedout"})
     console.log(loggoutUser);
     
     

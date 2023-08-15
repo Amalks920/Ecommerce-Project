@@ -11,9 +11,10 @@ import ImageZoom from "react-image-zooom";
 // import { cacheCartProducts } from '../utils/cartSlice'
 import { getCart } from '../features/cart/cartSlice'
 import { getProducts } from '../features/products/productSlice'
+import { getWishlist } from '../features/wishlist/wishlistSlice'
 
 
-const URL=`${BACKEND_API}/admin/get-all-products`
+
 
 
  const Home = () => {
@@ -21,12 +22,11 @@ const URL=`${BACKEND_API}/admin/get-all-products`
   // history.replace('/home')
  let dispatch=useDispatch()
   //access token
-  const token=useSelector(store=>store.user.token)
   const user=useSelector(store=>store.auth)
   const products=useSelector(store=>store.products)
   const cart=useSelector(store=>store.cart)
 
-
+console.log(user)
 
   const [isMenFiltered,setIsMenFiltered]=useState(false)
   const [isWomenFiltered,setIsWomenFiltered]=useState(false)
@@ -38,19 +38,13 @@ const URL=`${BACKEND_API}/admin/get-all-products`
 
   const [data,setData]=useState([])
 
-console.log('proooddddcuuuucts')
-console.log(products.products.products)
+
 // useEffect(()=>{
 //   dispatch(setProducts(data))
 
 // },[])
 
-  let headers
-  if(token){
-     headers={
-      'Authorization':`Bearer ${token}`
-    }
-  }
+
 
 
   useEffect(()=>{
@@ -65,29 +59,11 @@ console.log(products.products.products)
     dispatch(getProducts())
   },[])
 
-  // const getUserCart=async()=>{
+  useEffect(()=>{
+    dispatch(getWishlist(user?.user?.id))
+  },[])
 
-    
-  //   // try {
-  //   //   const response=await axios.post(GET_CART,{userid},{headers})
-     
-  //   //   dispatch(cacheCartProducts(response.data.cart))
-
-  //   // } catch (error) {
-  //   //   console.log(error.message)
-  //   // }
-  // }
-
-  // useEffect(()=>{
-  //   axios.get(URL,{headers})
-  //   .then((res)=>{
-  //     dispatch(setProducts(res.data.products))
-  //     setData(res.data.products)
-       
-  //   })
-  // .catch((err)=>console.log(err.message))
-  // },[])
-
+ 
 
   return (
     <div className='border border-x-red-700 mb-[10%] h-screen overflow-x-hidden'>
@@ -159,7 +135,7 @@ console.log(products.products.products)
          
         <div className=' min-h-fit  flex flex-wrap'>
       {
-        products.products.products.map((el)=>{
+        products?.products?.products?.map((el)=>{
         
          return <ProductCard products={el} />
          

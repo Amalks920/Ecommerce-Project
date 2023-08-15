@@ -11,7 +11,7 @@ const {addProduct,getAllProducts,getAProduct,
 
 
 
-router.get('/get-all-products',getAllProducts)
+router.get('/get-all-products',authMiddleware,getAllProducts)
 router.get('/get-a-product/:id',getAProduct)
 router.put('/delete-a-product/:id',deleteProduct)
 router.put('/update-product/:id',updateProduct)
